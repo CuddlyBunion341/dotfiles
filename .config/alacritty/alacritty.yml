@@ -10,8 +10,8 @@ window:
   decorations_theme_variant: None
   decorations: buttonless
   padding:
-    x: 10
-    y: 10
+    x: 5
+    y: 5
 
 colors:
   # Default colors
@@ -93,6 +93,13 @@ colors:
   indexed_colors:
     - { index: 16, color: "#9c715a" }
     - { index: 17, color: "#F4DBD6" }
+
+shell:
+  program: /bin/zsh
+  args:
+    - -l
+    - -c
+    - "tmux attach || tmux"
 
 # To get keybinding, just run: xxd -psd
 key_bindings:
@@ -182,56 +189,3 @@ key_bindings:
   - { key: I, mods: Command, chars: "\x18\x21" }
   - { key: I, mods: Shift|Command, chars: "\x18\x24" }
 
-  # Linux
-  - { key: V, mods: Alt, action: Paste }
-  - { key: D, mods: Alt, chars: "\x1b\x64" }
-  - { key: B, mods: Alt, chars: "\x1b\x62" }
-  - { key: J, mods: Alt, chars: "\x18\x6d" }
-  - { key: K, mods: Alt, chars: "\x18\x62" }
-  - { key: C, mods: Alt, action: Copy }
-  - { key: Q, mods: Alt, action: Quit }
-  - { key: W, mods: Alt, action: Quit }
-  - { key: Key0, mods: Alt, action: ResetFontSize }
-  - { key: Equals, mods: Alt, action: IncreaseFontSize }
-  - { key: Minus, mods: Alt, action: DecreaseFontSize }
-  - { key: Back, mods: Alt, chars: "\x15" } # delete word/line
-  - { key: D, mods: Shift|Alt, chars: "\x18\x64" }
-  - { key: V, mods: Shift|Alt, chars: "\x18\x76" }
-  - { key: A, mods: Shift|Alt, chars: "\x18\x73" }
-  - { key: S, mods: Shift|Alt, chars: "\x18\x56" }
-  - { key: H, mods: Shift|Alt, chars: "\x18\x08" }
-  - { key: J, mods: Shift|Alt, chars: "\x18\x0a" }
-  - { key: K, mods: Shift|Alt, chars: "\x18\x0b" }
-  - { key: L, mods: Shift|Alt, chars: "\x18\x0c" }
-  - { key: Key1, mods: Alt, chars: "\x18\x31" }
-  - { key: Key2, mods: Alt, chars: "\x18\x32" }
-  - { key: Key3, mods: Alt, chars: "\x18\x33" }
-  - { key: Key4, mods: Alt, chars: "\x18\x34" }
-  - { key: Key5, mods: Alt, chars: "\x18\x35" }
-  - { key: Key6, mods: Alt, chars: "\x18\x36" }
-  - { key: Key7, mods: Alt, chars: "\x18\x37" }
-  - { key: Key8, mods: Alt, chars: "\x18\x38" }
-  - { key: Key9, mods: Alt, chars: "\x18\x39" }
-  - { key: T, mods: Alt, chars: "\x18\x63" }
-  - { key: X, mods: Alt, chars: "\x18\x78" }
-  - { key: S, mods: Alt, chars: "\x18\x77" }
-  - { key: Slash, mods: Control|Alt, chars: "\x18\x2f" }
-  - { key: R, mods: Alt, chars: "\x18\x2c" }
-  - { key: LBracket, mods: Alt, chars: "\x18\x5b" }
-  - { key: A, mods: Alt, chars: "\x18\x3d" }
-  - { key: O, mods: Alt, chars: "\x18\x6f" }
-  - { key: O, mods: Shift|Alt, chars: "\x18\x7a" }
-  - { key: Return, mods: Alt, chars: "\x18\x7a" }
-  - { key: Escape, mods: Alt, chars: "\x18\x01" }
-  - { key: Comma, mods: Shift|Command, chars: "\x18<" }
-  - { key: Period, mods: Shift|Command, chars: "\x18>" }
-  - { key: Comma, mods: Alt, chars: "\x18\x10" }
-  - { key: Semicolon, mods: Alt, chars: "\x18\x0e" }
-  - { key: F, mods: Shift|Alt, chars: "\x18\x09" }
-  - { key: E, mods: Alt, chars: "\x18\x09" }
-  - { key: N, mods: Alt, chars: "\x18\x6e" }
-  - { key: P, mods: Alt, chars: "\x18\x70" }
-  - { key: Slash, mods: Alt, chars: "\x18\x2f" }
-  - { key: F, mods: Alt, chars: "\x1b\x66" }
-  - { key: I, mods: Alt, chars: "\x18\x21" }
-  - { key: I, mods: Shift|Alt, chars: "\x18\x24" }

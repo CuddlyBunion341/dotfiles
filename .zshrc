@@ -42,7 +42,8 @@ alias '...'='cd ../../'
 function rr() { rustc "$@.rs" && ./"$@"} # [r]ust [r]un
 
 alias zshrc='nvim ~/.zshrc' # Idea from Chris
-alias alacritty='nvim ~/.config/alacritty/alacritty.yml'
+alias calacritty='nvim ~/.config/alacritty/alacritty.yml'
+alias ctmux='nvim ~/.tmux.conf'
 alias g="grep" # [g]rep
 alias bra="bundle exec rubocop -A" # [b]undle exec [r]ubocop -[A]
 alias spec="be rspec"
