@@ -51,16 +51,16 @@ eval "$(fzf --zsh)"
 
 alias ls="eza"
 alias l="ls -lah"
-alias go="~/scripts/js/open-repo-in-browser.ts"
-alias gtable="~/scripts/js/git-smart-log.ts"
-alias gitcopy='~/scripts/copy_remote_to_clipboard.sh'
-alias cscript='~/scripts/create_executable_script.sh'
-alias timelog='bun ~/scripts/js/my-ticketing-query/index.ts'
-alias crails='~/renuo/personal/rails-generator/bin/crails'
-alias openticket='~/scripts/js/open-ticket-in-browser.ts'
-alias ot='~/scripts/js/open-ticket-in-browser.ts'
-alias prt='~/scripts/js/get-pr-template.ts'
-alias cpt='~/scripts/js/copy-ticket-number.ts'
+function go() { ./scripts/open-repo-in-browser.ts }
+function gtable() { ./scripts/git-smart-log.ts }
+function gitcopy() { ./scripts/copy_remote_to_clipboard.sh }
+function cscript() { ./scripts/create_executable_script.sh }
+function timelog() { ./scripts/index.ts }
+function openticket() { ./scripts/open-ticket-in-browser.ts }
+function ot() { ./scripts/open-ticket-in-browser.ts }
+function prt() { ./scripts/get-pr-template.ts }
+function cpt() { ./scripts/copy-ticket-number.ts }
+
 alias '..'='cd ..'
 alias '...'='cd ../../'
 
