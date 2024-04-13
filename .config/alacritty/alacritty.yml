@@ -9,15 +9,15 @@ window:
   dynamic_title: true
   decorations_theme_variant: None
   decorations: buttonless
+  dynamic_padding: false
   padding:
-    x: 5
-    y: 5
+    x: 0
+    y: 0
 
 colors:
   # Default colors
   primary:
-    padding_color: "#00FF00"
-    background: "#24273A" # base
+    background: "#000000" # base
     foreground: "#CAD3F5" # text
     # Bright and dim foreground colors
     dim_foreground: "#CAD3F5" # text
