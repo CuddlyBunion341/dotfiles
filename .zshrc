@@ -50,7 +50,8 @@ eval "$(jenv init -)"
 eval "$(fzf --zsh)"
 
 alias ls="eza"
-alias l="ls -lah"
+alias l="eza -lah"
+alias lh="eza -lah | grep -E ' \.\w+$'" # [l]ist [h]idden
 function go() { ./scripts/open-repo-in-browser.ts }
 function gtable() { ./scripts/git-smart-log.ts }
 function gitcopy() { ./scripts/copy_remote_to_clipboard.sh }
