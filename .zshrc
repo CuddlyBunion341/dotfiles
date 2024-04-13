@@ -1,32 +1,32 @@
 source ~/.import-secrets.sh
 
 
-if [ "$TERM_PROGRAM" = "WarpTerminal" ] && [ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]; then
-    printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh"}}\x9c'
-else
-  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-  source /opt/homebrew/share/antigen/antigen.zsh
-  antigen apply
-
-  if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-  fi
-fi
-
-# BEGIN mood-nvim https://github.com/otavioschwanck/mood-nvim/wiki/Manual-Installation#manual-installation
-if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
-    alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
-fi
-
-if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
-    export VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
-    export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'"
-else
-    export VISUAL="nvim"
-    export EDITOR="nvim"
-fi
-# END mood-nvim
+# if [ "$TERM_PROGRAM" = "WarpTerminal" ] && [ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]; then
+#     printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh"}}\x9c'
+# else
+#   [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+#
+  # source /opt/homebrew/share/antigen/antigen.zsh
+  # antigen apply
+#
+#   if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+#   fi
+# fi
+#
+# # BEGIN mood-nvim https://github.com/otavioschwanck/mood-nvim/wiki/Manual-Installation#manual-installation
+# if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+#     alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
+# fi
+#
+# if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+#     export VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+#     export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+# else
+#     export VISUAL="nvim"
+#     export EDITOR="nvim"
+# fi
+# # END mood-nvim
 
 export PATH="$HOME/.jenv/bin:$PATH"
 export PATH="~/renuo/personal/rails-generator/bin:$PATH"
@@ -45,9 +45,9 @@ source /opt/homebrew/opt/autojump/etc/autojump.sh
 source "$HOME/.cargo/env"
 source /opt/homebrew/opt/asdf/libexec/asdf.sh
 
-eval $(thefuck --alias)
-eval "$(jenv init -)"
-eval "$(fzf --zsh)"
+# eval $(thefuck --alias)
+# eval "$(jenv init -)"
+# eval "$(fzf --zsh)"
 
 alias ls="eza"
 alias l="eza -lah"
@@ -72,26 +72,24 @@ alias alacritty='nvim ~/.config/alacritty/alacritty.yml'
 alias g="grep" # [g]rep
 alias bra="bundle exec rubocop -A" # [b]undle exec [r]ubocop -[A]
 alias spec="be rspec"
-alias f="fork ."
+alias f="fork ." 
 alias rsf='be rspec spec/$(cd spec/ && fzf)' # [r][s]pec [f]uzzy find
-alias cnvim="cd ~/.config/nvim && nvim init.lua"
+alias cnvim="cd ~/.config/nvim && nvim init.lua" # [c]onfigure [nvim]
 
-alias glog_="git log --pretty=format:'%D %n %C(yellow)%h %C(reset)%ad %C(reset)%s' --date=format:'%d-%m-%Y %H:%M'"
-alias glog="glog_ | grep -v -e '^\s*$' --color=always | less --use-color"
-alias glag="glog_ --all --since='00:00' --until='NOW' | grep -v -e '^\s*$' --color=always"
-alias gb="if ( git branch | grep '* develop' ); then; git checkout -b ; else; echo 'You can only start a new feature from the development branch' ;fi;"
-alias gs="git status"
-alias gp="git push"
-alias gpp="git pull && git push"
+alias glog="glog_ | grep -v -e '^\s*$' --color=always | less --use-color" # [g]it [log]
+alias glag="glog_ --all --since='00:00' --until='NOW' | grep -v -e '^\s*$' --color=always" # [g]it [l]og [a]ll [g]rep
+alias gb="if ( git branch | grep '* develop' ); then; git checkout -b ; else; echo 'You can only start a new feature from the development branch' ;fi;" # [g]it [b]ranch
+alias gs="git status" # [g]it [s]tatus
+alias gp="git push" # [g]it [p]ush
+alias gpp="git pull && git push" # [g]it [p]ull and [p]ush
 alias gpl="git pull" # [g]it [p]u[l]l
 alias gc="git commit" # [g]it [c]ommit
-alias ga="git add"
+alias ga="git add" # [g]it [a]dd
 alias gac="git add . && git commit" # [g]it [a]dd and [c]ommit
-# alias gpsup="git push –-set-upstream origin $(git_current_branch)"
-alias lg="lazygit"
-alias gcl="git clone"
-alias gss="git stash"
-alias cl="clear"
+alias lg="lazygit" # [l]azy[g]it
+alias gcl="git clone" # [g]it [cl]one
+alias gss="git stash" # [g]it [s]tash [s]ave
+alias cl="clear" # [cl]ear
 # IDEA: gsf TICKET NAME => git checkout -b feature/TICKET-NAME + check if user on develop
 # IDEA: grd => git pull origin develop && fork . => rebase
 
