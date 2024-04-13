@@ -9,7 +9,7 @@ return {
         show_buffer_icons = false,
         groups = {
           items = {
-            require("bufferline.groups").builtin.pinned:with({ icon = "🔥" }),
+            require("bufferline.groups").builtin.pinned:with({ icon = "" }),
           },
         },
       },
