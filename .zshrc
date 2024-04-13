@@ -67,12 +67,13 @@ alias '...'='cd ../../'
 function rr() { rustc "$@.rs" && ./"$@"} # [r]ust [r]un
 
 alias zshrc='nvim ~/.zshrc' # Idea from Chris
+alias alacritty='nvim ~/.config/alacritty/alacritty.yml'
 alias g="grep" # [g]rep
 alias bra="bundle exec rubocop -A" # [b]undle exec [r]ubocop -[A]
 alias spec="be rspec"
 alias f="fork ."
 alias rsf='be rspec spec/$(cd spec/ && fzf)' # [r][s]pec [f]uzzy find
-alias nvcon="cd ~/.config/nvim && nvim init.lua"
+alias cnvim="cd ~/.config/nvim && nvim init.lua"
 
 alias glog_="git log --pretty=format:'%D %n %C(yellow)%h %C(reset)%ad %C(reset)%s' --date=format:'%d-%m-%Y %H:%M'"
 alias glog="glog_ | grep -v -e '^\s*$' --color=always | less --use-color"
