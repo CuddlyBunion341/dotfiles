@@ -1,6 +1,28 @@
 -- since this is just an example spec, don't actually load anything here and return an empty spec
 -- stylua: ignore
-if true then return {} end
+vim.g.lazygit_floating_window_winblend = 0
+if true then
+  return {
+    { "Lokaltog/vim-distinguished" },
+    {
+      "LazyVim/LazyVim",
+      opts = {
+        transparent = true,
+        colorscheme = "tokyonight",
+      },
+    },
+    {
+      "wk13eagle/telescope.nvim",
+      opts = {
+        pickers = {
+          colorscheme = {
+            enable_preview = true,
+          },
+        },
+      },
+    },
+  }
+end
 
 -- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
 --
