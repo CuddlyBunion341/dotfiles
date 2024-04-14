@@ -102,10 +102,11 @@ shell:
   args:
     - -l
     - -c
-    - "tmux attach || tmux"
+    - 'session_name=$(tmux ls | grep -v ''(attached)'' | head -1 | cut -d: -f1); [ -n "$session_name" ] && tmux attach -t "$session_name" || tmux new-session'
 
 # To get keybinding, just run: xxd -psd
 key_bindings:
+  - { key: N, mods: Command, action: SpawnNewInstance }
   - { key: Home, chars: "\x1bOH", mode: AppCursor }
   - { key: Home, chars: "\x1b[H", mode: ~AppCursor }
   - { key: End, chars: "\x1bOF", mode: AppCursor }
