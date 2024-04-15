@@ -1,5 +1,55 @@
 return {
   {
+    "rcarriga/nvim-notify",
+    opts = {
+      level = 3,
+      render = "minimal",
+      stages = "static",
+    },
+  },
+  {
+    "akinsho/bufferline.nvim",
+    config = {
+      options = {
+        separator_style = "thin",
+        always_show_bufferline = false,
+        color_icons = false,
+        show_buffer_icons = false,
+        groups = {
+          items = {
+            require("bufferline.groups").builtin.pinned:with({ icon = "" }),
+          },
+        },
+      },
+    },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    dependencies = { "RRethy/nvim-treesitter-endwise" },
+    opts = function(_, opts)
+      opts.endwise = { enable = true }
+      opts.indent = { enable = true, disable = { "yaml", "ruby" } }
+      opts.ensure_installed = {
+        "bash",
+        "embedded_template",
+        "html",
+        "javascript",
+        "json",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "python",
+        "query",
+        "regex",
+        "ruby",
+        "tsx",
+        "typescript",
+        "vim",
+        "yaml",
+      }
+    end,
+  },
+  {
     "echasnovski/mini.starter",
     version = false, -- wait till new 0.7.0 release to put it back on semver
     event = "VimEnter",

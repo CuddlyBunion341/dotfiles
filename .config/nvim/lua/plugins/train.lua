@@ -1,3 +1,0 @@
-return {
-  "tjdevries/train.nvim",
-}

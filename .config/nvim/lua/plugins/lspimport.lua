@@ -1,3 +1,0 @@
-return {
-  { "stevanmilic/nvim-lspimport" },
-}
