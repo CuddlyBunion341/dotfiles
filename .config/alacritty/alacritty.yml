@@ -185,6 +185,7 @@ key_bindings:
   - { key: Comma, mods: Command, chars: "\x18\x10" }
   - { key: Semicolon, mods: Command, chars: "\x18\x0e" }
   - { key: F, mods: Shift|Command, chars: "\x18\x09" }
+  - { key: F, mods: Command, action: SearchForward }
   - { key: E, mods: Command, chars: "\x18\x09" }
   - { key: N, mods: Command, chars: "\x18\x6e" }
   - { key: P, mods: Command, chars: "\x18\x70" }
