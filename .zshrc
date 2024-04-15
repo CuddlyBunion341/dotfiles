@@ -26,30 +26,65 @@ eval "$(fzf --zsh)"
 alias ls="eza"
 alias l="eza -lah"
 alias lh="eza -lah | grep -E ' \.\w+$'" # [l]ist [h]idden
-function go() { ./scripts/open-repo-in-browser.ts }
-function gtable() { ./scripts/git-smart-log.ts }
-function gitcopy() { ./scripts/copy_remote_to_clipboard.sh }
-function cscript() { ./scripts/create_executable_script.sh }
-function timelog() { ./scripts/index.ts }
-function openticket() { ./scripts/open-ticket-in-browser.ts }
-function ot() { ./scripts/open-ticket-in-browser.ts }
-function prt() { ./scripts/get-pr-template.ts }
-function cpt() { ./scripts/copy-ticket-number.ts }
+function go() { ~/scripts/open-repo-in-browser.ts }
+function gtable() { ~/scripts/git-smart-log.ts $@ }
+function gitcopy() { ~/scripts/copy_remote_to_clipboard.sh }
+function cscript() { ~/scripts/create_executable_script.sh }
+function timelog() { ~/scripts/index.ts }
+function openticket() { ~/scripts/open-ticket-in-browser.ts }
+function ot() { ~/scripts/open-ticket-in-browser.ts }
+function prt() { ~/scripts/get-pr-template.ts }
+function cpt() { ~/scripts/copy-ticket-number.ts }
+function rsf() { bundle exec rspec $(find spec/**/*_spec.rb | fzf --preview 'bat --color "always" {}') } # [r]spec [s]earch [f]ile
 
+function search_history() {
+  local selected_command=$( cat $HISTFILE | sort -u | fzf )
+
+  if [ -z "$selected_command" ]; then
+    echo "No command selected."
+    return 1
+  fi
+
+  echo "Executing: $selected_command"
+  eval "$selected_command"
+}
+
+reimport_abbr() {
+  rm -rf $ABBR_TMPDIR
+  rm $ABBR_USER_ABBREVIATIONS_FILE
+  abbr import-aliases
+}
+
+backup_directory() {
+  if [ -z "$1" ]; then
+    echo "Please provide a directory to backup"
+    return
+  fi
+
+  directory_name_with_timestamp_suffix=$1-$(date +%Y-%m-%d:%H:%M:%S)
+  cp -r "$1" "$directory_name_with_timestamp_suffix"
+  printf "Backup created at $directory_name_with_timestamp_suffix"
+}
+
+
+alias '~'='cd ~'
 alias '..'='cd ..'
 alias '...'='cd ../../'
 
 function rr() { rustc "$@.rs" && ./"$@"} # [r]ust [r]un
+function rgs() { rg --json -C 2 "$@" | delta } # [r]ip[g]rep [s]earch
 
 alias zshrc='nvim ~/.zshrc' # Idea from Chris
 alias calacritty='nvim ~/.config/alacritty/alacritty.yml'
 alias ctmux='nvim ~/.tmux.conf'
+alias clazygit='nvim ~/Library/Application\ Support/lazygit/config.yml'
+alias v='nvim'
 alias g="grep" # [g]rep
 alias bra="bundle exec rubocop -A" # [b]undle exec [r]ubocop -[A]
 alias spec="be rspec"
 alias f="fork ." 
-alias rsf='be rspec spec/$(cd spec/ && fzf)' # [r][s]pec [f]uzzy find
 alias cnvim="cd ~/.config/nvim && nvim init.lua" # [c]onfigure [nvim]
+alias dbreset="bundle exec rails db:drop db:create db:schema:load db:seed" # [d]ata[b]ase [reset]
 
 alias glog="glog_ | grep -v -e '^\s*$' --color=always | less --use-color" # [g]it [log]
 alias glag="glog_ --all --since='00:00' --until='NOW' | grep -v -e '^\s*$' --color=always" # [g]it [l]og [a]ll [g]rep
@@ -93,23 +128,6 @@ alias spf="~/bin/spf"
 alias gch="git checkout"
 
 alias gcf="git checkout -b feature/"
-
-reimport_abbr() {
-  rm -rf $ABBR_TMPDIR
-  rm $ABBR_USER_ABBREVIATIONS_FILE
-  abbr import-aliases
-}
-
-backup_directory() {
-  if [ -z "$1" ]; then
-    echo "Please provide a directory to backup"
-    return
-  fi
-
-  directory_name_with_timestamp_suffix=$1-$(date +%Y-%m-%d:%H:%M:%S)
-  cp -r "$1" "$directory_name_with_timestamp_suffix"
-  printf "Backup created at $directory_name_with_timestamp_suffix"
-}
 
 compinit -C
 
@@ -195,3 +213,5 @@ zinit light-mode for \
 # Load pure theme
 zinit ice pick"async.zsh" src"pure.zsh" # with zsh-async library that's bundled with it.
 zinit light sindresorhus/pure
+
+PATH=~/.console-ninja/.bin:$PATH
