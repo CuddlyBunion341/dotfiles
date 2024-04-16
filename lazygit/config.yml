@@ -1,0 +1,39 @@
+customCommands:
+  - key: "F"
+    command: "git fetch --prune"
+    context: "localBranches"
+    stream: true
+
+os:
+  editPreset: "nvim"
+
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+    # pager: diff-so-fancy
+
+theme:
+  activeBorderColor:
+    #- "#8caaee"
+    #- bold
+    - "#FF0000"
+  inactiveBorderColor:
+    - "#a5adce"
+  optionsTextColor:
+    - "#8caaee"
+  selectedLineBgColor:
+    - "#414559"
+  cherryPickedCommitBgColor:
+    - "#51576d"
+  cherryPickedCommitFgColor:
+    - "#8caaee"
+  unstagedChangesColor:
+    - "#e78284"
+  defaultFgColor:
+    - "#c6d0f5"
+  searchingActiveBorderColor:
+    - "#e5c890"
+
+authorColors:
+  "*": "#babbf1"
