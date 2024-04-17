@@ -18,15 +18,6 @@ return {
     priority = 1000,
     config = true,
   },
-  -- {
-  --   "rest-nvim/rest.nvim",
-  --   ft = "http",
-  --   lazy = true,
-  --   dependencies = { "luarocks.nvim" },
-  --   config = function()
-  --     require("rest-nvim").setup()
-  --   end,
-  -- },
   {
     "dstein64/vim-startuptime",
   },

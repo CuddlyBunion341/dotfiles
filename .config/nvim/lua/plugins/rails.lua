@@ -1,5 +1,5 @@
 return {
-  { "tpope/vim-rails" },
+  { "tpope/vim-rails", lazy = false },
   { "namadnuno/neoi18n" },
   {
     "airblade/vim-localorie",
@@ -14,9 +14,24 @@ return {
     "weizheheng/ror.nvim",
     config = function()
       require("ror").setup()
-      vim.keymap.set("n", "<Leader>rc", ":lua require('ror.commands').list_commands()<CR>", { silent = true })
-      -- vim.keymap.sot("n", "<Leader>fv", ":lua require('ror.commands').find_view()<CR>", { silent = true })
     end,
+    keys = {
+      { "<leader>rg", ":lua require('ror.commands').list_commands()<CR>", desc = "List Rails Commands" },
+    },
+  },
+  {
+    "sato-s/telescope-rails.nvim",
+    config = function()
+      require("telescope").load_extension("rails")
+    end,
+    keys = {
+      { "<leader>rs", ":Telescope rails specs<CR>" },
+      { "<leader>rc", ":Telescope rails controllers<CR>" },
+      { "<leader>rm", ":Telescope rails models<CR>" },
+      { "<leader>rv", ":Telescope rails views<CR>" },
+      { "<leader>ri", ":Telescope rails migrations<CR>" },
+      { "<leader>rl", ":Telescope rails libs<CR>" },
+    },
   },
   {
     "neovim/nvim-lspconfig",
@@ -24,18 +39,23 @@ return {
     opts = {
       ---@type lspconfig.options
       servers = {
-        solargraph = {
-          settings = {
-            solargraph = {
-              autoformat = false,
-              -- bundlerPath = "bundle",
-              diagnostics = true,
-              completion = true,
-              formatting = false,
-              definitions = true,
-            },
-          },
-        },
+        -- solargraph = {
+        --   settings = {
+        --     solargraph = {
+        --       useBundler = false,
+        --       autoformat = false,
+        --       -- bundlerPath = "bundle",
+        --       diagnostics = true,
+        --       completion = true,
+        --       formatting = false,
+        --       definitions = true,
+        --       symbols = true,
+        --       rename = true,
+        --       transport = "stdio",
+        --       logLevel = "warn",
+        --     },
+        --   },
+        -- },
       },
     },
   },

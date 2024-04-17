@@ -9,10 +9,11 @@ return {
   },
   {
     "akinsho/bufferline.nvim",
+    lazy = false,
     config = {
       options = {
         separator_style = "thin",
-        always_show_bufferline = false,
+        always_show_bufferline = true,
         color_icons = false,
         show_buffer_icons = false,
         groups = {
