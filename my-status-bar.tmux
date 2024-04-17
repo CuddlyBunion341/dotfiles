@@ -24,12 +24,14 @@ background="#[fg=$color2,bg=$color1]"
 title="#W:#I"
 tmux_set status-fg "$color2"
 tmux_set status-bg "$color1"
-# tmux_set window-status-format "$secondary""$primary$title""$secondary"""
-# tmux_set window-status-format "$secondary"" $primary$title""$secondary"""
-# tmux_set window-status-current-format "$secondary""$primary $title ""$secondary"""
-tmux_set window-status-current-format "#[underscore]$title"
-tmux_set window-status-format "$title"
-tmux_set window-status-separator " | "
+# tmux_set window-status-current-format "#[underscore]$title"
+# tmux_set window-status-format "$title"
+# tmux_set window-status-separator " | "
+
+tmux_set window-status-current-format "#[bg=white,fg=black] $title "
+tmux_set window-status-format "#[bg=black] $title "
+tmux_set window-status-separator " "
+
 #   
 cmd="#[fg=orange]#{pane_current_command}"
 path="#(echo #{pane_current_path} | sed 's#$HOME#~#g')"
@@ -37,7 +39,8 @@ ruby_version=$(ruby -v | awk '{print $2}')
 ruby="#[fg=red] $ruby_version"
 
 tmux_set status-left " #H [#S] "
-tmux_set status-right "#{prefix_highlight} $cmd $path $ruby"
+# tmux_set status-right "#{prefix_highlight} $cmd $path $ruby"
+tmux_set status-right "#{prefix_highlight} $cmd $path"
 # Window status style
 # tmux_set window-status-style "fg=$tertiary,bg=$primary,none"
 # tmux_set window-status-last-style "fg=$tertiary,bg=$primary,bold"

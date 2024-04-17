@@ -4,6 +4,7 @@ if [ "$TERM_PROGRAM" = "WarpTerminal" ] && [ "$TERMINAL_EMULATOR" != "JetBrains-
     printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh"}}\x9c'
 fi
 
+PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="$HOME/.jenv/bin:$PATH"
 export PATH="~/renuo/personal/rails-generator/bin:$PATH"
 export PATH="~/.asdf/shims/:$PATH"
@@ -36,18 +37,7 @@ function ot() { ~/scripts/open-ticket-in-browser.ts }
 function prt() { ~/scripts/get-pr-template.ts }
 function cpt() { ~/scripts/copy-ticket-number.ts }
 function rsf() { bundle exec rspec $(find spec/**/*_spec.rb | fzf --preview 'bat --color "always" {}') } # [r]spec [s]earch [f]ile
-
-function search_history() {
-  local selected_command=$( cat $HISTFILE | sort -u | fzf )
-
-  if [ -z "$selected_command" ]; then
-    echo "No command selected."
-    return 1
-  fi
-
-  echo "Executing: $selected_command"
-  eval "$selected_command"
-}
+function vg() { nvim $(fzf) } # [v]im [g]rep
 
 reimport_abbr() {
   rm -rf $ABBR_TMPDIR
@@ -79,6 +69,7 @@ alias calacritty='nvim ~/.config/alacritty/alacritty.yml'
 alias ctmux='nvim ~/.tmux.conf'
 alias clazygit='nvim ~/Library/Application\ Support/lazygit/config.yml'
 alias v='nvim'
+alias cpp='pbcopy'
 alias g="grep" # [g]rep
 alias bra="bundle exec rubocop -A" # [b]undle exec [r]ubocop -[A]
 alias spec="be rspec"

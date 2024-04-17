@@ -1,14 +1,14 @@
 #!/usr/bin/env bun
 
-import {exec, execSync} from 'child_process';
+import { exec, execSync } from 'child_process';
 
 const pipe = <T>(...fns: Array<(arg: T) => T>) => (value: T) => fns.reduce((acc, fn) => fn(acc), value);
 
 try {
-    execSync('git status')
+  execSync('git status')
 } catch (e) {
-    console.log('Not a git repository')
-    process.exit(1)
+  console.log('Not a git repository')
+  process.exit(1)
 }
 
 const redmineBaseUrl = 'https://redmine.renuo.ch/issues/'
