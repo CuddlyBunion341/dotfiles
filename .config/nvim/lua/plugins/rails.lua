@@ -39,23 +39,28 @@ return {
     opts = {
       ---@type lspconfig.options
       servers = {
-        -- solargraph = {
-        --   settings = {
-        --     solargraph = {
-        --       useBundler = false,
-        --       autoformat = false,
-        --       -- bundlerPath = "bundle",
-        --       diagnostics = true,
-        --       completion = true,
-        --       formatting = false,
-        --       definitions = true,
-        --       symbols = true,
-        --       rename = true,
-        --       transport = "stdio",
-        --       logLevel = "warn",
-        --     },
-        --   },
-        -- },
+        erblint = {
+          cmd = { "erblint", "lint" },
+          filetypes = { "erb" },
+          root_dir = require("lspconfig.util").root_pattern(".git", "app", "config", "db", "lib", "test"),
+        },
+        solargraph = {
+          settings = {
+            solargraph = {
+              useBundler = false,
+              autoformat = false,
+              -- bundlerPath = "bundle",
+              diagnostics = true,
+              completion = true,
+              formatting = false,
+              definitions = true,
+              symbols = true,
+              rename = true,
+              transport = "stdio",
+              logLevel = "warn",
+            },
+          },
+        },
       },
     },
   },

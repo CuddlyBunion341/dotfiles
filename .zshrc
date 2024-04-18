@@ -1,10 +1,13 @@
 source ~/.import-secrets.sh
 
+set -o vi
+
 if [ "$TERM_PROGRAM" = "WarpTerminal" ] && [ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]; then
     printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh"}}\x9c'
 fi
 
 PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 export PATH="$HOME/.jenv/bin:$PATH"
 export PATH="~/renuo/personal/rails-generator/bin:$PATH"
 export PATH="~/.asdf/shims/:$PATH"
@@ -23,6 +26,7 @@ source "$HOME/.cargo/env"
 source /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 eval "$(fzf --zsh)"
+eval "$(tmuxifier init -)"
 
 alias ls="eza"
 alias l="eza -lah"
@@ -38,6 +42,20 @@ function prt() { ~/scripts/get-pr-template.ts }
 function cpt() { ~/scripts/copy-ticket-number.ts }
 function rsf() { bundle exec rspec $(find spec/**/*_spec.rb | fzf --preview 'bat --color "always" {}') } # [r]spec [s]earch [f]ile
 function vg() { nvim $(fzf) } # [v]im [g]rep
+
+function cached_routes() {
+  if ( [ ! -f config/routes.rb ]); then
+    echo "No routes file found"
+    return "Empty"
+  fi
+
+
+  if ( [ ! -f tmp/cache/routes-$(md5 -q config/routes.rb).txt ] ); then
+    bundle exec rails routes > tmp/cache/routes-$(md5 -q config/routes.rb).txt
+  fi
+
+  cat tmp/cache/routes-$(md5 -q config/routes.rb).txt
+}
 
 reimport_abbr() {
   rm -rf $ABBR_TMPDIR
@@ -68,6 +86,7 @@ alias zshrc='nvim ~/.zshrc' # Idea from Chris
 alias calacritty='nvim ~/.config/alacritty/alacritty.yml'
 alias ctmux='nvim ~/.tmux.conf'
 alias clazygit='nvim ~/Library/Application\ Support/lazygit/config.yml'
+alias cgit='nvim ~/.gitconfig'
 alias v='nvim'
 alias cpp='pbcopy'
 alias g="grep" # [g]rep

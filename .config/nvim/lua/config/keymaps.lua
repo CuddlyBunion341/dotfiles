@@ -5,3 +5,4 @@
 vim.keymap.set("n", "<C-CR>", "<cmd>lua require('flash').jump()<CR>")
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 vim.keymap.set("n", "<leader>?", "<cmd>Telescope keymaps<CR>")
+vim.keymap.set("n", "@", "@q")

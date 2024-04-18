@@ -35,9 +35,9 @@ tmux_set status-fg "white"
 # tmux_set window-status-current-format "#[bg=khite,fg=black] $title "
 # tmux_set window-status-separator " "
 
-tmux_set window-status-current-format "#[bg=$color1,fg=$color2]#[bg=$color2,fg=$color3] $title #[bg=$color1,fg=$color2]"
+tmux_set window-status-current-format "#[bg=$color1,fg=$color2]#[bg=$color2,fg=$color3] $title #[bg=$color1,fg=$color2]"
 tmux_set window-status-separator ""
-tmux_set window-status-format "#[bg=$color1,fg=$color3]#[bg=$color3,fg=$color2] $title #[bg=$color1,fg=$color3]"
+tmux_set window-status-format "#[bg=$color1,fg=$color3]#[bg=$color3,fg=$color2] $title #[bg=$color1,fg=$color3]"
 
 #   
 cmd="#[fg=orange]#{pane_current_command}"
