@@ -69,17 +69,17 @@ return {
           "solargraph",
           "stdio",
         },
-        --   -- settings = {
-        --   --   solargraph = {
-        --   --     autoformat = false,
-        --   --     completion = true,
-        --   --     diagnostic = true,
-        --   --     folding = true,
-        --   --     references = true,
-        --   --     rename = true,
-        --   --     symbols = true
-        --   --   }
-        --   -- }
+        settings = {
+          solargraph = {
+            autoformat = false,
+            completion = true,
+            diagnostic = true,
+            folding = true,
+            references = true,
+            rename = true,
+            symbols = true
+          }
+        }
       })
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
