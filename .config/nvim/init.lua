@@ -4,6 +4,7 @@ vim.opt.titlestring = 'nvim %{expand("%:p")}'
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 vim.wo.number = true
+vim.wo.relativenumber = true
 vim.opt.termguicolors = true
 
 vim.opt.expandtab = true
