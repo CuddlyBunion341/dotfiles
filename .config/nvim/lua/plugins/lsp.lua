@@ -20,6 +20,26 @@ return {
     },
   },
   {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({})
+    end,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    lazy = false,
+    event = "InsertEnter",
+    config = function()
+      require("copilot_cmp").setup()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      })
+    end
+  },
+  {
     "williamboman/mason.nvim",
     lazy = false,
     keys = {
@@ -132,6 +152,11 @@ return {
   {
     "hrsh7th/nvim-cmp",
     lazy = false,
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-cmdline',
+    },
     config = function()
       local cmp = require("cmp")
       require("luasnip.loaders.from_vscode").lazy_load()
@@ -154,6 +179,7 @@ return {
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources({
+          { name = "copilot", group_index = 2 },
           { name = "nvim_lsp" },
           { name = "luasnip" },
         }, {
@@ -162,4 +188,11 @@ return {
       })
     end,
   },
+  {
+    "zbirenbaum/copilot-cmp",
+    lazy = false,
+    config = function()
+      require("copilot_cmp").setup()
+    end
+  }
 }
