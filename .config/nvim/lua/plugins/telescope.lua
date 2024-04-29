@@ -10,5 +10,19 @@ return {
       { "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Telescope Keymap" },
       { "<leader><leader>", "<cmd>Telescope commands<cr>", desc = "Telescope Command" },
     }
+  },
+  {
+    "nvim-telescope/telescope-ui-select.nvim",
+    lazy = false,
+    config = function()
+      require("telescope").setup({
+        extensions = {
+          ["ui-select"] = {
+            require("telescope.themes").get_dropdown {}
+          }
+        }
+      })
+      require("telescope").load_extension("ui-select")
+    end
   }
 }
