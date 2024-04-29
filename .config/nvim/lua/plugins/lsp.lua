@@ -42,10 +42,45 @@ return {
 		"nvim-lspconfig",
 		lazy = false,
 		config = function()
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			-- https://www.mitchellhanberg.com/modern-format-on-save-in-neovim/
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("lsp", { clear = true }),
+				callback = function(args)
+					vim.api.nvim_create_autocmd("BufWritePre", {
+						buffer = args.buf,
+						callback = function()
+							vim.lsp.buf.format({ async = false, id = args.data.client_id })
+						end,
+					})
+				end,
+			})
+
 			local lspconfig = require("lspconfig")
-			lspconfig.lua_ls.setup({})
-			lspconfig.tsserver.setup({})
-			lspconfig.solargraph.setup({})
+			lspconfig.lua_ls.setup({ capabilities = capabilities })
+			lspconfig.tsserver.setup({ capabilities = capabilities })
+			lspconfig.standardrb.setup({ capabilities = capabilities })
+
+			lspconfig.solargraph.setup({
+				capabilities = capabilities,
+				cmd = {
+					"asdf",
+					"exec",
+					"solargraph",
+					"stdio",
+				},
+				--   -- settings = {
+				--   --   solargraph = {
+				--   --     autoformat = false,
+				--   --     completion = true,
+				--   --     diagnostic = true,
+				--   --     folding = true,
+				--   --     references = true,
+				--   --     rename = true,
+				--   --     symbols = true
+				--   --   }
+				--   -- }
+			})
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
@@ -57,6 +92,7 @@ return {
 		"nvimtools/none-ls.nvim",
 		config = function()
 			local null_ls = require("null-ls")
+			null_ls.disable({ "rubocop" })
 			null_ls.setup({
 				sources = {
 					null_ls.builtins.formatting.stylua,
@@ -67,26 +103,29 @@ return {
 		end,
 		keys = {
 			{ "<leader>gf", vim.lsp.buf.format },
-    },
-  },
-  {
-    'L3MON4D3/LuaSnip',
-    dependencies = {
-      'saadparwaiz1/cmp_luasnip',
-      'rafamadriz/friendly-snippets',
-    },
-  },
+		},
+	},
+	{
+		"hrsh7th/cmp-nvim-lsp",
+		lazy = false,
+	},
+	{
+		"L3MON4D3/LuaSnip",
+		dependencies = {
+			"saadparwaiz1/cmp_luasnip",
+			"rafamadriz/friendly-snippets",
+		},
+	},
 	{
 		"hrsh7th/nvim-cmp",
-    lazy = false,
+		lazy = false,
 		config = function()
 			local cmp = require("cmp")
-      require("luasnip.loaders.from_vscode").lazy_load()
+			require("luasnip.loaders.from_vscode").lazy_load()
 
 			cmp.setup({
 				snippet = {
 					expand = function(args)
-						vim.fn["vsnip#anonymous"](args.body)
 						require("luasnip").lsp_expand(args.body)
 					end,
 				},
@@ -102,7 +141,7 @@ return {
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
 				}),
 				sources = cmp.config.sources({
-					-- { name = "nvim_lsp" },
+					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
 				}, {
 					{ name = "buffer" },

@@ -16,13 +16,30 @@ return {
   },
   {
     "nat-418/boole.nvim",
+    lazy = false,
     config = function()
       require("boole").setup({
+        mappings = {
+          increment = "<C-a>",
+          decrement = "<C-x>",
+        },
+        additions = {
+          { "Foo", "Bar" },
+          { "tic", "tac", "toe" },
+        },
         allow_caps_additions = {
           { "enable", "disable" },
-          { "foo",    "bar" },
         },
       })
     end,
   },
+  {
+    "numToStr/Comment.nvim",
+    opts = {},
+    lazy = false,
+  },
+  {
+    "machakann/vim-highlightedyank",
+    lazy = false
+  }
 }

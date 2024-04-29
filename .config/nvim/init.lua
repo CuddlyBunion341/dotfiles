@@ -13,31 +13,32 @@ vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 
 vim.keymap.set("n", "<leader>qq", "<cmd>wqa<cr>")
+vim.keymap.set("n", "<leader>/", "<cmd>noh<cr>")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
 
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-	{ "sainnhe/sonokai", priority = 9999 },
-	{ import = "plugins" },
-	{ import = "languages" },
+  { "sainnhe/sonokai",   priority = 9999 },
+  { import = "plugins" },
+  { import = "languages" },
 }
 
 local opts = {
-	defaults = {
-		lazy = true,
-	},
+  defaults = {
+    lazy = true,
+  },
 }
 
 require("lazy").setup(plugins, opts)
