@@ -1,7 +1,9 @@
 return {
   {
     "nvim-neotest/neotest",
-    lazy = false,
+    modules = { "neotest" },
+    events = { "InsertEnter" },
+    cmd = { "Neotest" },
     dependencies = {
       "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",

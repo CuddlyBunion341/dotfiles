@@ -48,10 +48,10 @@ return {
     dependencies = {
       "RRethy/nvim-treesitter-endwise"
     },
-    setup = function()
+    config = function()
       require("nvim-treesitter.configs").setup({
-        ensure_installed = { "lua", "vim", "vimdoc", "help", "ruby", "bibtex", "latex" },
-        auto_install = true,
+        ensure_installed = { "lua", "vim", "vimdoc", "vimdoc", "ruby", "bibtex", "latex", "yaml" },
+        auto_install = false,
         endwise = {
           enable = true,
         },
@@ -88,5 +88,21 @@ return {
       { mode = 'v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>',                   desc = "Search current word" },
       { mode = 'n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', desc = "Search on current file" },
     }
+  },
+  { "folke/trouble.nvim" },
+  {
+    "folke/todo-comments.nvim",
+    cmd = { "TodoTrouble", "TodoTelescope" },
+    event = "VeryLazy",
+    config = true,
+    -- stylua: ignore
+    keys = {
+      { "]t",         function() require("todo-comments").jump_next() end, desc = "Next Todo Comment" },
+      { "[t",         function() require("todo-comments").jump_prev() end, desc = "Previous Todo Comment" },
+      { "<leader>xt", "<cmd>TodoTrouble<cr>",                              desc = "Todo (Trouble)" },
+      { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",      desc = "Todo/Fix/Fixme (Trouble)" },
+      { "<leader>st", "<cmd>TodoTelescope<cr>",                            desc = "Todo" },
+      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>",    desc = "Todo/Fix/Fixme" },
+    },
   }
 }
