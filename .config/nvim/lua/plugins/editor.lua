@@ -22,7 +22,6 @@ return {
     opts = {},
   },
   {
-
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     dependencies = {
@@ -31,8 +30,17 @@ return {
       "MunifTanjim/nui.nvim",
     },
     keys = {
-      { "<leader>e", "<cmd>Neotree position=float<cr>", desc = "Neotree" },
+      { "<leader>e", "<cmd>Neotree position=float reveal toggle<cr>", desc = "Neotree" },
     },
+    config = function()
+      require("neo-tree").setup({
+        window = {
+          mappings = {
+            ["<space>"] = "none"
+          }
+        }
+      })
+    end
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -61,4 +69,8 @@ return {
       { "-", "<cmd>Oil<CR>", desc = "Oil" },
     },
   },
+  {
+    "jlanzarotta/bufexplorer",
+    lazy = false
+  }
 }
