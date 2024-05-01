@@ -42,7 +42,7 @@ return {
     },
     setup = function()
       require("nvim-treesitter.configs").setup({
-        ensure_installed = { "lua", "vim", "vimdoc", "help", "ruby" },
+        ensure_installed = { "lua", "vim", "vimdoc", "help", "ruby", "bibtex", "latex" },
         auto_install = true,
         endwise = {
           enable = true,

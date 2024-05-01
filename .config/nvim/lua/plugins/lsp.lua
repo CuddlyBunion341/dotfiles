@@ -81,6 +81,13 @@ return {
       lspconfig.tsserver.setup({ capabilities = capabilities })
       lspconfig.standardrb.setup({ capabilities = capabilities })
 
+      lspconfig.ltex.setup({
+        cmd = { "ltex-ls" },
+        filetypes = { "markdown", "text", "cff", "tex" },
+        flags = { debounce_text_changes = 299 },
+      })
+
+
       lspconfig.solargraph.setup({
         capabilities = capabilities,
         cmd = {
