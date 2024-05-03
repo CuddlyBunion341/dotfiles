@@ -43,7 +43,7 @@ local opts = {
 
 require("lazy").setup(plugins, opts)
 
-vim.keymap.set("n", "<leader>l", "<cmd>Lazy<cr>")
+vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>")
 
 vim.g.sonokai_better_performance = 1
 vim.g.sonokai_style = "andromeda"

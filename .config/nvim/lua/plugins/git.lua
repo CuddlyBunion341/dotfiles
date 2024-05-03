@@ -1,6 +1,9 @@
 return {
   {
     "kdheepak/lazygit.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    },
     cmd = {
       "LazyGit",
       "LazyGitConfig",
@@ -12,6 +15,7 @@ return {
       { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
     },
     config = function()
+      require("telescope").load_extension("lazygit")
       vim.g.lazygit_floating_window_winblend = 0
       vim.g.lazygit_floating_window_scaling_factor = 1
       vim.g.lazygit_floating_window_use_plenary = 0
