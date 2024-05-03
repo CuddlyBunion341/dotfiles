@@ -144,6 +144,10 @@ key_bindings:
   - { key: F, mods: Command, chars: "\x1b\x66" }
   - { key: I, mods: Command, chars: "\x18\x21" }
   - { key: I, mods: Shift|Command, chars: "\x18\x24" }
+  - { key: J,        mods: Alt,     chars: "\x1bj"                       }
+  - { key: K,        mods: Alt,     chars: "\x1bk"                       }
+  - { key: H,        mods: Alt,     chars: "\x1bh"                       }
+  - { key: L,        mods: Alt,     chars: "\x1bl"                       }
 
   # Tmux
   - { key: D, mods: Command, chars: "\x06\x76" }
