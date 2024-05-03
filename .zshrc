@@ -1,6 +1,7 @@
 source ~/.import-secrets.sh
 
 set -o vi
+bindkey -v
 
 if [ "$TERM_PROGRAM" = "WarpTerminal" ] && [ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]; then
     printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh"}}\x9c'
@@ -14,8 +15,12 @@ export PATH="~/.asdf/shims/:$PATH"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH=~/dev/flutter/bin:$PATH
-export PATH="/Users/dani/.gem/ruby/3.2.0/bin:$PATH"
+# export PATH="/Users/dani/.gem/ruby/3.2.0/bin:$PATH"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # fix libcurl error
+unset LIBRARY_PATH
+unset LDFLAGS
+
 source $HOMEBREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
@@ -26,6 +31,8 @@ source "$HOME/.cargo/env"
 source /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 eval "$(fzf --zsh)"
+bindkey -r "^t" # Unbind fzf keybinding
+
 eval "$(tmuxifier init -)"
 
 alias ls="eza"
@@ -87,14 +94,17 @@ alias calacritty='nvim ~/.config/alacritty/alacritty.yml'
 alias ctmux='nvim ~/.tmux.conf'
 alias clazygit='nvim ~/Library/Application\ Support/lazygit/config.yml'
 alias cgit='nvim ~/.gitconfig'
+alias kts='tmux kill-server' # [k]ill [t]mux [s]erver
 alias v='nvim'
 alias cpp='pbcopy'
+alias bo='tectonic -X build && open build/default/default.pdf' # [b]uild and [o]pen
 alias g="grep" # [g]rep
 alias bra="bundle exec rubocop -A" # [b]undle exec [r]ubocop -[A]
 alias spec="be rspec"
 alias f="fork ." 
 alias cnvim="cd ~/.config/nvim && nvim init.lua" # [c]onfigure [nvim]
 alias dbreset="bundle exec rails db:drop db:create db:schema:load db:seed" # [d]ata[b]ase [reset]
+alias cpb="git branch | grep '*' | tr -d '*' | tr -d ' ' | pbcopy" # [c]o[p]y [b]ranch to clipboard
 
 alias glog="glog_ | grep -v -e '^\s*$' --color=always | less --use-color" # [g]it [log]
 alias glag="glog_ --all --since='00:00' --until='NOW' | grep -v -e '^\s*$' --color=always" # [g]it [l]og [a]ll [g]rep
