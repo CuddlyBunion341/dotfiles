@@ -119,5 +119,29 @@ return {
       { "<leader>st", "<cmd>TodoTelescope<cr>",                            desc = "Todo" },
       { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>",    desc = "Todo/Fix/Fixme" },
     },
+  },
+  {
+    'akinsho/toggleterm.nvim',
+    version = "*",
+    opts = {},
+    keys = {
+      { "<C-t>", "<cmd>ToggleTerm<CR>", desc = "Toggle Terminal" }
+    }
+  },
+  {
+    "simrat39/symbols-outline.nvim",
+    config = function()
+      require("symbols-outline").setup()
+    end,
+    keys = {
+      { "so", "<cmd>SymbolsOutline<cr>", desc = "SymbolsOutline" }
+    }
+  },
+  {
+    "brenoprata10/nvim-highlight-colors",
+    event = "VeryLazy",
+    config = function()
+      require('nvim-highlight-colors').setup({})
+    end
   }
 }
