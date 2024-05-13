@@ -17,7 +17,7 @@ return {
     event = "VeryLazy",
     init = function()
       vim.o.timeout = true
-      vim.o.timeoutlen = 0
+      vim.o.timeoutlen = 300
     end,
     opts = {},
   },
@@ -28,6 +28,7 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
+      "s1n7ax/nvim-window-picker"
     },
     keys = {
       { "<leader>e", "<cmd>Neotree position=float reveal toggle<cr>", desc = "Neotree" },
@@ -65,7 +66,8 @@ return {
     },
     config = function()
       require("nvim-treesitter.configs").setup({
-        ensure_installed = { "lua", "vim", "vimdoc", "vimdoc", "ruby", "bibtex", "latex", "yaml" },
+        ensure_installed = { "lua", "vim", "vimdoc", "vimdoc", "ruby", "bibtex", "yaml" },
+        ignore_install = { "latex" }, -- highlighting by vimtex
         auto_install = false,
         endwise = {
           enable = true,
@@ -143,5 +145,26 @@ return {
     config = function()
       require('nvim-highlight-colors').setup({})
     end
-  }
+  },
+  {
+    "ThePrimeagen/harpoon",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("harpoon").setup({})
+    end,
+    keys = {
+      { "<leader>1",  function() require("harpoon.ui").nav_file(1) end,         desc = "Harpoon file 1" },
+      { "<leader>2",  function() require("harpoon.ui").nav_file(2) end,         desc = "Harpoon file 2" },
+      { "<leader>3",  function() require("harpoon.ui").nav_file(3) end,         desc = "Harpoon file 3" },
+      { "<leader>4",  function() require("harpoon.ui").nav_file(4) end,         desc = "Harpoon file 4" },
+      { "<leader>5",  function() require("harpoon.ui").nav_file(5) end,         desc = "Harpoon file 5" },
+      { "<leader>6",  function() require("harpoon.ui").nav_file(6) end,         desc = "Harpoon file 6" },
+      { "<leader>7",  function() require("harpoon.ui").nav_file(7) end,         desc = "Harpoon file 7" },
+      { "<leader>8",  function() require("harpoon.ui").nav_file(8) end,         desc = "Harpoon file 8" },
+      { "<leader>9",  function() require("harpoon.ui").nav_file(9) end,         desc = "Harpoon file 9" },
+      { "<leader>hh", function() require("harpoon.ui").toggle_quick_menu() end, desc = "Harpoon toggle quick menu" },
+      { "<leader>H",  function() require("harpoon.mark").add_file() end,        desc = "Harpoon add file" },
+    }
+  },
 }
