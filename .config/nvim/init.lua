@@ -16,9 +16,12 @@ vim.opt.scrolloff = 10
 vim.opt.winbar = "%f"
 vim.opt.laststatus = 3
 
+vim.opt.spelllang = "de_ch"
+
 vim.keymap.set("n", "<leader>qq", "<cmd>wqa<cr>")
 vim.keymap.set("n", "<leader>q!", "<cmd>qa!<cr>")
 vim.keymap.set("n", "<leader>/", "<cmd>noh<cr>")
+vim.api.nvim_set_keymap('n', 'gw', 'diw"apviwo<esc>"bpviwo<esc>', { noremap = true, silent = true })
 
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
@@ -58,4 +61,10 @@ vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>")
 
 vim.g.sonokai_better_performance = 1
 vim.g.sonokai_style = "andromeda"
-vim.cmd.colorscheme("sonokai")
+-- vim.cmd.colorscheme("tokyonight")
+
+-- vim.api.nvim_command('highlight Normal guibg=NONE ctermbg=NONE')
+-- vim.api.nvim_command('highlight NonText guibg=NONE ctermbg=NONE')
+-- vim.api.nvim_command('highlight LineNr guibg=NONE ctermbg=NONE')
+-- vim.api.nvim_command('highlight SignColumn guibg=NONE ctermbg=NONE')
+-- vim.api.nvim_command('highlight VertSplit guibg=NONE ctermbg=NONE')

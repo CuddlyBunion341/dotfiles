@@ -28,7 +28,12 @@ return {
     cmd = { "Git" }
   },
   {
+    "sindrets/diffview.nvim",
+    lazy = false
+  },
+  {
     "lewis6991/gitsigns.nvim",
+    lazy = false,
     config = function()
       require('gitsigns').setup({
         numhl = true,
@@ -36,7 +41,7 @@ return {
           virt_text_pos = "right_align",
           delay = 0,
         },
-        show_deleted = true,
+        show_deleted = false,
         update_debounce = 100,
         on_attach = function(bufnr)
           local gitsigns = require('gitsigns')

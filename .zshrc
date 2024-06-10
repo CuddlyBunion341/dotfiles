@@ -18,6 +18,7 @@ export PATH=~/dev/flutter/bin:$PATH
 # export PATH="/Users/dani/.gem/ruby/3.2.0/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # fix libcurl error
+export EDITOR="nvim"
 unset LIBRARY_PATH
 unset LDFLAGS
 
@@ -90,23 +91,31 @@ function rr() { rustc "$@.rs" && ./"$@"} # [r]ust [r]un
 function rgs() { rg --json -C 2 "$@" | delta } # [r]ip[g]rep [s]earch
 
 alias zshrc='nvim ~/.zshrc' # Idea from Chris
-alias calacritty='nvim ~/.config/alacritty/alacritty.yml'
+alias calacritty='nvim ~/.config/alacritty/alacritty.toml'
 alias ctmux='nvim ~/.tmux.conf'
 alias clazygit='nvim ~/Library/Application\ Support/lazygit/config.yml'
+alias cneovide='nvim ~/.config/neovide/config.toml'
+alias nv='neovide'
 alias cgit='nvim ~/.gitconfig'
 alias kts='tmux kill-server' # [k]ill [t]mux [s]erver
 alias v='nvim'
 alias cpp='pbcopy'
 alias bo='tectonic -X build && open build/default/default.pdf' # [b]uild and [o]pen
+alias bno='tectonic -X build' # [b]uild and do[n]'t [o]pen
 alias g="grep" # [g]rep
+alias myip="ipconfig getifaddr en0"
 alias bra="bundle exec rubocop -A" # [b]undle exec [r]ubocop -[A]
 alias spec="be rspec"
 alias f="fork ." 
 alias cnvim="cd ~/.config/nvim && nvim init.lua" # [c]onfigure [nvim]
+alias yabairc="v ~/.yabairc"
+alias skhdrc="v ~/.config/skhd/skhdrc"
 alias dbreset="bundle exec rails db:drop db:create db:schema:load db:seed" # [d]ata[b]ase [reset]
 alias cpb="git branch | grep '*' | tr -d '*' | tr -d ' ' | pbcopy" # [c]o[p]y [b]ranch to clipboard
+alias tks="tmux kill-server" # [t]mux [k]ill [s]erver
 
-alias glog="glog_ | grep -v -e '^\s*$' --color=always | less --use-color" # [g]it [log]
+#alias glog="git log --oneline | grep -v -e '^\s*$' --color=always | less --use-color" # [g]it [log]
+alias glog="git log --oneline"
 alias glag="glog_ --all --since='00:00' --until='NOW' | grep -v -e '^\s*$' --color=always" # [g]it [l]og [a]ll [g]rep
 alias gb="if ( git branch | grep '* develop' ); then; git checkout -b ; else; echo 'You can only start a new feature from the development branch' ;fi;" # [g]it [b]ranch
 alias gs="git status" # [g]it [s]tatus
@@ -138,12 +147,13 @@ alias yt="yarn test"
 alias brc="be rspec --format doc" # [b]undle [e]xec run [c]hecks
 alias nvimc="cd ~/.config/nvim && nvim ."
 alias gcf="git checkout -b feature/"
-alias rr="rails routes | grep"
+alias rr="rails routes | rg"
 alias c="code"
-alias bat="bat --style plain "
+alias bat="bat --style plain --theme OneHalfDark"
 alias cat="bat"
 alias gdu="git diff @{upstream}"
 alias spf="~/bin/spf"
+alias clines="find . -type f -name '*.txt' -exec wc -l {} +"
 
 alias gch="git checkout"
 
@@ -203,7 +213,7 @@ zle -N _zle-line-init
 zle -N zle-line-init sticky-prompt-zle-line-init
 zle -N sticky-prompt-set
 zle -N accept-line sticky-prompt-accept-line
-bindkey '^S' sticky-prompt-set
+bindkey '^F' sticky-prompt-set
 
 # END zsh-sticky-prompt
 

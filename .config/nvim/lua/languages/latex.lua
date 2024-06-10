@@ -6,5 +6,9 @@ return {
     init = function()
       -- VimTeX configuration goes here
     end
+  },
+  {
+    "rhysd/vim-grammarous",
+    ft = "tex",
   }
 }

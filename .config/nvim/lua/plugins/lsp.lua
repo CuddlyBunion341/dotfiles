@@ -64,24 +64,24 @@ return {
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       -- https://www.mitchellhanberg.com/modern-format-on-save-in-neovim/
-      vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("lsp", { clear = true }),
-        callback = function(args)
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            buffer = args.buf,
-            callback = function()
-              vim.lsp.buf.format({ async = false, id = args.data.client_id })
-            end,
-          })
-        end,
-      })
+      -- vim.api.nvim_create_autocmd("LspAttach", {
+      --   group = vim.api.nvim_create_augroup("lsp", { clear = true }),
+      --   callback = function(args)
+      --     vim.api.nvim_create_autocmd("BufWritePre", {
+      --       buffer = args.buf,
+      --       callback = function()
+      --         vim.lsp.buf.format({ async = false, id = args.data.client_id })
+      --       end,
+      --     })
+      --   end,
+      -- })
 
       local lspconfig = require("lspconfig")
       lspconfig.lua_ls.setup({ capabilities = capabilities })
       lspconfig.tsserver.setup({ capabilities = capabilities })
       lspconfig.standardrb.setup({ capabilities = capabilities })
+      -- lspconfig.rubocop.setup({ capabilities = capabilities })
       lspconfig.rust_analyzer.setup({ capabilities = capabilities })
-
       lspconfig.ltex.setup({
         cmd = { "ltex-ls" },
         filetypes = { "markdown", "text", "cff", "tex" },
@@ -114,6 +114,7 @@ return {
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+      vim.keymap.set("n", "<leader>cn", vim.lsp.buf.rename, {})
     end,
   },
   {
