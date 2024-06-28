@@ -81,7 +81,7 @@ return {
       lspconfig.tsserver.setup({ capabilities = capabilities })
       lspconfig.standardrb.setup({ capabilities = capabilities })
       -- lspconfig.rubocop.setup({ capabilities = capabilities })
-      lspconfig.rust_analyzer.setup({ capabilities = capabilities })
+      -- lspconfig.rust_analyzer.setup({ capabilities = capabilities })
       lspconfig.ltex.setup({
         cmd = { "ltex-ls" },
         filetypes = { "markdown", "text", "cff", "tex" },
@@ -165,6 +165,7 @@ return {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-cmdline',
+      'rafamadriz/friendly-snippets',
     },
     config = function()
       local cmp = require("cmp")

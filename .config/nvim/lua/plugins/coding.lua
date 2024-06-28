@@ -26,9 +26,10 @@ return {
 				additions = {
 					{ "Foo", "Bar" },
 					{ "tic", "tac", "toe" },
-					-- plantuml sequence
 					{ "->", "<--" },
 					{ "++", "--" },
+					{ "light", "dark" },
+					{ "public", "private", "protected" },
 				},
 				allow_caps_additions = {
 					{ "enable", "disable" },

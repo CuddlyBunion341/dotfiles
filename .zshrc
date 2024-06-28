@@ -1,7 +1,7 @@
 source ~/.import-secrets.sh
 
 set -o vi
-bindkey -v
+# bindkey -v
 
 if [ "$TERM_PROGRAM" = "WarpTerminal" ] && [ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]; then
     printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh"}}\x9c'
@@ -50,6 +50,11 @@ function prt() { ~/scripts/get-pr-template.ts }
 function cpt() { ~/scripts/copy-ticket-number.ts }
 function rsf() { bundle exec rspec $(find spec/**/*_spec.rb | fzf --preview 'bat --color "always" {}') } # [r]spec [s]earch [f]ile
 function vg() { nvim $(fzf) } # [v]im [g]rep
+function pkill() {
+  port=$1
+  process=$(lsof -i :$port | fzf | awk '{print $2}')
+  kill $process
+} # [k]ill [p]rocess
 
 function cached_routes() {
   if ( [ ! -f config/routes.rb ]); then
@@ -82,6 +87,16 @@ backup_directory() {
   printf "Backup created at $directory_name_with_timestamp_suffix"
 }
 
+parallel_exec() {
+  # Example usage:
+  # parallel_exec "sleep 1" "echo 'Hello, World!'" "ls -l"
+
+  trap 'kill $(jobs -p)' SIGINT SIGTERM # Kill child processes on interrupt or termination
+  for cmd in "$@"; do
+    eval "$cmd" &
+  done
+  wait
+}
 
 alias '~'='cd ~'
 alias '..'='cd ..'
@@ -113,6 +128,9 @@ alias skhdrc="v ~/.config/skhd/skhdrc"
 alias dbreset="bundle exec rails db:drop db:create db:schema:load db:seed" # [d]ata[b]ase [reset]
 alias cpb="git branch | grep '*' | tr -d '*' | tr -d ' ' | pbcopy" # [c]o[p]y [b]ranch to clipboard
 alias tks="tmux kill-server" # [t]mux [k]ill [s]erver
+alias crc="cargo r -r --bin client"
+alias crs="cargo r -r --bin server"
+function rkill() { "kill $(cat tmp/pids/server.pid)" }
 
 #alias glog="git log --oneline | grep -v -e '^\s*$' --color=always | less --use-color" # [g]it [log]
 alias glog="git log --oneline"
@@ -139,6 +157,7 @@ alias be="bundle exec"
 alias qlf='qlmanage -p "$@"'
 alias mine='rubymine .'
 alias m='rubymine .'
+alias bs="bin/setup"
 alias bc="bin/check"
 alias br="bin/run"
 alias bd="bin/dev"

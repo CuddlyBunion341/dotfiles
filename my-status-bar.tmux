@@ -13,7 +13,7 @@ tmux_set() {
 	tmux set-option -gq "$1" "$2"
 }
 
-color1="#2c2e34"
+color1="#161616"
 color2="blue"
 color3="orange"
 

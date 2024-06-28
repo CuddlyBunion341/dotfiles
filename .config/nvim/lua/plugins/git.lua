@@ -87,5 +87,22 @@ return {
       { "<leader>hd", function() require("gitsigns").diffthis() end,                                        desc = "diffthis" },
       { "<leader>td", function() require("gitsigns").toggle_deleted() end,                                  desc = "toggle_deleted" },
     }
+  },
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- required
+      "sindrets/diffview.nvim", -- optional - Diff integration
+
+      -- Only one of these is needed, not both.
+      "nvim-telescope/telescope.nvim", -- optional
+      "ibhagwan/fzf-lua",            -- optional
+    },
+    config = true,
+    lazy = false
+  },
+  {
+    "junkblocker/git-time-lapse",
+    lazy = false
   }
 }

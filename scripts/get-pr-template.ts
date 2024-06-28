@@ -14,7 +14,7 @@ try {
 const redmineBaseUrl = 'https://redmine.renuo.ch/issues/'
 const branchPattern = /feature\/(\d+)/
 
-const openGitInBrowser = <any>pipe(
+const copyTicket = <any>pipe(
   () => execSync('git branch --list | grep "*"'),
   (branch) => branchPattern.exec(branch.toString()),
   (matches) => {
@@ -29,4 +29,4 @@ const openGitInBrowser = <any>pipe(
   () => execSync('echo "The PR template has been copied to your clipboard\!"')
 )
 
-openGitInBrowser('')
+copyTicket('')

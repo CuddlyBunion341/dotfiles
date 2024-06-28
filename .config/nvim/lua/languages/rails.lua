@@ -33,5 +33,9 @@ return {
         },
       })
     end
+  },
+  {
+    "slim-template/vim-slim",
+    ft = "slim",
   }
 }
