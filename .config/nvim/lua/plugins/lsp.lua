@@ -79,7 +79,7 @@ return {
       local lspconfig = require("lspconfig")
       lspconfig.lua_ls.setup({ capabilities = capabilities })
       lspconfig.tsserver.setup({ capabilities = capabilities })
-      lspconfig.standardrb.setup({ capabilities = capabilities })
+      -- lspconfig.standardrb.setup({ capabilities = capabilities })
       -- lspconfig.rubocop.setup({ capabilities = capabilities })
       -- lspconfig.rust_analyzer.setup({ capabilities = capabilities })
       lspconfig.ltex.setup({
@@ -115,6 +115,9 @@ return {
       vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
       vim.keymap.set("n", "<leader>cn", vim.lsp.buf.rename, {})
+      vim.cmd [[
+      autocmd BufNewFile,BufRead *.prawn set filetype=ruby
+      ]]
     end,
   },
   {

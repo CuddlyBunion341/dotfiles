@@ -1,7 +1,6 @@
 source ~/.import-secrets.sh
 
 set -o vi
-# bindkey -v
 
 if [ "$TERM_PROGRAM" = "WarpTerminal" ] && [ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]; then
     printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh"}}\x9c'

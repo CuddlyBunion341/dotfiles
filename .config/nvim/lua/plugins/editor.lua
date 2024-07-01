@@ -2,6 +2,16 @@ return {
   { "christoomey/vim-system-copy", lazy = false },
   { "folke/neoconf.nvim",          cmd = "Neoconf" },
   {
+    'nvimdev/dashboard-nvim',
+    event = 'VimEnter',
+    config = function()
+      require('dashboard').setup {
+        theme = 'hyper'
+      }
+    end,
+    dependencies = { { 'nvim-tree/nvim-web-devicons' } }
+  },
+  {
     "nyoom-engineering/oxocarbon.nvim",
     lazy = false,
     config = function()
@@ -49,7 +59,7 @@ return {
     event = "VeryLazy",
     init = function()
       vim.o.timeout = true
-      vim.o.timeoutlen = 0
+      vim.o.timeoutlen = 200
     end,
     opts = {},
   },

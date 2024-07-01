@@ -35,16 +35,16 @@ vim.keymap.set("n", "<a-k>", "5kzz")
 vim.opt.wildmenu = true
 vim.opt.wildmode = "longest:full"
 vim.opt.wildignore = {
-  "*.docx",
-  "*.jpg",
-  "*.png",
-  "*.gif",
-  "*.pdf",
-  "*.pyc",
-  "*.exe",
-  "*.flv",
-  "*.img",
-  "*.xlsx",
+	"*.docx",
+	"*.jpg",
+	"*.png",
+	"*.gif",
+	"*.pdf",
+	"*.pyc",
+	"*.exe",
+	"*.flv",
+	"*.img",
+	"*.xlsx",
 }
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -63,6 +63,7 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
 	{ "sainnhe/sonokai", priority = 9999 },
+	{ "iruzo/matrix-nvim", priority = 9999 },
 	{
 		"catppuccin/nvim",
 		priority = 9999,

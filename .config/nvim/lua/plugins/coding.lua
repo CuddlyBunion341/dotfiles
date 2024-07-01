@@ -30,6 +30,7 @@ return {
 					{ "++", "--" },
 					{ "light", "dark" },
 					{ "public", "private", "protected" },
+					{ "if", "unless" },
 				},
 				allow_caps_additions = {
 					{ "enable", "disable" },
@@ -102,6 +103,9 @@ return {
 	{
 		"machakann/vim-highlightedyank",
 		lazy = false,
+    config = function()
+      vim.g.highlightedyank_highlight_duration = 100
+    end
 	},
 	{
 		"tpope/vim-repeat",
