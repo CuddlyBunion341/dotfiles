@@ -9,6 +9,18 @@ return {
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Telescope Buffer" },
       { "<leader>fs", "<cmd>Telescope grep_string<cr>", desc = "Telescope Grep" },
       { "<leader>fw", "<cmd>Telescope live_grep<cr>", desc = "Telescope Grep" },
+      { "<leader>fr",
+        function()
+          local word = vim.fn.expand("<cword>")
+          require("telescope.builtin").grep_string {
+            search = word,
+            only_sort_text = true,
+            layout_strategy = "vertical",
+            layout_config = {}
+          }
+        end,
+        desc = "Telescope current word"
+      },
       { "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Telescope Keymap" },
       { "<leader><leader>", "<cmd>Telescope commands<cr>", desc = "Telescope Command" },
     }

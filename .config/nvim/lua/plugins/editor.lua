@@ -2,14 +2,14 @@ return {
   { "christoomey/vim-system-copy", lazy = false },
   { "folke/neoconf.nvim",          cmd = "Neoconf" },
   {
-    'nvimdev/dashboard-nvim',
-    event = 'VimEnter',
+    "nvimdev/dashboard-nvim",
+    event = "VimEnter",
     config = function()
-      require('dashboard').setup {
-        theme = 'hyper'
-      }
+      require("dashboard").setup({
+        theme = "hyper",
+      })
     end,
-    dependencies = { { 'nvim-tree/nvim-web-devicons' } }
+    dependencies = { { "nvim-tree/nvim-web-devicons" } },
   },
   {
     "nyoom-engineering/oxocarbon.nvim",
@@ -23,16 +23,14 @@ return {
     "max397574/better-escape.nvim",
     lazy = false,
     config = function()
-      require("better_escape").setup(
-        {
-          mapping = { "jk", "jj" },
-          timeout = 100,
-          clear_empty_lines = false,
-          keys = function()
-            return vim.api.nvim_win_get_cursor(0)[2] > 1 and '<esc>l' or '<esc>'
-          end,
-        }
-      )
+      require("better_escape").setup({
+        mapping = { "jk", "jj" },
+        timeout = 100,
+        clear_empty_lines = false,
+        keys = function()
+          return vim.api.nvim_win_get_cursor(0)[2] > 1 and "<esc>l" or "<esc>"
+        end,
+      })
     end,
   },
   {
@@ -163,7 +161,37 @@ return {
       })
     end,
   },
-  { "echasnovski/mini.indentscope", version = "*",   lazy = false },
+  {
+    "echasnovski/mini.indentscope",
+    version = "*",
+    lazy = false,
+    config = function() end,
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    lazy = true,
+    config = {
+      exclude = {
+        filetypes = {
+            "lspinfo",
+            "packer",
+            "checkhealth",
+            "help",
+            "man",
+            "gitcommit",
+            "TelescopePrompt",
+            "TelescopeResults",
+            "Dashboard"
+        }
+      }
+    },
+    keys = {
+      {
+        "<leader>ibl", "<cmd>IBLToggleScope<cr>"
+      }
+    }
+  },
   {
     "jlanzarotta/bufexplorer",
     lazy = false,
@@ -365,5 +393,5 @@ return {
     end,
     lazy = false,
   },
-  { "echasnovski/mini.ai",          version = false, lazy = false },
+  { "echasnovski/mini.ai", version = false, lazy = false },
 }

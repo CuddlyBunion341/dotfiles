@@ -31,6 +31,7 @@ return {
 					{ "light", "dark" },
 					{ "public", "private", "protected" },
 					{ "if", "unless" },
+					{ "width", "height" },
 				},
 				allow_caps_additions = {
 					{ "enable", "disable" },
