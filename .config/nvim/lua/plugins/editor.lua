@@ -1,4 +1,5 @@
 return {
+  { "tpope/vim-unimpaired",        lazy = false },
   { "christoomey/vim-system-copy", lazy = false },
   { "folke/neoconf.nvim",          cmd = "Neoconf" },
   {
@@ -7,9 +8,52 @@ return {
     config = function()
       require("dashboard").setup({
         theme = "hyper",
+        config = {
+          header = {
+            [[                                                                       ]],
+            [[                                                                     ]],
+            [[       ████ ██████           █████      ██                     ]],
+            [[      ███████████             █████                             ]],
+            [[      █████████ ███████████████████ ███   ███████████   ]],
+            [[     █████████  ███    █████████████ █████ ██████████████   ]],
+            [[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
+            [[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
+            [[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
+            [[                                                                       ]],
+          },
+        },
+        shortcut = {
+          { desc = "󰊳 Update", group = "@property", action = "Lazy update", key = "u" },
+          {
+            icon = " ",
+            icon_hl = "@variable",
+            desc = "Files",
+            group = "Label",
+            action = "Telescope find_files",
+            key = "f",
+          },
+          {
+            desc = " Apps",
+            group = "DiagnosticHint",
+            action = "Telescope app",
+            key = "a",
+          },
+          {
+            desc = " dotfiles",
+            group = "Number",
+            action = "Telescope dotfiles",
+            key = "d",
+          },
+          {
+            desc = " Restore Session",
+            group = "Number",
+            action = "require('persistence').load()",
+            key = "r"
+          }
+        },
       })
     end,
-    dependencies = { { "nvim-tree/nvim-web-devicons" } },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
   },
   {
     "nyoom-engineering/oxocarbon.nvim",
@@ -76,6 +120,13 @@ return {
     config = function()
       require("neo-tree").setup({
         sources = { "filesystem", "document_symbols" },
+        filesystem = {
+          filtered_items = {
+            visible = true, -- when true, they will just be displayed differently than normal items
+            hide_dotfiles = true,
+            hide_gitignored = true,
+          },
+        },
         window = {
           mappings = {
             ["<space>"] = "none",
@@ -120,11 +171,23 @@ return {
   },
   {
     "stevearc/oil.nvim",
-    opts = {},
+    lazy = false,
+    opts = {
+      default_file_explorer = true,
+      columns = {
+        "icon",
+      },
+      view_options = {
+        show_hidden = true,
+      },
+      float = {
+        max_width = 142,
+        preview_split = "right",
+      },
+    },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
-      { "-", "<cmd>Oil<CR>", desc = "Oil" },
-      -- { "-", function() require("oil").toggle_float() end, desc = "Oil" }
+      { "-", "<cmd>Oil --float<CR>", desc = "Oil" },
     },
   },
   {
@@ -174,23 +237,24 @@ return {
     config = {
       exclude = {
         filetypes = {
-            "lspinfo",
-            "packer",
-            "checkhealth",
-            "help",
-            "man",
-            "gitcommit",
-            "TelescopePrompt",
-            "TelescopeResults",
-            "Dashboard"
-        }
-      }
+          "lspinfo",
+          "packer",
+          "checkhealth",
+          "help",
+          "man",
+          "gitcommit",
+          "TelescopePrompt",
+          "TelescopeResults",
+          "Dashboard",
+        },
+      },
     },
     keys = {
       {
-        "<leader>ibl", "<cmd>IBLToggleScope<cr>"
-      }
-    }
+        "<leader>ibl",
+        "<cmd>IBLToggleScope<cr>",
+      },
+    },
   },
   {
     "jlanzarotta/bufexplorer",

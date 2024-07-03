@@ -98,6 +98,9 @@ return {
       "nvim-telescope/telescope.nvim", -- optional
       "ibhagwan/fzf-lua",            -- optional
     },
+    keys = {
+      {"<leader>ng", "<cmd>Neogit<cr>", desc = "Neogit"},
+    },
     config = true,
     lazy = false
   },
