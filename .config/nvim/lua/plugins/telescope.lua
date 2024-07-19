@@ -2,16 +2,22 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.6",
-		dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-live-grep-args.nvim" },
+		dependencies = { 
+      "nvim-lua/plenary.nvim",
+      "nvim-lua/popup.nvim",
+      "nvim-telescope/telescope-live-grep-args.nvim" ,
+      "nvim-telescope/telescope-media-files.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
 		config = function()
 			local telescope = require("telescope")
-			telescope.setup({})
 			telescope.load_extension("live_grep_args")
+      telescope.load_extension("media_files")
 		end,
 		keys = {
 			{
 				"<leader>ff",
-				"<cmd>Telescope find_files<cr>",
+				"<cmd>Telescope find_files hidden=true<cr>",
 				desc = "Telescope File",
 			},
 			{

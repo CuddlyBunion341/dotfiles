@@ -37,7 +37,7 @@ return {
         suggestion = { enabled = false },
         panel = { enabled = false },
       })
-    end
+    end,
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
@@ -48,10 +48,42 @@ return {
       { "nvim-lua/plenary.nvim" },  -- for curl, log wrapper
     },
     opts = {
-      debug = true, -- Enable debugging
-      -- See Configuration section for rest
+      temperature = 0.3,
+      mappings = {
+        reset = {
+          normal = '<C-r>',
+          insert = '<C-r>'
+        },
+        complete = {
+          detail = 'Use @<Tab> or /<Tab> for options.',
+          insert = '<Tab>',
+        },
+        close = {
+          normal = 'q',
+          insert = '<C-c>'
+        },
+        submit_prompt = {
+          normal = '<CR>',
+          insert = '<C-m>'
+        },
+        accept_diff = {
+          normal = '<C-y>',
+          insert = '<C-y>'
+        },
+        yank_diff = {
+          normal = 'gy',
+        },
+        show_diff = {
+          normal = 'gd'
+        },
+        show_system_prompt = {
+          normal = 'gp'
+        },
+        show_user_selection = {
+          normal = 'gs'
+        },
+      },
     },
-    -- See Commands section for default commands if you want to lazy load on them
     keys = {
       {
         "<leader>ccq",
@@ -80,7 +112,7 @@ return {
         end,
         desc = "CopilotChat - Prompt actions",
       },
-    }
+    },
   },
   {
     "williamboman/mason.nvim",
@@ -130,7 +162,7 @@ return {
         filetypes = { "markdown", "text", "cff", "tex" },
         flags = { debounce_text_changes = 299 },
       })
-
+      lspconfig.astro.setup({})
 
       lspconfig.solargraph.setup({
         capabilities = capabilities,
@@ -148,9 +180,9 @@ return {
             folding = true,
             references = true,
             rename = true,
-            symbols = true
-          }
-        }
+            symbols = true,
+          },
+        },
       })
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
@@ -158,9 +190,9 @@ return {
       vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
       vim.keymap.set("n", "<leader>cn", vim.lsp.buf.rename, {})
-      vim.cmd [[
+      vim.cmd([[
       autocmd BufNewFile,BufRead *.prawn set filetype=ruby
-      ]]
+      ]])
     end,
   },
   {
@@ -200,18 +232,30 @@ return {
         silent = true,
         mode = "i",
       },
-      { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
-      { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
-    }
+      {
+        "<tab>",
+        function()
+          require("luasnip").jump(1)
+        end,
+        mode = "s",
+      },
+      {
+        "<s-tab>",
+        function()
+          require("luasnip").jump(-1)
+        end,
+        mode = { "i", "s" },
+      },
+    },
   },
   {
     "hrsh7th/nvim-cmp",
     lazy = false,
     dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-cmdline',
-      'rafamadriz/friendly-snippets',
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-cmdline",
+      "rafamadriz/friendly-snippets",
     },
     config = function()
       local cmp = require("cmp")
@@ -249,6 +293,39 @@ return {
     event = "InsertEnter",
     config = function()
       require("copilot_cmp").setup()
-    end
-  }
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-refactor",
+    lazy = false,
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        refactor = {
+          highlight_definitions = {
+            enable = true,
+            clear_on_cursor_move = true,
+          },
+          highlight_current_scope = { enable = false },
+          smart_rename = {
+            enable = true,
+            -- Assign keymaps to false to disable them, e.g. `smart_rename = false`.
+            keymaps = {
+              smart_rename = "grr",
+            },
+          },
+          navigation = {
+            enable = true,
+            -- Assign keymaps to false to disable them, e.g. `goto_definition = false`.
+            keymaps = {
+              goto_definition = "gnd",
+              list_definitions = "gnD",
+              list_definitions_toc = "gO",
+              goto_next_usage = "<a-*>",
+              goto_previous_usage = "<a-#>",
+            },
+          },
+        },
+      })
+    end,
+  },
 }

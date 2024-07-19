@@ -56,6 +56,13 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
   {
+    'adelarsq/image_preview.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require("image_preview").setup()
+    end
+  },
+  {
     "nyoom-engineering/oxocarbon.nvim",
     lazy = false,
     config = function()
@@ -187,7 +194,7 @@ return {
     },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
-      { "-", "<cmd>Oil --float<CR>", desc = "Oil" },
+      { "-", "<cmd>Oil<CR>", desc = "Oil" },
     },
   },
   {

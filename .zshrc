@@ -7,6 +7,8 @@ if [ "$TERM_PROGRAM" = "WarpTerminal" ] && [ "$TERMINAL_EMULATOR" != "JetBrains-
 fi
 
 PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH="$HOME/.asdf/installs/ruby/latest/bin:$PATH"
+export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 export PATH="$HOME/.jenv/bin:$PATH"
 export PATH="~/renuo/personal/rails-generator/bin:$PATH"
@@ -14,7 +16,7 @@ export PATH="~/.asdf/shims/:$PATH"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH=~/dev/flutter/bin:$PATH
-# export PATH="/Users/dani/.gem/ruby/3.2.0/bin:$PATH"
+export PATH="/Users/dani/.gem/:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES # fix libcurl error
 export EDITOR="nvim"
@@ -47,7 +49,12 @@ function openticket() { ~/scripts/open-ticket-in-browser.ts }
 function ot() { ~/scripts/open-ticket-in-browser.ts }
 function prt() { ~/scripts/get-pr-template.ts }
 function cpt() { ~/scripts/copy-ticket-number.ts }
-function rsf() { bundle exec rspec $(find spec/**/*_spec.rb | fzf --preview 'bat --color "always" {}') } # [r]spec [s]earch [f]ile
+function rsf() { 
+  file=$(find spec/**/*_spec.rb | fzf --preview 'bat --color "always" {}')
+  echo "bundle exec rspec $file"
+  print -S "$file"
+  bundle exec rspec $file
+} # [r]spec [s]earch [f]ile
 function vg() { nvim $(fzf) } # [v]im [g]rep
 function pkill() {
   port=$1
@@ -136,6 +143,7 @@ alias glog="git log --oneline"
 alias glag="glog_ --all --since='00:00' --until='NOW' | grep -v -e '^\s*$' --color=always" # [g]it [l]og [a]ll [g]rep
 alias gb="if ( git branch | grep '* develop' ); then; git checkout -b ; else; echo 'You can only start a new feature from the development branch' ;fi;" # [g]it [b]ranch
 alias gs="git status" # [g]it [s]tatus
+alias gso="git show" # [g]it [s]how
 alias gp="git push" # [g]it [p]ush
 alias gpp="git pull && git push" # [g]it [p]ull and [p]ush
 alias gpl="git pull" # [g]it [p]u[l]l
@@ -263,3 +271,32 @@ zinit ice pick"async.zsh" src"pure.zsh" # with zsh-async library that's bundled 
 zinit light sindresorhus/pure
 
 PATH=~/.console-ninja/.bin:$PATH
+
+renuo-cli() {
+  initial_directory=$(pwd)
+  cd ~/renuo-cli
+  trap "cd $initial_directory" EXIT
+  ruby -Ilib ./bin/renuo "$@"
+}
+
+renuo-cli-hack() {
+  local current_ruby_version=$(asdf current ruby | awk '{print $2}')
+
+  local tool_versions_exists=false
+  [ -f .tool-versions ] && tool_versions_exists=true
+
+  local ruby_in_tool_versions=false
+  grep -q "ruby" .tool-versions && ruby_in_tool_versions=true
+
+  asdf local ruby 3.2.3
+  renuo "$@"
+
+  if ! $tool_versions_exists; then
+    rm .tool-versions
+  elif ! $ruby_in_tool_versions; then
+    sed -i '' '/ruby/d' .tool-versions
+  else
+    asdf local ruby $current_ruby_version
+  fi
+}
+

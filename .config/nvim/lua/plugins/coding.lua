@@ -32,6 +32,7 @@ return {
 					{ "public", "private", "protected" },
 					{ "if", "unless" },
 					{ "width", "height" },
+					{ "let", "const" },
 				},
 				allow_caps_additions = {
 					{ "enable", "disable" },

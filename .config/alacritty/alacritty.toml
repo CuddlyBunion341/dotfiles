@@ -596,6 +596,11 @@ chars = "\u0006L"
 key = "Right"
 mods = "Command"
 
+[[keyboard.bindings]]
+key = "T"
+mods = "Command"
+chars = "\u0013c" # This is CTRL + S + 'c'
+
 [shell]
 args = ["-l", "-c", "session_name=$(tmux ls | grep -v \"(attached)\" | head -n 1 | cut -d: -f1); [ -n \"$session_name\" ] && tmux attach -t \"$session_name\" || tmux new-session"]
 program = "/bin/zsh"
