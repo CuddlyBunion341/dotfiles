@@ -28,10 +28,6 @@ return {
     cmd = { "Git" }
   },
   {
-    "sindrets/diffview.nvim",
-    lazy = false
-  },
-  {
     "lewis6991/gitsigns.nvim",
     lazy = false,
     config = function()
@@ -91,23 +87,16 @@ return {
   {
     "NeogitOrg/neogit",
     dependencies = {
-      "nvim-lua/plenary.nvim",  -- required
-      "sindrets/diffview.nvim", -- optional - Diff integration
-
-      -- Only one of these is needed, not both.
-      "nvim-telescope/telescope.nvim", -- optional
-      "ibhagwan/fzf-lua",              -- optional
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "nvim-telescope/telescope.nvim",
     },
+    config = true,
     keys = {
       { "<leader>ng", "<cmd>Neogit<cr>", desc = "Neogit" },
     },
-    config = true,
-    lazy = false
   },
-  {
-    "junkblocker/git-time-lapse",
-    lazy = false
-  },
+  { "junkblocker/git-time-lapse", commands = { "GitTimeLapse" } },
   {
     "ldelossa/gh.nvim",
     lazy = false,
@@ -123,5 +112,4 @@ return {
       require("litee.gh").setup()
     end,
   }
-
 }

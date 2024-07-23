@@ -45,6 +45,11 @@ return {
 				"<cmd>Telescope live_grep<cr>",
 				desc = "Telescope Grep",
 			},
+      {
+        "<leader>fq",
+        "<cmd>Telescope quickfix<cr>",
+        desc = "Telescope Quickfix",
+      },
 			{
 				"<leader>fr",
 				function()

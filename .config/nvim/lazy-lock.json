@@ -18,7 +18,6 @@
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "flash.nvim": { "branch": "main", "commit": "43f67935d388fbb540f8b40e8cbfd80de54f978a" },
   "friendly-snippets": { "branch": "main", "commit": "682157939e57bd6a2c86277dfd4d6fbfce63dbac" },
-  "fzf-lua": { "branch": "main", "commit": "24a1616df5f27d1286e5113cf176693de4111d21" },
   "gh.nvim": { "branch": "main", "commit": "ebbaac254ef7dd6f85b439825fbce82d0dc84515" },
   "git-time-lapse": { "branch": "master", "commit": "3b6f38ec13af04a29e822efda15c36b69f6972ff" },
   "gitsigns.nvim": { "branch": "main", "commit": "6b1a14eabcebbcca1b9e9163a26b2f8371364cb7" },
@@ -38,7 +37,7 @@
   "mini.indentscope": { "branch": "main", "commit": "f0d7faa064c892b96997810afcddfadc3f2a15b3" },
   "neo-tree.nvim": { "branch": "v3.x", "commit": "29f7c215332ba95e470811c380ddbce2cebe2af4" },
   "neoconf.nvim": { "branch": "main", "commit": "94f1e5b81c440ec1fc7efde3c7f9448b7bab7776" },
-  "neogit": { "branch": "master", "commit": "66b29453df7050543a51986620f8961a79a13fcc" },
+  "neogit": { "branch": "master", "commit": "a232e38512a09107b10ae3ac11a5803897fbdfef" },
   "neotest": { "branch": "master", "commit": "26ed90509c377d10dbdebd25b7094a886323b32b" },
   "neotest-minitest": { "branch": "main", "commit": "0543bf4e997b2c970707cb297e2f74c438eb0653" },
   "neotest-rspec": { "branch": "main", "commit": "48573d5882cbe8d8bcd3b735d9ee7705168b1b87" },
@@ -88,5 +87,6 @@
   "vim-tmux-navigator": { "branch": "master", "commit": "5b3c701686fb4e6629c100ed32e827edf8dad01e" },
   "vim-unimpaired": { "branch": "master", "commit": "6d44a6dc2ec34607c41ec78acf81657248580bf1" },
   "vimtex": { "branch": "master", "commit": "2dc2a5435809c13f6f4aa07964be4ef19a7864f5" },
-  "which-key.nvim": { "branch": "main", "commit": "0099511294f16b81c696004fa6a403b0ae61f7a0" }
+  "which-key.nvim": { "branch": "main", "commit": "0099511294f16b81c696004fa6a403b0ae61f7a0" },
+  "yaml.nvim": { "branch": "main", "commit": "77aa8812e652acc44ae16fd1dbeb5a952db937e0" }
 }
