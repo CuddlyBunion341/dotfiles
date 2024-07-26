@@ -20,6 +20,11 @@ return {
 				"<cmd>Telescope find_files hidden=true<cr>",
 				desc = "Telescope File",
 			},
+      {
+				"<leader>ft",
+				"<cmd>Telescope resume<cr>",
+				desc = "Telescope Resume",
+			},
 			{
 				"<leader>fc",
 				"<cmd>Telescope find_files search_dirs={'~/.config/nvim/'}<cr>",
