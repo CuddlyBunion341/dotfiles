@@ -12,7 +12,7 @@ return {
       "LazyGitFilterCurrentFile",
     },
     keys = {
-      { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
+      { "<leader>ng", "<cmd>LazyGit<cr>", desc = "LazyGit" }
     },
     config = function()
       require("telescope").load_extension("lazygit")
@@ -93,10 +93,10 @@ return {
     },
     config = true,
     keys = {
-      { "<leader>ng", "<cmd>Neogit<cr>", desc = "Neogit" },
+      { "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
     },
   },
-  { "junkblocker/git-time-lapse", commands = { "GitTimeLapse" } },
+  { "junkblocker/git-time-lapse", commands = { "GitTimeLapse" },  lazy = false},
   {
     "ldelossa/gh.nvim",
     lazy = false,
