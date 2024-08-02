@@ -13,12 +13,13 @@ tmux_set() {
 	tmux set-option -gq "$1" "$2"
 }
 
-color1="#161616"
-color2="blue"
-color3="orange"
+color1="#fdf6e3"
+color2=""
+color3="black"
+color4="black"
 
 secondary="#[fg=$color2,bg=$color1]"
-tertiary="#[fg=orange,bg=$color1]"
+tertiary="#[fg=black,bg=$color1]"
 primary="#[fg=$color1,bg=$color2]"
 background="#[fg=$color2,bg=$color1]"
 
@@ -26,13 +27,13 @@ title="#W:#I"
 # tmux_set status-fg "$colork"
 # tmux_set status-bg "$color1"
 tmux_set status-bg "$color1"
-tmux_set status-fg "white"
+tmux_set status-fg "$color4"
 # tmux_set window-status-current-format "#[underscore]$title"
 # tmux_set window-status-format "$title"
 # tmux_set window-status-separator " | "
 
 tmux_set window-status-format "#[bg=$color1] $title "
-tmux_set window-status-current-format "#[bg=white,fg=$color1] $title "
+tmux_set window-status-current-format "#[bg=$color4,fg=$color1] $title "
 tmux_set window-status-separator " "
 
 # tmux_set window-status-current-format "#[bg=$color1,fg=$color2]#[bg=$color2,fg=$color3] $title #[bg=$color1,fg=$color2]"
@@ -40,7 +41,7 @@ tmux_set window-status-separator " "
 # tmux_set window-status-format "#[bg=$color1,fg=$color3]#[bg=$color3,fg=$color2] $title #[bg=$color1,fg=$color3]"
 
 #   
-cmd="#[fg=orange]#{pane_current_command}"
+cmd="#[fg=black]#{pane_current_command}"
 path="#(echo #{pane_current_path} | sed 's#$HOME#~#g')"
 ruby_version=$(ruby -v | awk '{print $2}')
 ruby="#[fg=red] $ruby_version"
