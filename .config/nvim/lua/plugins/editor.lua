@@ -1,101 +1,101 @@
 return {
-  { "tpope/vim-unimpaired",        lazy = false },
-  { "christoomey/vim-system-copy", lazy = false },
-  { "folke/neoconf.nvim",          cmd = "Neoconf" },
-  {
-    "nvimdev/dashboard-nvim",
-    event = "VimEnter",
-    config = function()
-      require("dashboard").setup({
-        theme = "hyper",
-        config = {
-          header = {
-            [[                                                                       ]],
-            [[                                                                     ]],
-            [[       ████ ██████           █████      ██                     ]],
-            [[      ███████████             █████                             ]],
-            [[      █████████ ███████████████████ ███   ███████████   ]],
-            [[     █████████  ███    █████████████ █████ ██████████████   ]],
-            [[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
-            [[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
-            [[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
-            [[                                                                       ]],
-          },
-        },
-        shortcut = {
-          { desc = "󰊳 Update", group = "@property", action = "Lazy update", key = "u" },
-          {
-            icon = " ",
-            icon_hl = "@variable",
-            desc = "Files",
-            group = "Label",
-            action = "Telescope find_files",
-            key = "f",
-          },
-          {
-            desc = " Apps",
-            group = "DiagnosticHint",
-            action = "Telescope app",
-            key = "a",
-          },
-          {
-            desc = " dotfiles",
-            group = "Number",
-            action = "Telescope dotfiles",
-            key = "d",
-          },
-          {
-            desc = " Restore Session",
-            group = "Number",
-            action = "require('persistence').load()",
-            key = "r"
-          }
-        },
-      })
-    end,
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-  },
-  {
-    'adelarsq/image_preview.nvim',
-    event = 'VeryLazy',
-    config = function()
-      require("image_preview").setup()
-    end
-  },
-  {
-    "nyoom-engineering/oxocarbon.nvim",
-    lazy = false,
-    config = function()
-      -- vim.cmd.colorscheme("oxocarbon")
-    end,
-  },
-  -- TODO: fix
-  {
-    "max397574/better-escape.nvim",
-    lazy = false,
-    config = function()
-      require("better_escape").setup({
-        mapping = { "jk", "jj" },
-        timeout = 100,
-        clear_empty_lines = false,
-        keys = function()
-          return vim.api.nvim_win_get_cursor(0)[2] > 1 and "<esc>l" or "<esc>"
-        end,
-      })
-    end,
-  },
-  {
-    "jsit/toast.vim",
-    lazy = false,
-    config = function()
-      -- vim.cmd "set background=light"
-      -- vim.cmd.colorscheme "toast"
-    end,
-  },
-  {
-    "folke/persistence.nvim",
-    event = "BufReadPre",
-    opts = { options = vim.opt.sessionoptions:get() },
+	{ "tpope/vim-unimpaired", event = "VeryLazy" },
+	{ "christoomey/vim-system-copy", lazy = false },
+	{ "folke/neoconf.nvim", cmd = "Neoconf" },
+	{
+		"nvimdev/dashboard-nvim",
+		event = "VimEnter",
+		config = function()
+			require("dashboard").setup({
+				theme = "hyper",
+				config = {
+					header = {
+						[[                                                                       ]],
+						[[                                                                     ]],
+						[[       ████ ██████           █████      ██                     ]],
+						[[      ███████████             █████                             ]],
+						[[      █████████ ███████████████████ ███   ███████████   ]],
+						[[     █████████  ███    █████████████ █████ ██████████████   ]],
+						[[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
+						[[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
+						[[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
+						[[                                                                       ]],
+					},
+				},
+				shortcut = {
+					{ desc = "󰊳 Update", group = "@property", action = "Lazy update", key = "u" },
+					{
+						icon = " ",
+						icon_hl = "@variable",
+						desc = "Files",
+						group = "Label",
+						action = "Telescope find_files",
+						key = "f",
+					},
+					{
+						desc = " Apps",
+						group = "DiagnosticHint",
+						action = "Telescope app",
+						key = "a",
+					},
+					{
+						desc = " dotfiles",
+						group = "Number",
+						action = "Telescope dotfiles",
+						key = "d",
+					},
+					{
+						desc = " Restore Session",
+						group = "Number",
+						action = "require('persistence').load()",
+						key = "r",
+					},
+				},
+			})
+		end,
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
+	{
+		"adelarsq/image_preview.nvim",
+		event = "VeryLazy",
+		config = function()
+			require("image_preview").setup()
+		end,
+	},
+	{
+		"nyoom-engineering/oxocarbon.nvim",
+		lazy = false,
+		config = function()
+			-- vim.cmd.colorscheme("oxocarbon")
+		end,
+	},
+	-- TODO: fix
+	-- {
+	-- 	"max397574/better-escape.nvim",
+	-- 	lazy = false,
+	-- 	config = function()
+	-- 		require("better_escape").setup({
+	-- 			mapping = { "jk", "jj" },
+	-- 			timeout = 100,
+	-- 			clear_empty_lines = false,
+	-- 			keys = function()
+	-- 				return vim.api.nvim_win_get_cursor(0)[2] > 1 and "<esc>l" or "<esc>"
+	-- 			end,
+	-- 		})
+	-- 	end,
+	-- },
+	{
+		"jsit/toast.vim",
+		lazy = false,
+		config = function()
+			-- vim.cmd "set background=light"
+			-- vim.cmd.colorscheme "toast"
+		end,
+	},
+	{
+		"folke/persistence.nvim",
+		event = "BufReadPre",
+		opts = { options = vim.opt.sessionoptions:get() },
     -- stylua: ignore
     keys = {
       { "<leader>qs", function() require("persistence").load() end,                desc = "Restore Session" },
@@ -156,29 +156,28 @@ return {
       })
     end,
   },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    event = "VeryLazy",
-    dependencies = {
-      "RRethy/nvim-treesitter-endwise",
-    },
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = { "lua", "vim", "vimdoc", "vimdoc", "ruby", "bibtex", "yaml" },
-        ignore_install = { "latex" }, -- highlighting by vimtex
-        auto_install = false,
-        endwise = {
-          enable = true,
-        },
-        highlight = {
-          enable = true,
-        },
-      })
-    end,
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter",
+  --   event = "VeryLazy",
+  --   dependencies = {
+  --     "RRethy/nvim-treesitter-endwise",
+  --   },
+  --   config = function()
+  --     require("nvim-treesitter.configs").setup({
+  --       ensure_installed = { "lua", "vim", "ruby", "bibtex", "yaml" },
+  --       ignore_install = { "latex" },
+  --       auto_install = true,
+  --       endwise = {
+  --         enable = true,
+  --       },
+  --       highlight = {
+  --         enable = true,
+  --       },
+  --     })
+  --   end,
+  -- },
   {
     "stevearc/oil.nvim",
-    lazy = false,
     opts = {
       default_file_explorer = true,
       columns = {
@@ -203,7 +202,7 @@ return {
       "nvim-telescope/telescope.nvim",
     },
     keys = {
-      { "<leader>f",  "<CMD>Telescope commander<CR>", mode = "n" },
+      { "<leader>fp",  "<CMD>Telescope commander<CR>", mode = "n" },
       { "<leader>fc", "<CMD>Telescope commander<CR>", mode = "n" },
     },
     config = function()
@@ -465,4 +464,12 @@ return {
     lazy = false,
   },
   { "echasnovski/mini.ai", version = false, lazy = false },
+  {
+    'nvim-lualine/lualine.nvim',
+    lazy = false,
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require("lualine").setup()
+    end
+  }
 }

@@ -97,19 +97,18 @@ return {
     },
   },
   { "junkblocker/git-time-lapse", commands = { "GitTimeLapse" },  lazy = false},
-  {
-    "ldelossa/gh.nvim",
-    lazy = false,
-    dependencies = {
-      {
-        "ldelossa/litee.nvim",
-        config = function()
-          require("litee.lib").setup()
-        end,
-      },
-    },
-    config = function()
-      require("litee.gh").setup()
-    end,
-  }
+  -- {
+  --   "ldelossa/gh.nvim",
+  --   dependencies = {
+  --     {
+  --       "ldelossa/litee.nvim",
+  --       config = function()
+  --         require("litee.lib").setup()
+  --       end,
+  --     },
+  --   },
+  --   config = function()
+  --     require("litee.gh").setup()
+  --   end,
+  -- }
 }

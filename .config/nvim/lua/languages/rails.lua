@@ -10,17 +10,17 @@ return {
       { "<leader>rv", "<cmd>Telescope rails views<cr>",       desc = "Telescope rails views" },
       { "<leader>ri", "<cmd>Telescope rails migrations<cr>",  desc = "Telescope rails migrations" },
       { "<leader>rl", "<cmd>Telescope rails libs<cr>",        desc = "Telescope rails libs" },
-    }
+    },
   },
   {
     "rgroli/other.nvim",
     keys = {
-      { "<leader>ll", "<cmd>:Other<CR>",       desc = "Other" },
-      { "leader>ltn", "<cmd>:OtherTabNew<CR>", desc = "OtherTabNew" },
-      { "leader>lp",  "<cmd>:OtherSplit<CR>",  desc = "OtherSplit" },
-      { "leader>lv",  "<cmd>:OtherVSplit<CR>", desc = "OtherVSplit" },
-      { "leader>lc",  "<cmd>:OtherClear<CR>",  desc = "OtherClear" },
-      { "leader>lt",  "<cmd>:Other test<CR>",  desc = "Other test" },
+      { "<leader>ll",  "<cmd>:Other<CR>",       desc = "Other" },
+      { "<leader>ltn", "<cmd>:OtherTabNew<CR>", desc = "OtherTabNew" },
+      { "<leader>lp",  "<cmd>:OtherSplit<CR>",  desc = "OtherSplit" },
+      { "<leader>lv",  "<cmd>:OtherVSplit<CR>", desc = "OtherVSplit" },
+      { "<leader>lc",  "<cmd>:OtherClear<CR>",  desc = "OtherClear" },
+      { "<leader>lt",  "<cmd>:Other test<CR>",  desc = "Other test" },
     },
     config = function()
       require("other-nvim").setup({
@@ -32,10 +32,10 @@ return {
           "golang",
         },
       })
-    end
+    end,
   },
   {
     "slim-template/vim-slim",
     ft = "slim",
-  }
+  },
 }

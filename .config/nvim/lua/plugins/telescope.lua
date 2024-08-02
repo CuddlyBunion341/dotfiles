@@ -2,17 +2,26 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.6",
-		dependencies = { 
-      "nvim-lua/plenary.nvim",
-      "nvim-lua/popup.nvim",
-      "nvim-telescope/telescope-live-grep-args.nvim" ,
-      "nvim-telescope/telescope-media-files.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-lua/popup.nvim",
+			"nvim-telescope/telescope-live-grep-args.nvim",
+			"nvim-telescope/telescope-media-files.nvim",
+			"nvim-telescope/telescope.nvim",
+			"erlingur/telescope-rails-db-schema",
+		},
 		config = function()
 			local telescope = require("telescope")
 			telescope.load_extension("live_grep_args")
-      telescope.load_extension("media_files")
+			telescope.load_extension("media_files")
+			telescope.load_extension("rails_db_schema")
+      telescope.setup({
+        pickers = {
+					colorscheme = {
+						enable_preview = true,
+					},
+				},
+			})
 		end,
 		keys = {
 			{
@@ -20,13 +29,13 @@ return {
 				"<cmd>Telescope find_files hidden=true<cr>",
 				desc = "Telescope File",
 			},
-      {
+			{
 				"<leader>ft",
 				"<cmd>Telescope resume<cr>",
 				desc = "Telescope Resume",
 			},
 			{
-				"<leader>fc",
+				"<leader>fn",
 				"<cmd>Telescope find_files search_dirs={'~/.config/nvim/'}<cr>",
 				desc = "Telescope Config",
 			},
@@ -50,11 +59,11 @@ return {
 				"<cmd>Telescope live_grep<cr>",
 				desc = "Telescope Grep",
 			},
-      {
-        "<leader>fq",
-        "<cmd>Telescope quickfix<cr>",
-        desc = "Telescope Quickfix",
-      },
+			{
+				"<leader>fq",
+				"<cmd>Telescope quickfix<cr>",
+				desc = "Telescope Quickfix",
+			},
 			{
 				"<leader>fr",
 				function()
@@ -66,15 +75,26 @@ return {
 						layout_config = {},
 					})
 				end,
-				desc = "Telescope current word",
+				desc = "Telescope grep current word",
+			},
+			{
+				"<leader>fc",
+				function()
+					local filename = vim.fn.expand("<cfile>")
+					require("telescope.builtin").find_files({
+						find_command = { "rg", "--files", "--hidden", "--ignore", "--glob", "!*.git/*", filename },
+					})
+				end,
+				desc = "Telescope find file under cursor",
 			},
 			{
 				"<leader>fg",
 				":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
-        desc = "Telescope Grep Args",
+				desc = "Telescope Grep Args",
 			},
 			{ "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Telescope Keymap" },
 			{ "<leader><leader>", "<cmd>Telescope commands<cr>", desc = "Telescope Command" },
+			{ "<leader>fd", "<cmd>:Telescope rails_db_schema<CR>", desc = "Telescope Rails db schema" },
 		},
 	},
 	{
