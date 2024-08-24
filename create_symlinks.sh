@@ -11,4 +11,4 @@ function create_symlink() {
   fi
 }
 
-create_symlink .zshrc ~/.zshrc
+create_symlink ~/dotfiles/.zshrc ~/.zshrc
