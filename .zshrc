@@ -125,6 +125,7 @@ alias bo='tectonic -X build && open build/default/default.pdf' # [b]uild and [o]
 alias bno='tectonic -X build' # [b]uild and do[n]'t [o]pen
 alias g="grep" # [g]rep
 alias myip="ipconfig getifaddr en0"
+alias pubip="dig +short myip.opendns.com @resolver1.opendns.com -4" # borrowed from raphi
 alias bra="bundle exec rubocop -A" # [b]undle exec [r]ubocop -[A]
 alias spec="be rspec"
 alias f="fork ." 

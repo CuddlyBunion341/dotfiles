@@ -21,6 +21,7 @@ vim.opt.laststatus = 3
 
 vim.keymap.set("n", "<leader>qq", "<cmd>wqa<cr>")
 vim.keymap.set("n", "<leader>q!", "<cmd>qa!<cr>")
+
 vim.keymap.set("n", "<leader>/", "<cmd>noh<cr>")
 
 vim.keymap.set("n", "n", "nzz")
