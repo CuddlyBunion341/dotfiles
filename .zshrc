@@ -56,7 +56,7 @@ function rsf() {
   bundle exec rspec $file
 } # [r]spec [s]earch [f]ile
 function vg() { nvim $(fzf) } # [v]im [g]rep
-function pkill() {
+function prokill() {
   port=$1
   process=$(lsof -i :$port | fzf | awk '{print $2}')
   kill $process
@@ -133,6 +133,7 @@ alias cnvim="cd ~/.config/nvim && nvim init.lua" # [c]onfigure [nvim]
 alias yabairc="v ~/.yabairc"
 alias skhdrc="v ~/.config/skhd/skhdrc"
 alias dbreset="bundle exec rails db:drop db:create db:schema:load db:seed" # [d]ata[b]ase [reset]
+alias change_theme="~/.config/change_theme.sh > /dev/null"
 alias cpb="git branch | grep '*' | tr -d '*' | tr -d ' ' | pbcopy" # [c]o[p]y [b]ranch to clipboard
 alias tks="tmux kill-server" # [t]mux [k]ill [s]erver
 alias crc="cargo r -r --bin client"
