@@ -1,10 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
+  imports = [
     ./hardware-configuration.nix
-    ];
+  ];
+
+  nixpkgs.config.allowUnfree = true;
 
 # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -61,18 +62,22 @@
       lynx
       hyprland
       lynx
-      firefox
       fastfetch
-      krusader
       git
       zsh
       btop
       wget
       ripgrep
+
+      firefox
+      kdePackages.dolphin
+      discord
+      krusader
       ];
 
-  programs.hyprland.enable = true;
   programs.zsh.enable = true;
+  programs.hyprland.enable = true;
+  # programs.dolphin.enable = true;
 # programs.fbterm.enable = true;
 
   programs.firefox = {
@@ -105,7 +110,7 @@
       OverrideFirstRunPage = "";
       OverridePostUpdatePage = "";
       DontCheckDefaultBrowser = true;
-      DisplayBookmarksToolbar = "never"; # alternatives: "always" or "newtab"
+      DisplayBookmarksToolbar = "newtab"; # alternatives: "always" or "newtab"
         DisplayMenuBar = "default-off"; # alternatives: "always", "never" or "default-on"
         SearchBar = "unified"; # alternative: "separate"
 
