@@ -50,6 +50,8 @@
     fbterm
       eza
 
+      bun
+
       vim
       neovim
       neovim-remote
