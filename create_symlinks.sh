@@ -14,3 +14,9 @@ function create_symlink() {
 }
 
 create_symlink ~/dotfiles/.zshrc ~/.zshrc
+create_symlink ~/dotfiles/.config/nvim ~/.config/nvim
+create_symlink ~/dotfiles/.config/alacritty ~/.config/alacritty
+create_symlink ~/dotfiles/.tmux.conf ~/.tmux.conf
+create_symlink ~/dotfiles/my-status-bar.tmux ~/my-status-bar.tmux
+create_symlink ~/dotfiles/.gitignore ~/.gitignore
+create_symlink ~/dotfiles/scripts ~/scripts
