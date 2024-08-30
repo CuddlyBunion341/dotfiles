@@ -7,9 +7,9 @@ if [ "$TERM_PROGRAM" = "WarpTerminal" ] && [ "$TERMINAL_EMULATOR" != "JetBrains-
 fi
 
 PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
-export PATH="$HOME/.asdf/installs/ruby/latest/bin:$PATH"
-export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
-export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
+# export PATH="$HOME/.asdf/installs/ruby/latest/bin:$PATH"
+# export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+# export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 export PATH="$HOME/.jenv/bin:$PATH"
 export PATH="~/renuo/personal/rails-generator/bin:$PATH"
 export PATH="~/.asdf/shims/:$PATH"
@@ -23,19 +23,19 @@ export EDITOR="nvim"
 unset LIBRARY_PATH
 unset LDFLAGS
 
-source $HOMEBREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+# source $HOMEBREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+# source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 
 [ -s "/Users/dani/.bun/_bun" ] && source "/Users/dani/.bun/_bun"
-source /opt/homebrew/opt/autojump/etc/autojump.sh
-source "$HOME/.cargo/env"
-source /opt/homebrew/opt/asdf/libexec/asdf.sh
+# source /opt/homebrew/opt/autojump/etc/autojump.sh
+# source "$HOME/.cargo/env"
+# source /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 eval "$(fzf --zsh)"
 bindkey -r "^t" # Unbind fzf keybinding
 
-eval "$(tmuxifier init -)"
+# eval "$(tmuxifier init -)"
 
 alias ls="eza"
 alias l="eza -lah"
@@ -117,7 +117,7 @@ alias ctmux='nvim ~/.tmux.conf'
 alias clazygit='nvim ~/Library/Application\ Support/lazygit/config.yml'
 alias cneovide='nvim ~/.config/neovide/config.toml'
 alias chypr='nvim ~/.config/hypr/hyprland.conf'
-alias cnix="sudo nvim /etc/nixos/configuration.nix"
+alias cnix="nvim /etc/nixos/configuration.nix"
 alias nxs="sudo nixos-rebuild switch"
 alias nv='neovide'
 alias cgit='nvim ~/.gitconfig'

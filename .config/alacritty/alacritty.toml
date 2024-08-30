@@ -11,7 +11,7 @@ offset.x = 0
 offset.y = 0
 
 [font.normal]
-family = "JetBrainsMono Nerd Font"
+family = "Monospace"
 
 [[keyboard.bindings]]
 action = "CreateNewWindow"
@@ -63,20 +63,20 @@ action = "DecreaseFontSize"
 key = "Minus"
 mods = "Command"
 
-[[keyboard.bindings]]
-key = "T"
-mods = "Command"
-command = { program = "/opt/homebrew/bin/tmux", args = ["new-window", "/bin/zsh"] }
-
-[[keyboard.bindings]]
-key = "W"
-mods = "Command"
-command = { program = "/opt/homebrew/bin/tmux", args = ["kill-pane"] }
-
+# [[keyboard.bindings]]
+# key = "T"
+# mods = "Command"
+# command = { program = "/opt/homebrew/bin/tmux", args = ["new-window", "/bin/zsh"] }
+# 
+# [[keyboard.bindings]]
+# key = "W"
+# mods = "Command"
+# command = { program = "/opt/homebrew/bin/tmux", args = ["kill-pane"] }
+# 
 [shell]
-args = ["-l", "-c", "session_name=$(tmux ls | grep -v \"(attached)\" | head -n 1 | cut -d: -f1); [ -n \"$session_name\" ] && tmux attach -t \"$session_name\" || tmux new-session"]
-program = "/bin/zsh"
-
+# args = ["-l", "-c", "session_name=$(tmux ls | grep -v \"(attached)\" | head -n 1 | cut -d: -f1); [ -n \"$session_name\" ] && tmux attach -t \"$session_name\" || tmux new-session"]
+program = "/run/current-system/sw/bin/zsh"
+# 
 [window]
 decorations = "buttonless"
 decorations_theme_variant = "None"

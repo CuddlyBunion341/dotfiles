@@ -92,8 +92,8 @@ vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>")
 
 vim.g.sonokai_better_performance = 1
 vim.g.sonokai_style = "andromeda"
-vim.cmd.colorscheme("solarized")
-vim.opt.background = "light"
+vim.cmd.colorscheme("elflord")
+vim.opt.background = "dark"
 
 
 -- vim.api.nvim_command('autocmd VimEnter * lua require("persistence").load()')
