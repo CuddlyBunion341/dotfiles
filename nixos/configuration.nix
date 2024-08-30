@@ -47,7 +47,13 @@
 
 # $ nix search wget
   environment.systemPackages = with pkgs; [
-    fbterm
+    krusader
+      bemenu
+      nnn
+
+      lz4
+
+      fbterm
       eza
 
       bun
@@ -74,25 +80,24 @@
       firefox
       kdePackages.dolphin
       discord
-      krusader
       ];
 
   programs.zsh.enable = true;
   programs.hyprland.enable = true;
-  # programs.dolphin.enable = true;
+# programs.dolphin.enable = true;
 # programs.fbterm.enable = true;
 
   programs.firefox = {
     enable = true;
     languagePacks = [ "de" "en-US" ];
 
-    # profiles = {
-    #   myProfile = {
-    #     settings = {
-    #       extensions.activeThemeID = "4ae94ae4-df44-487a-bb8d-cdf0cb324144";
-    #     };
-    #   };
-    # };
+# profiles = {
+#   myProfile = {
+#     settings = {
+#       extensions.activeThemeID = "4ae94ae4-df44-487a-bb8d-cdf0cb324144";
+#     };
+#   };
+# };
 
     /* ---- POLICIES ---- */
 # Check about:policies#documentation for options.
@@ -139,7 +144,7 @@
       /* ---- PREFERENCES ---- */
 # Check about:config for options.
       Preferences = {
-      extensions.activeThemeId = "4ae94ae4-df44-487a-bb8d-cdf0cb324144";
+        extensions.activeThemeId = "4ae94ae4-df44-487a-bb8d-cdf0cb324144";
 # "browser.contentblocking.category" = { Value = "strict"; Status = "locked"; };
 # "extensions.pocket.enabled" = lock-false;
 # "extensions.screenshots.disabled" = lock-true;
