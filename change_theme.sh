@@ -12,7 +12,7 @@ fi
 
 NVIM_CONFIG_FILE="$HOME/.config/nvim/init.lua"
 NVIM_LIGHT_THEME='solarized'
-NVIM_DARK_THEME='elflord'
+NVIM_DARK_THEME='moonfly'
 
 NVIM_LIGHT_THEME_CONFIG="vim.cmd.colorscheme(\"$NVIM_LIGHT_THEME\")"
 NVIM_DARK_THEME_CONFIG="vim.cmd.colorscheme(\"$NVIM_DARK_THEME\")"
