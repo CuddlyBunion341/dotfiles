@@ -2,23 +2,16 @@ return {
 	{
 		"kylechui/nvim-surround",
 		version = "*",
-		event = "VeryLazy",
-		config = function()
-			require("nvim-surround").setup({})
-		end,
+		lazy = false
 	},
 	{
 		"m4xshen/autoclose.nvim",
 		event = "VeryLazy",
-		config = function()
-			require("autoclose").setup()
-		end,
 	},
 	{
 		"nat-418/boole.nvim",
 		event = "VeryLazy",
-		config = function()
-			require("boole").setup({
+    opts = {
 				mappings = {
 					increment = "<C-a>",
 					decrement = "<C-x>",
@@ -37,12 +30,10 @@ return {
 				allow_caps_additions = {
 					{ "enable", "disable" },
 				},
-			})
-		end,
+    }
 	},
 	{
 		"numToStr/Comment.nvim",
-		opts = {},
     event = "VeryLazy"
 	},
 	{

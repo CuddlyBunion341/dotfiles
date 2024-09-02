@@ -4,7 +4,7 @@ return {
 	{ "folke/neoconf.nvim", cmd = "Neoconf" },
 	{
 		"nvimdev/dashboard-nvim",
-		event = "VimEnter",
+		-- event = "VimEnter",
 		config = function()
 			require("dashboard").setup({
 				theme = "hyper",

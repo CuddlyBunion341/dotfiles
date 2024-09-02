@@ -21,7 +21,6 @@ vim.opt.laststatus = 3
 
 vim.keymap.set("n", "<leader>qq", "<cmd>wqa<cr>")
 vim.keymap.set("n", "<leader>q!", "<cmd>qa!<cr>")
-
 vim.keymap.set("n", "<leader>/", "<cmd>noh<cr>")
 
 vim.keymap.set("n", "n", "nzz")
@@ -59,23 +58,16 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
+
 local plugins = {
-  { "sainnhe/sonokai",              priority = 1000 },
-  { "iruzo/matrix-nvim",            priority = 1000 },
-  { "nyoom-engineering/nyoom.nvim", priority = 1000 },
-  { "ray-x/aurora",                 priority = 1000 },
-  { "shaunsingh/solarized.nvim",    priority = 1000 },
-  {
-    "catppuccin/nvim",
-    priority = 1000,
-    config = function()
-      require("catppuccin").setup({
-        flavour = "mocha",
-        transparent_background = true,
-        show_end_of_buffer = true,
-      })
-    end,
-  },
+  -- { "sainnhe/sonokai",                   lazy = true, priority = 1000 },
+  -- { "iruzo/matrix-nvim",                 lazy = true, priority = 1000 },
+  -- { "nyoom-engineering/nyoom.nvim",      lazy = true, priority = 1000 },
+  -- { "folke/tokyonight.nvim", lazy = false, priority = 1000 },
+  -- { "ray-x/aurora",                      lazy = true, priority = 1000 },
+  -- { "shaunsingh/solarized.nvim",         lazy = false, priority = 1000 },
+  { "ishan9299/nvim-solarized-lua", name = "moonfly", lazy = false, priority = 1000 },
+  { "bluz71/vim-moonfly-colors",                      lazy = false, priority = 1000 },
   { import = "plugins" },
   { import = "languages" },
 }
@@ -90,10 +82,7 @@ require("lazy").setup(plugins, opts)
 
 vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>")
 
-vim.g.sonokai_better_performance = 1
-vim.g.sonokai_style = "andromeda"
-vim.cmd.colorscheme("solarized")
-vim.opt.background = "light"
-
+vim.cmd.colorscheme("moonfly")
+vim.opt.background = "dark"
 
 -- vim.api.nvim_command('autocmd VimEnter * lua require("persistence").load()')
