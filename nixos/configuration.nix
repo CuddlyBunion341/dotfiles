@@ -80,6 +80,8 @@
       firefox
       kdePackages.dolphin
       discord
+      
+      hyprland
       ];
 
   programs.zsh.enable = true;
