@@ -13,10 +13,12 @@ tmux_set() {
 	tmux set-option -gq "$1" "$2"
 }
 
-color1="#fdf6e3"
-color2=""
-color3="black"
-color4="black"
+color1="#000000"
+# color1="#fdf6e3"
+# color1="#000000"
+color2="white"
+color3="white"
+color4="white"
 
 secondary="#[fg=$color2,bg=$color1]"
 tertiary="#[fg=black,bg=$color1]"
