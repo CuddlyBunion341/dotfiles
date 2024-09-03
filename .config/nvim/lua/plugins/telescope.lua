@@ -25,47 +25,47 @@ return {
 		end,
 		keys = {
 			{
-				"<leader>ff",
+				"<leader>f",
 				"<cmd>Telescope find_files hidden=true<cr>",
 				desc = "Telescope File",
 			},
 			{
-				"<leader>ft",
+				"<leader>tr",
 				"<cmd>Telescope resume<cr>",
 				desc = "Telescope Resume",
 			},
 			{
-				"<leader>fn",
+				"<leader>n",
 				"<cmd>Telescope find_files search_dirs={'~/.config/nvim/'}<cr>",
 				desc = "Telescope Config",
 			},
 			{
-				"<leader>fg",
+				"<leader>tg",
 				"<cmd>Telescope git_files<cr>",
 				desc = "Telescope Git File",
 			},
 			{
-				"<leader>fb",
+				"<leader>tb",
 				"<cmd>Telescope buffers<cr>",
 				desc = "Telescope Buffer",
 			},
 			{
-				"<ileadier>fs",
+				"<leader>tw",
 				"<cmd>Telescope grep_string<cr>",
 				desc = "Telescope Grep",
 			},
 			{
-				"<leader>fw",
+				"<leader>w",
 				"<cmd>Telescope live_grep<cr>",
 				desc = "Telescope Grep",
 			},
 			{
-				"<leader>fq",
+				"<leader>tq",
 				"<cmd>Telescope quickfix<cr>",
 				desc = "Telescope Quickfix",
 			},
 			{
-				"<leader>fr",
+				"<leader>r",
 				function()
 					local word = vim.fn.expand("<cword>")
 					require("telescope.builtin").grep_string({
@@ -78,7 +78,7 @@ return {
 				desc = "Telescope grep current word",
 			},
 			{
-				"<leader>fc",
+				"<leader>tc",
 				function()
 					local filename = vim.fn.expand("<cfile>")
 					require("telescope.builtin").find_files({
@@ -88,13 +88,13 @@ return {
 				desc = "Telescope find file under cursor",
 			},
 			{
-				"<leader>fg",
+				"<leader>tg",
 				":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
 				desc = "Telescope Grep Args",
 			},
-			{ "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Telescope Keymap" },
+			{ "<leader>tk", "<cmd>Telescope keymaps<cr>", desc = "Telescope Keymap" },
 			{ "<leader><leader>", "<cmd>Telescope commands<cr>", desc = "Telescope Command" },
-			{ "<leader>fd", "<cmd>:Telescope rails_db_schema<CR>", desc = "Telescope Rails db schema" },
+			{ "<leader>td", "<cmd>:Telescope rails_db_schema<CR>", desc = "Telescope Rails db schema" },
 		},
 	},
 	{
