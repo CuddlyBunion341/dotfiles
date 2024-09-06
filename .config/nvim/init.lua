@@ -8,6 +8,8 @@ vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.scrolloff = 10
+vim.opt.autowrite = true
+vim.opt.shortmess:append("A") -- https://stackoverflow.com/questions/1098159/vim-stop-existing-swap-file-warnings
 
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
