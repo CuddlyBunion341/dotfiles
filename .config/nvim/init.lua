@@ -11,7 +11,7 @@ vim.opt.scrolloff = 10
 
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
-vim.keymap.set("n", "Q", ":quit<cr>")
+vim.keymap.set("n", "Q", ":quitall<cr>")
 vim.keymap.set("n", "<leader>/", "<cmd>noh<cr>")
 
 vim.api.nvim_set_keymap('n', '@', '@q', {noremap = true})
