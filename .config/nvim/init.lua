@@ -22,6 +22,9 @@ vim.keymap.set('n', '<C-k>', ':wincmd k<cr>', { silent = true })
 vim.keymap.set('n', '<C-j>', ':wincmd j<cr>', { silent = true })
 vim.keymap.set('n', '<C-h>', ':wincmd h<cr>', { silent = true })
 vim.keymap.set('n', '<C-l>', ':wincmd l<cr>', { silent = true })
+vim.keymap.set('n', '<C-e>', ':wincmd =<cr>', { silent = true })
+vim.keymap.set('n', '<C-n>', ':wincmd s<cr>', { silent = true })
+vim.keymap.set('n', '<C-m>', ':wincmd v<cr>', { silent = true })
 
 vim.api.nvim_set_keymap('n', '@', '@q', {noremap = true})
 
