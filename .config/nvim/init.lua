@@ -1,6 +1,6 @@
 vim.opt.title = true
 vim.opt.titlelen = 0
-vim.opt.titlestring = 'nvim %{expand("%:p")}'
+-- vim.opt.titlestring = 'nvim %{expand("%:p")}'
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 vim.wo.number = true
@@ -14,10 +14,9 @@ vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.scrolloff = 10
-vim.opt.cmdheight = 0
+vim.opt.cmdheight = 1
 
-vim.opt.winbar = "%f"
-vim.opt.laststatus = 3
+vim.api.nvim_set_keymap('n', '@', '@q', {noremap = true})
 
 vim.keymap.set("n", "<leader>qq", "<cmd>wqa<cr>")
 vim.keymap.set("n", "<leader>q!", "<cmd>qa!<cr>")
@@ -82,7 +81,7 @@ require("lazy").setup(plugins, opts)
 
 vim.keymap.set("n", "<leader>L", "<cmd>Lazy<cr>")
 
-vim.cmd.colorscheme("moonfly")
-vim.opt.background = "dark"
+vim.cmd.colorscheme("solarized")
+vim.opt.background = "light"
 
 -- vim.api.nvim_command('autocmd VimEnter * lua require("persistence").load()')

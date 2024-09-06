@@ -68,21 +68,24 @@ return {
 				"<leader>r",
 				function()
 					local word = vim.fn.expand("<cword>")
-					require("telescope.builtin").grep_string({
-						search = word,
-						only_sort_text = true,
-						layout_strategy = "vertical",
-						layout_config = {},
-					})
+					require("telescope.builtin").grep_string(
+          -- require('telescope.themes').get_cursor({})
+					--      {
+					-- 	search = word,
+					-- 	only_sort_text = true,
+					-- 	layout_strategy = "vertical",
+					-- }
+          )
 				end,
 				desc = "Telescope grep current word",
 			},
 			{
-				"<leader>tc",
+				"<leader>R",
 				function()
-					local filename = vim.fn.expand("<cfile>")
+					local filename = vim.fn.expand("<cword>")
 					require("telescope.builtin").find_files({
-						find_command = { "rg", "--files", "--hidden", "--ignore", "--glob", "!*.git/*", filename },
+            prompt_prefix = "🔍",
+						find_command = { "rg", "--files", "--hidden", "--ignore", "--glob", "!*.git/*" },
 					})
 				end,
 				desc = "Telescope find file under cursor",
