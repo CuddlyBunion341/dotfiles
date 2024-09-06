@@ -23,7 +23,7 @@ export EDITOR="nvim"
 unset LIBRARY_PATH
 unset LDFLAGS
 
-source $HOMEBREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# source $HOMEBREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 
@@ -52,7 +52,7 @@ function cpt() { ~/scripts/copy-ticket-number.ts }
 function rsf() { 
   file=$(find spec/**/*_spec.rb | fzf --preview 'bat --color "always" {}')
   echo "bundle exec rspec $file"
-  print -S "$file"
+  print -S "bundle exec rspec $file"
   bundle exec rspec $file
 } # [r]spec [s]earch [f]ile
 function vg() { nvim $(fzf) } # [v]im [g]rep
@@ -139,6 +139,7 @@ alias cpb="git branch | grep '*' | tr -d '*' | tr -d ' ' | pbcopy" # [c]o[p]y [b
 alias tks="tmux kill-server" # [t]mux [k]ill [s]erver
 alias crc="cargo r -r --bin client"
 alias crs="cargo r -r --bin server"
+alias listfonts="fc-list | sed 's/.*:\s*\([^:]*\):.*/\1/' | tr ',' '\n' | sed 's/^[ \t]*//;s/[ \t]*$//' | sort | uniq" # https://stackoverflow.com/questions/57473124/how-to-find-all-available-fonts-on-osx-using-the-default-shell
 function rkill() { "kill $(cat tmp/pids/server.pid)" }
 
 #alias glog="git log --oneline | grep -v -e '^\s*$' --color=always | less --use-color" # [g]it [log]
