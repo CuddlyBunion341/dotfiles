@@ -5,5 +5,6 @@ return {
     { "<leader>f", "<cmd>Telescope find_files hidden=true<cr>" },
     { "<leader>w", "<cmd>Telescope live_grep<cr>" },
     { "<leader>r", "<cmd>Telescope resume<cr>" },
+    { "<leader>c", "<cmd>Telescope git_commits<cr>" },
   }
 }

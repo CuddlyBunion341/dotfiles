@@ -10,6 +10,7 @@ return {
         "size",
         "mtime",
       },
+      constrain_cursor = "name",
       skip_confirm_for_simple_edits = true,
       prompt_save_on_select_new_entry = true,
       watch_for_changes = true,
