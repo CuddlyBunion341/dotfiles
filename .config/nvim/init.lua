@@ -14,6 +14,11 @@ vim.keymap.set("n", "N", "Nzz")
 vim.keymap.set("n", "Q", ":quitall<cr>")
 vim.keymap.set("n", "<leader>/", "<cmd>noh<cr>")
 
+vim.api.nvim_set_keymap('n', '<C-k>', ':wincmd k<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<C-j>', ':wincmd j<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<C-h>', ':wincmd h<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<C-l>', ':wincmd l<CR>', { silent = true })
+
 vim.api.nvim_set_keymap('n', '@', '@q', {noremap = true})
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
