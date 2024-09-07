@@ -5,6 +5,6 @@ return {
     'Maximize'
   },
   keys = {
-    { "<C-z>", "<cmd>Maximize<cr>" }
+    { "<leader>z", "<cmd>Maximize<cr>" }
   }
 }
