@@ -43,6 +43,9 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
+vim.keymap.set('n', 'L', ':Lazy<cr>')
+vim.keymap.set('n', '<leader>C', ':Git commit')
+
 local plugins = {
   { import = "plugins" }
 }
