@@ -4,7 +4,7 @@ vim.opt.cursorcolumn = true
 vim.opt.termguicolors = true
 vim.wo.number = true
 vim.wo.relativenumber = true
-vim.opt.expandtab = true
+vim.opt.expandtab = false
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.scrolloff = 10
@@ -14,6 +14,7 @@ vim.opt.shortmess:append("A") -- https://stackoverflow.com/questions/1098159/vim
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
 vim.keymap.set("n", "Q", ":quit<cr>")
+vim.keymap.set("n", "<leader>W", ":wq<cr>")
 vim.keymap.set("n", "<leader>q", ":quitall<cr>")
 vim.keymap.set("n", "<leader>/", "<cmd>noh<cr>")
 
@@ -29,6 +30,8 @@ vim.keymap.set('n', '<leader>V', ':wincmd s<cr>', { noremap = true, silent = tru
 
 vim.api.nvim_set_keymap('n', '@', '@q', {noremap = true})
 
+vim.keymap.set('n', 'L', ':Lazy<cr>')
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
@@ -42,9 +45,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 
 vim.opt.rtp:prepend(lazypath)
-
-vim.keymap.set('n', 'L', ':Lazy<cr>')
-vim.keymap.set('n', '<leader>C', ':Git commit')
 
 local plugins = {
   { import = "plugins" }

@@ -6,7 +6,7 @@ return {
 	},
 	config = function()
 		require("nvim-treesitter.configs").setup {
-			ensure_installed = { "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "ruby", "javascript", "rust", "html" },
+			ensure_installed = { "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "ruby", "javascript", "rust", "html", "embedded_template" },
 			incremental_selection = {
 				enable = true,
 				keymaps = {
