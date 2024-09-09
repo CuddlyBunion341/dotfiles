@@ -10,6 +10,8 @@ vim.opt.shiftwidth = 2
 vim.opt.scrolloff = 10
 vim.opt.autowrite = true
 vim.opt.shortmess:append("A") -- https://stackoverflow.com/questions/1098159/vim-stop-existing-swap-file-warnings
+vim.opt.autowriteall = true
+vim.opt.list = true
 
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
@@ -59,6 +61,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Hightlight selection on yank',
   pattern = '*',
   callback = function()
-    vim.highlight.on_yank { higroup = 'IncSearch', timeout = 69 }
+    vim.highlight.on_yank { higroup = 'IncSearch', timeout = 100 }
   end,
 })
