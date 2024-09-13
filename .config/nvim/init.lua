@@ -19,6 +19,7 @@ vim.keymap.set("n", "Q", ":quit<cr>")
 vim.keymap.set("n", "<leader>W", ":wq<cr>")
 vim.keymap.set("n", "<leader>q", ":quitall<cr>")
 vim.keymap.set("n", "<leader>/", "<cmd>noh<cr>")
+vim.keymap.set("n", "<leader>s", ":w<cr>")
 
 vim.opt.splitright = true
 vim.opt.splitbelow = true
@@ -56,6 +57,8 @@ local opts = { defaults = { lazy = true }, change_detection = { notify = false }
 
 require("lazy").setup(plugins, opts)
 
+-- highlighted yank
+
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('highlight_yank', {}),
   desc = 'Hightlight selection on yank',
@@ -64,3 +67,33 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank { higroup = 'IncSearch', timeout = 100 }
   end,
 })
+
+-- hybrid line numbers
+
+local numbertoggle_group = vim.api.nvim_create_augroup('numbertoggle', { clear = true })
+
+vim.api.nvim_create_autocmd(
+  {'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter'},
+  {
+    group = numbertoggle_group,
+    pattern = '*',
+    callback = function()
+      if vim.wo.number and vim.fn.mode() ~= 'i' then
+        vim.wo.relativenumber = true
+      end
+    end
+  }
+)
+
+vim.api.nvim_create_autocmd(
+  {'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave'},
+  {
+    group = numbertoggle_group,
+    pattern = '*',
+    callback = function()
+      if vim.wo.number then
+        vim.wo.relativenumber = false
+      end
+    end
+  }
+)
