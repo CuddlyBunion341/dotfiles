@@ -23,6 +23,7 @@ vim.keymap.set("n", "<leader>/", "<cmd>noh<cr>")
 vim.keymap.set("n", "<leader>s", ":w<cr>")
 vim.keymap.set("n", "g=", "ggVG=<C-o>")
 vim.keymap.set("n", "zt", "<cmd>%s/\t/  /g<cr><C-o>")
+vim.keymap.set("n", "vag", "ggVG")
 
 vim.opt.splitright = true
 vim.opt.splitbelow = true
