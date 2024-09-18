@@ -107,6 +107,9 @@ parallel_exec() {
 alias '~'='cd ~'
 alias '..'='cd ..'
 alias '...'='cd ../../'
+alias '....'='cd ../../../'
+alias '.....'='cd ../../../../'
+alias '......'='cd ../../../../../'
 
 function rr() { rustc "$@.rs" && ./"$@"} # [r]ust [r]un
 function rgs() { rg --json -C 2 "$@" | delta } # [r]ip[g]rep [s]earch
@@ -139,6 +142,8 @@ alias cpb="git branch | grep '*' | tr -d '*' | tr -d ' ' | pbcopy" # [c]o[p]y [b
 alias tks="tmux kill-server" # [t]mux [k]ill [s]erver
 alias crc="cargo r -r --bin client"
 alias crs="cargo r -r --bin server"
+alias fastfetch="cat ~/.config/fastfetch/logo.txt | fastfetch --file - --logo-color-1 magenta"
+alias ff="fastfetch"
 alias listfonts="fc-list | sed 's/.*:\s*\([^:]*\):.*/\1/' | tr ',' '\n' | sed 's/^[ \t]*//;s/[ \t]*$//' | sort | uniq" # https://stackoverflow.com/questions/57473124/how-to-find-all-available-fonts-on-osx-using-the-default-shell
 function rkill() { "kill $(cat tmp/pids/server.pid)" }
 
@@ -304,3 +309,11 @@ renuo-cli-hack() {
   fi
 }
 
+# Update history
+HISTSIZE=1000000            # Size of in-memory history (you can set this to a large number)
+SAVEHIST=1000000            # Size of history saved to file (set to the same or a large number)
+HISTFILE=~/.zsh_history     # Location of history file
+setopt APPEND_HISTORY       # Append to history file instead of overwriting
+setopt HIST_IGNORE_DUPS     # Ignore duplicate commands in history
+setopt HIST_IGNORE_ALL_DUPS # Remove all previous duplicate entries
+setopt HIST_REDUCE_BLANKS   # Remove superfluous blanks in command
