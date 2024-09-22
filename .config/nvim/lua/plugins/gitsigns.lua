@@ -5,7 +5,7 @@ return {
     require("gitsigns").setup({
       numhl = true,
       attach_to_untracked = true,
-      update_debounce = 10,
+      update_debounce = 5,
       on_attach = function(bufnr)
         local gitsigns = require("gitsigns")
       end,

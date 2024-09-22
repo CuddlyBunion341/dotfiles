@@ -1,136 +1,41 @@
 return {
-  {
-    "ThePrimeagen/refactoring.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    opts = {},
-    keys = {
-      {
-        "<leader>rr",
-        function()
-          require("refactoring").select_refactor()
-        end,
-        desc = "Refactor",
-      },
-    },
-  },
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({})
-    end,
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-    lazy = false,
-    event = "InsertEnter",
-    config = function()
-      require("copilot_cmp").setup()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
-    end,
-  },
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    dependencies = {
-      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-    },
-    commands = {
-      "CopilotChat",
-      "CopilotChat",
-      "CopilotChatOpen",
-      "CopilotChatClose",
-      "CopilotChatToggle",
-      "CopilotChatStop",
-      "CopilotChatReset",
-      "CopilotChatSave",
-      "CopilotChatLoad",
-      "CopilotChatDebugInfo",
-      "CopilotChatModels",
-      "CopilotChatExplain",
-      "CopilotChatReview",
-      "CopilotChatFix",
-      "CopilotChatOptimize",
-      "CopilotChatDocs",
-      "CopilotChatTests",
-      "CopilotChatFixDiagnostic",
-      "CopilotChatCommit",
-      "CopilotChatCommitStaged",
-    },
-    opts = {
-      temperature = 0.3,
-      mappings = {
-        reset = {
-          normal = "<C-r>",
-          insert = "<C-r>",
-        },
-        complete = {
-          detail = "Use @<Tab> or /<Tab> for options.",
-          insert = "<Tab>",
-        },
-        close = {
-          normal = "q",
-          insert = "<C-c>",
-        },
-        submit_prompt = {
-          normal = "<CR>",
-          insert = "<C-m>",
-        },
-        accept_diff = {
-          normal = "<C-y>",
-          insert = "<C-y>",
-        },
-        yank_diff = {
-          normal = "gy",
-        },
-        show_diff = {
-          normal = "gd",
-        },
-        show_system_prompt = {
-          normal = "gp",
-        },
-        show_user_selection = {
-          normal = "gs",
-        },
-      },
-    },
-    keys = {
-      {
-        "<leader>ccq",
-        function()
-          local input = vim.fn.input("Quick Chat: ")
-          if input ~= "" then
-            require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
-          end
-        end,
-        desc = "CopilotChat - Quick chat",
-      },
-      {
-        "<leader>cch",
-        function()
-          local actions = require("CopilotChat.actions")
-          require("CopilotChat.integrations.telescope").pick(actions.help_actions())
-        end,
-        desc = "CopilotChat - Help actions",
-      },
-      -- Show prompts actions with telescope
-      {
-        "<leader>ccp",
-        function()
-          local actions = require("CopilotChat.actions")
-          require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-        end,
-        desc = "CopilotChat - Prompt actions",
-      },
-    },
-  },
+  -- {
+  --   "ThePrimeagen/refactoring.nvim",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-treesitter/nvim-treesitter",
+  --   },
+  --   opts = {},
+  --   keys = {
+  --     {
+  --       "<leader>rr",
+  --       function()
+  --         require("refactoring").select_refactor()
+  --       end,
+  --       desc = "Refactor",
+  --     },
+  --   },
+  -- },
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   cmd = "Copilot",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("copilot").setup({})
+  --   end,
+  -- },
+  -- {
+  --   "zbirenbaum/copilot-cmp",
+  --   lazy = false,
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("copilot_cmp").setup()
+  --     require("copilot").setup({
+  --       suggestion = { enabled = false },
+  --       panel = { enabled = false },
+  --     })
+  --   end,
+  -- },
   {
     "williamboman/mason.nvim",
     lazy = false,
@@ -155,33 +60,39 @@ return {
     lazy = false,
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      -- https://www.mitchellhanberg.com/modern-format-on-save-in-neovim/
-      -- vim.api.nvim_create_autocmd("LspAttach", {
-      --   group = vim.api.nvim_create_augroup("lsp", { clear = true }),
-      --   callback = function(args)
-      --     vim.api.nvim_create_autocmd("BufWritePre", {
-      --       buffer = args.buf,
-      --       callback = function()
-      --         vim.lsp.buf.format({ async = false, id = args.data.client_id })
-      --       end,
-      --     })
-      --   end,
-      -- })
+      -- require('java').setup()
 
       local lspconfig = require("lspconfig")
-      lspconfig.lua_ls.setup({ capabilities = capabilities })
-      lspconfig.ruby_lsp.setup({ capabilities = capabilities })
-      -- lspconfig.tsserver.setup({ capabilities = capabilities })
-      -- lspconfig.standardrb.setup({ capabilities = capabilities })
-      lspconfig.rubocop.setup({ capabilities = capabilities })
-      -- lspconfig.rust_analyzer.setup({ capabilities = capabilities })
+
+      -- Function to disable LSP for oil buffer
+      local function disable_lsp_for_oil_buffer(client, bufnr)
+        local bufname = vim.api.nvim_buf_get_name(bufnr)
+        if bufname:match("oil://") then
+          vim.lsp.stop_client(client.id)
+        end
+      end
+
+      lspconfig.lua_ls.setup({
+        capabilities = capabilities,
+        on_attach = disable_lsp_for_oil_buffer,
+      })
+      lspconfig.ruby_lsp.setup({
+        capabilities = capabilities,
+        on_attach = disable_lsp_for_oil_buffer,
+      })
+      lspconfig.rubocop.setup({
+        capabilities = capabilities,
+        on_attach = disable_lsp_for_oil_buffer,
+      })
       lspconfig.ltex.setup({
         cmd = { "ltex-ls" },
         filetypes = { "markdown", "text", "cff", "tex" },
         flags = { debounce_text_changes = 299 },
+        on_attach = disable_lsp_for_oil_buffer,
       })
-      lspconfig.astro.setup({})
-
+      lspconfig.astro.setup({
+        on_attach = disable_lsp_for_oil_buffer,
+      })
       lspconfig.solargraph.setup({
         capabilities = capabilities,
         cmd = {
@@ -201,6 +112,7 @@ return {
             symbols = true,
           },
         },
+        on_attach = disable_lsp_for_oil_buffer,
       })
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
@@ -212,7 +124,7 @@ return {
       autocmd BufNewFile,BufRead *.prawn set filetype=ruby
       ]])
     end,
-  },
+},
   {
     "nvimtools/none-ls.nvim",
     config = function()
@@ -306,13 +218,13 @@ return {
       })
     end,
   },
-  {
-    "zbirenbaum/copilot-cmp",
-    event = "InsertEnter",
-    config = function()
-      require("copilot_cmp").setup()
-    end,
-  },
+  -- {
+  --   "zbirenbaum/copilot-cmp",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("copilot_cmp").setup()
+  --   end,
+  -- },
   -- {
   --   "nvim-treesitter/nvim-treesitter-refactor",
   --   lazy = false,

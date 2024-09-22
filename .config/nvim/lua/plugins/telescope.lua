@@ -4,7 +4,10 @@ return {
   keys = {
     { "<leader>f", "<cmd>Telescope find_files hidden=true<cr>" },
     { "<leader>w", "<cmd>Telescope live_grep<cr>" },
-    { "<leader>r", "<cmd>Telescope resume<cr>" },
+    { "<leader>r", function()
+      local current_word = vim.fn.expand("<cword>")
+      require('telescope.builtin').grep_string({ search = current_word })
+    end },
     { "<leader>c", "<cmd>Telescope git_commits<cr>" },
   }
 }
