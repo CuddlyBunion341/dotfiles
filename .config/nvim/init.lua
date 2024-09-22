@@ -12,7 +12,6 @@ vim.opt.autowrite = true
 vim.opt.shortmess:append("A") -- https://stackoverflow.com/questions/1098159/vim-stop-existing-swap-file-warnings
 vim.opt.autowriteall = true
 vim.opt.list = true
-
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
 vim.keymap.set("n", "Q", ":quit<cr>")
@@ -24,6 +23,10 @@ vim.keymap.set("n", "<leader>s", ":w<cr>")
 vim.keymap.set("n", "g=", "ggVG=<C-o>")
 vim.keymap.set("n", "zt", "<cmd>%s/\t/  /g<cr><C-o>")
 vim.keymap.set("n", "vag", "ggVG")
+vim.keymap.set("n", "gJ", "Jx")
+vim.api.nvim_set_keymap('n', '<Delete>', 'qq', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<PageUp>', 'q', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<PageDown>', '@q', { noremap = true, silent = true })
 
 vim.opt.splitright = true
 vim.opt.splitbelow = true
