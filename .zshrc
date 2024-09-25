@@ -117,7 +117,7 @@ function rgs() { rg --json -C 2 "$@" | delta } # [r]ip[g]rep [s]earch
 
 alias zshrc='nvim ~/.zshrc' # Idea from Chris
 alias calacritty='nvim ~/.config/alacritty/alacritty.toml'
-alias ckitty='nvim ~/.config/kitty/kitty.yml'
+alias ckitty='nvim ~/.config/kitty/kitty.conf'
 alias ctmux='nvim ~/.tmux.conf'
 alias clazygit='nvim ~/Library/Application\ Support/lazygit/config.yml'
 alias cneovide='nvim ~/.config/neovide/config.toml'
@@ -315,7 +315,7 @@ renuo-cli-hack() {
 }
 
 # Update history
-HISTSIZE=1000000            # Size of in-memory history (you can set this to a large number)
+HISTSIZE=100000             # Size of in-memory history (you can set this to a large number)
 SAVEHIST=1000000            # Size of history saved to file (set to the same or a large number)
 HISTFILE=~/.zsh_history     # Location of history file
 setopt APPEND_HISTORY       # Append to history file instead of overwriting
