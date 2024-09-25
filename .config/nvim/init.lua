@@ -30,6 +30,37 @@ vim.api.nvim_set_keymap('n', '<Delete>', 'qq', { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '<PageUp>', 'q', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<PageDown>', '@q', { noremap = true, silent = true })
 
+-- tabs
+vim.keymap.set("n", "<C-t>", ":tabnew<cr>", { noremap = true })
+vim.keymap.set("n", "<C-]>", ":tabnext<cr>", { noremap = true })
+vim.keymap.set("n", "<C-[>", ":tabprevious<cr>", { noremap = true })
+
+-- terminal
+vim.keymap.set("n", "<C-`>", ":vert terminal<cr>", { noremap = true })
+vim.keymap.set("t", "<C-q>", "<C-\\><C-n>", { noremap = true })
+
+-- Function to toggle terminal on the right
+function toggle_terminal()
+  local term_bufnr = nil
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_get_option(bufnr, 'buftype') == 'terminal' then
+      term_bufnr = bufnr
+      break
+    end
+  end
+
+  if term_bufnr then
+    -- If terminal is open, close it
+    vim.api.nvim_buf_delete(term_bufnr, { force = true })
+  else
+    -- If terminal is not open, open it in a vertical split
+    vim.cmd('vsplit | terminal')
+  end
+end
+
+-- Map Ctrl + . to toggle terminal
+vim.keymap.set("n", "<C-.>", toggle_terminal, { noremap = true, silent = true })
+
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.keymap.set('n', '<C-k>', ':wincmd k<cr>', { silent = true })
