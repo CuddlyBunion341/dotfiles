@@ -66,7 +66,27 @@ mods = "Command"
 [[keyboard.bindings]]
 key = "T"
 mods = "Command"
-command = { program = "/opt/homebrew/bin/tmux", args = ["new-window", "/bin/zsh"] }
+command = { program = "/opt/homebrew/bin/tmux", args = ["new-window"] }
+
+[[keyboard.bindings]]
+key = "["
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["previous-window"] }
+
+[[keyboard.bindings]]
+key = "]"
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["next-window"] }
+
+[[keyboard.bindings]]
+key = "d"
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["split", "-h"] }
+
+[[keyboard.bindings]]
+key = "e"
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["split", "-v"] }
 
 [[keyboard.bindings]]
 key = "W"
