@@ -227,6 +227,10 @@ return {
       autocmd BufNewFile,BufRead *.prawn set filetype=ruby
       ]])
     end,
+    keys = {
+      {"<leader>ls", "<cmd>LspStop<cr>"},
+      {"<leader>lS", "<cmd>LspStart<cr>"},
+    }
 },
   {
     "nvimtools/none-ls.nvim",
