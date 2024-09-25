@@ -117,6 +117,7 @@ function rgs() { rg --json -C 2 "$@" | delta } # [r]ip[g]rep [s]earch
 
 alias zshrc='nvim ~/.zshrc' # Idea from Chris
 alias calacritty='nvim ~/.config/alacritty/alacritty.toml'
+alias ckitty='nvim ~/.config/kitty/kitty.yml'
 alias ctmux='nvim ~/.tmux.conf'
 alias clazygit='nvim ~/Library/Application\ Support/lazygit/config.yml'
 alias cneovide='nvim ~/.config/neovide/config.toml'
