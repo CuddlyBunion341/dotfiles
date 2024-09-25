@@ -1,41 +1,4 @@
 return {
-  -- {
-  --   "ThePrimeagen/refactoring.nvim",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-treesitter/nvim-treesitter",
-  --   },
-  --   opts = {},
-  --   keys = {
-  --     {
-  --       "<leader>rr",
-  --       function()
-  --         require("refactoring").select_refactor()
-  --       end,
-  --       desc = "Refactor",
-  --     },
-  --   },
-  -- },
-  -- {
-  --   "zbirenbaum/copilot.lua",
-  --   cmd = "Copilot",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("copilot").setup({})
-  --   end,
-  -- },
-  -- {
-  --   "zbirenbaum/copilot-cmp",
-  --   lazy = false,
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("copilot_cmp").setup()
-  --     require("copilot").setup({
-  --       suggestion = { enabled = false },
-  --       panel = { enabled = false },
-  --     })
-  --   end,
-  -- },
   {
     "williamboman/mason.nvim",
     lazy = false,
@@ -60,7 +23,147 @@ return {
     lazy = false,
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      -- require('java').setup()
+      -- require('java').setup(
+	},
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = function()
+			require("copilot").setup({})
+		end,
+	},
+	{
+		"zbirenbaum/copilot-cmp",
+		lazy = false,
+		event = "InsertEnter",
+		config = function()
+			require("copilot_cmp").setup()
+			require("copilot").setup({
+				suggestion = { enabled = false },
+				panel = { enabled = false },
+			})
+		end,
+	},
+	{
+		"CopilotC-Nvim/CopilotChat.nvim",
+		dependencies = {
+			{ "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+		},
+		commands = {
+			"CopilotChat",
+			"CopilotChat",
+			"CopilotChatOpen",
+			"CopilotChatClose",
+			"CopilotChatToggle",
+			"CopilotChatStop",
+			"CopilotChatReset",
+			"CopilotChatSave",
+			"CopilotChatLoad",
+			"CopilotChatDebugInfo",
+			"CopilotChatModels",
+			"CopilotChatExplain",
+			"CopilotChatReview",
+			"CopilotChatFix",
+			"CopilotChatOptimize",
+			"CopilotChatDocs",
+			"CopilotChatTests",
+			"CopilotChatFixDiagnostic",
+			"CopilotChatCommit",
+			"CopilotChatCommitStaged",
+		},
+		opts = {
+			temperature = 0.3,
+			mappings = {
+				reset = {
+					normal = "<C-r>",
+					insert = "<C-r>",
+				},
+				complete = {
+					detail = "Use @<Tab> or /<Tab> for options.",
+					insert = "<Tab>",
+				},
+				close = {
+					normal = "q",
+					insert = "<C-c>",
+				},
+				submit_prompt = {
+					normal = "<CR>",
+					insert = "<C-m>",
+				},
+				accept_diff = {
+					normal = "<C-y>",
+					insert = "<C-y>",
+				},
+				yank_diff = {
+					normal = "gy",
+				},
+				show_diff = {
+					normal = "gd",
+				},
+				show_system_prompt = {
+					normal = "gp",
+				},
+				show_user_selection = {
+					normal = "gs",
+				},
+			},
+		},
+		keys = {
+			{
+				"<leader>ccq",
+				function()
+					local input = vim.fn.input("Quick Chat: ")
+					if input ~= "" then
+						require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+					end
+				end,
+				desc = "CopilotChat - Quick chat",
+			},
+			{
+				"<leader>cch",
+				function()
+					local actions = require("CopilotChat.actions")
+					require("CopilotChat.integrations.telescope").pick(actions.help_actions())
+				end,
+				desc = "CopilotChat - Help actions",
+			},
+			-- Show prompts actions with telescope
+			{
+				"<leader>ccp",
+				function()
+					local actions = require("CopilotChat.actions")
+					require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+				end,
+				desc = "CopilotChat - Prompt actions",
+			},
+		},
+	},
+	{
+		"williamboman/mason.nvim",
+		lazy = false,
+		keys = {
+			{ "<leader>m", "<cmd>Mason<cr>" },
+		},
+		config = function()
+			require("mason").setup()
+		end,
+	},
+	{
+		"williamboman/mason-lspconfig.nvim",
+		lazy = false,
+		config = function()
+			require("mason-lspconfig").setup({
+				ensure_installed = { "lua_ls", "tsserver", "solargraph" },
+			})
+		end,
+	},
+	{
+		"neovim/nvim-lspconfig",
+		lazy = false,
+		config = function()
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
       local lspconfig = require("lspconfig")
 
@@ -218,52 +321,4 @@ return {
       })
     end,
   },
-  -- {
-  --   "zbirenbaum/copilot-cmp",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("copilot_cmp").setup()
-  --   end,
-  -- },
-  -- {
-  --   "nvim-treesitter/nvim-treesitter-refactor",
-  --   lazy = false,
-  --   config = function()
-  --     require("nvim-treesitter.configs").setup({
-  --       refactor = {
-  --         highlight_definitions = {
-  --           enable = true,
-  --           clear_on_cursor_move = true,
-  --         },
-  --         highlight_current_scope = { enable = false },
-  --         smart_rename = {
-  --           enable = true,
-  --           -- Assign keymaps to false to disable them, e.g. `smart_rename = false`.
-  --           keymaps = {
-  --             smart_rename = "grr",
-  --           },
-  --         },
-  --         navigation = {
-  --           enable = true,
-  --           -- Assign keymaps to false to disable them, e.g. `goto_definition = false`.
-  --           keymaps = {
-  --             goto_definition = "gnd",
-  --             list_definitions = "gnD",
-  --             list_definitions_toc = "gO",
-  --             goto_next_usage = "<a-*>",
-  --             goto_previous_usage = "<a-#>",
-  --           },
-  --         },
-  --       },
-  --     })
-  --   end,
-  -- },
-  -- {
-  --   "cuducos/yaml.nvim",
-  --   ft = { "yaml" }, -- optional
-  --   dependencies = {
-  --     "nvim-treesitter/nvim-treesitter",
-  --     "nvim-telescope/telescope.nvim", -- optional
-  --   },
-  -- }
 }
