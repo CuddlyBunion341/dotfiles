@@ -39,100 +39,6 @@ return {
     end,
   },
   {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    dependencies = {
-      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-    },
-    commands = {
-      "CopilotChat",
-      "CopilotChatOpen",
-      "CopilotChatClose",
-      "CopilotChatToggle",
-      "CopilotChatStop",
-      "CopilotChatReset",
-      "CopilotChatSave",
-      "CopilotChatLoad",
-      "CopilotChatDebugInfo",
-      "CopilotChatModels",
-      "CopilotChatExplain",
-      "CopilotChatReview",
-      "CopilotChatFix",
-      "CopilotChatOptimize",
-      "CopilotChatDocs",
-      "CopilotChatTests",
-      "CopilotChatFixDiagnostic",
-      "CopilotChatCommit",
-      "CopilotChatCommitStaged",
-    },
-    opts = {
-      temperature = 0.3,
-      mappings = {
-        reset = {
-          normal = "<C-r>",
-          insert = "<C-r>",
-        },
-        complete = {
-          detail = "Use @<Tab> or /<Tab> for options.",
-          insert = "<Tab>",
-        },
-        close = {
-          normal = "q",
-          insert = "<C-c>",
-        },
-        submit_prompt = {
-          normal = "<CR>",
-          insert = "<C-m>",
-        },
-        accept_diff = {
-          normal = "<C-y>",
-          insert = "<C-y>",
-        },
-        yank_diff = {
-          normal = "gy",
-        },
-        show_diff = {
-          normal = "gd",
-        },
-        show_system_prompt = {
-          normal = "gp",
-        },
-        show_user_selection = {
-          normal = "gs",
-        },
-      },
-    },
-    keys = {
-      {
-        "<leader>ccq",
-        function()
-          local input = vim.fn.input("Quick Chat: ")
-          if input ~= "" then
-            require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
-          end
-        end,
-        desc = "CopilotChat - Quick chat",
-      },
-      {
-        "<leader>cch",
-        function()
-          local actions = require("CopilotChat.actions")
-          require("CopilotChat.integrations.telescope").pick(actions.help_actions())
-        end,
-        desc = "CopilotChat - Help actions",
-      },
-      -- Show prompts actions with telescope
-      {
-        "<leader>ccp",
-        function()
-          local actions = require("CopilotChat.actions")
-          require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-        end,
-        desc = "CopilotChat - Prompt actions",
-      },
-    },
-  },
-  {
     "williamboman/mason.nvim",
     lazy = false,
     keys = {
@@ -147,7 +53,7 @@ return {
     lazy = false,
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "tsserver", "solargraph" },
+        ensure_installed = { "lua_ls", "ts_ls", "solargraph", "rust_analyzer" },
       })
     end,
   },
@@ -179,6 +85,10 @@ return {
         capabilities = capabilities,
         on_attach = disable_lsp_for_oil_buffer,
       })
+      lspconfig.ts_ls.setup({
+        capabilities = capabilities,
+        on_attach = disable_lsp_for_oil_buffer,
+      })
       lspconfig.ltex.setup({
         cmd = { "ltex-ls" },
         filetypes = { "markdown", "text", "cff", "tex" },
@@ -186,6 +96,10 @@ return {
         on_attach = disable_lsp_for_oil_buffer,
       })
       lspconfig.astro.setup({
+        on_attach = disable_lsp_for_oil_buffer,
+      })
+      lspconfig.rust_analyzer.setup({
+        capabilities = capabilities,
         on_attach = disable_lsp_for_oil_buffer,
       })
       lspconfig.solargraph.setup({
@@ -223,7 +137,46 @@ return {
       {"<leader>ls", "<cmd>LspStop<cr>"},
       {"<leader>lS", "<cmd>LspStart<cr>"},
     }
-},
+  },
+  {
+    "danarth/sonarlint.nvim",
+    ft = "java",
+    config = function()
+      require('sonarlint').setup({
+        server = {
+          cmd = {
+            'sonarlint-language-server',
+            -- Ensure that sonarlint-language-server uses stdio channel
+            '-stdio',
+            '-analyzers',
+            -- paths to the analyzers you need, using those for python and java in this example
+            vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarpython.jar"),
+            vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarcfamily.jar"),
+            vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarjava.jar"),
+          },
+          -- All settings are optional
+          settings = {
+            -- The default for sonarlint is {}, this is just an example
+            sonarlint = {
+              rules = {
+                ['typescript:S101'] = { level = 'on', parameters = { format = '^[A-Z][a-zA-Z0-9]*$' } },
+                ['typescript:S103'] = { level = 'on', parameters = { maximumLineLength = 180 } },
+                ['typescript:S106'] = { level = 'on' },
+                ['typescript:S107'] = { level = 'on', parameters = { maximumFunctionParameters = 7 } }
+              }
+            }
+          }
+        },
+        filetypes = {
+          -- Tested and working
+          'python',
+          'cpp',
+          -- Requires nvim-jdtls, otherwise an error message will be printed
+          'java',
+        }
+      })
+    end
+  },
   {
     "nvimtools/none-ls.nvim",
     config = function()

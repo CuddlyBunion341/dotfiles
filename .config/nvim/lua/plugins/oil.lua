@@ -1,5 +1,5 @@
 return {
-  'stevearc/oil.nvim',
+  "stevearc/oil.nvim",
   dependencies = { { "echasnovski/mini.icons", opts = {} } },
   lazy = false,
   config = function()
@@ -23,8 +23,8 @@ return {
         ["<C-p>"] = "actions.preview",
         ["-"] = "actions.parent",
         ["_"] = "actions.open_cwd",
-        ["`"] = "actions.cd",
-        ["~"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory" },
+        ["<C-`>"] = "actions.cd",
+        ["<C-~>"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory" },
         ["gs"] = "actions.change_sort",
         ["<C-o>"] = {
           "actions.open_cmdline",

@@ -30,10 +30,43 @@ vim.api.nvim_set_keymap('n', '<Delete>', 'qq', { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '<PageUp>', 'q', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<PageDown>', '@q', { noremap = true, silent = true })
 
+-- Function to get the current line under the cursor
+local function get_current_line()
+  return vim.api.nvim_get_current_line()
+end
+
+-- Function to extract the attribute name from the current line
+local function extract_attribute_name(line)
+  return line:match("%s*(%w+)%s*;")
+end
+
+-- Function to define getter and setter macros
+local function define_getter_setter_macros()
+  local line = get_current_line()
+  local attribute_name = extract_attribute_name(line)
+  if attribute_name then
+    local getter = string.format(
+      'o// Getter method for %s^Mpublic String get%s() {^M  return this.%s;^M}',
+      attribute_name, attribute_name:gsub("^%l", string.upper), attribute_name
+    )
+    local setter = string.format(
+      'o// Setter method for %s^Mpublic void set%s(String %s) {^M  this.%s = %s;^M}',
+      attribute_name, attribute_name:gsub("^%l", string.upper), attribute_name, attribute_name, attribute_name
+    )
+    vim.cmd(string.format("let @g = '%s'", getter))
+    vim.cmd(string.format("let @s = '%s'", setter))
+  else
+    print("No attribute name found on the current line.")
+  end
+end
+
+-- Call the function to define the macros
+define_getter_setter_macros()
+
 -- tabs
-vim.keymap.set("n", "<C-t>", ":tabnew<cr>", { noremap = true })
-vim.keymap.set("n", "<C-]>", ":tabnext<cr>", { noremap = true })
-vim.keymap.set("n", "<C-[>", ":tabprevious<cr>", { noremap = true })
+-- vim.keymap.set("n", "<C-t>", ":tabnew<cr>", { noremap = true })
+-- vim.keymap.set("n", "<C-]>", ":tabnext<cr>", { noremap = true })
+-- vim.keymap.set("n", "<C-[>", ":tabprevious<cr>", { noremap = true })
 
 -- terminal
 vim.keymap.set("n", "<C-`>", ":vert terminal<cr>", { noremap = true })
