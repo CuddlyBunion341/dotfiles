@@ -1,41 +1,10 @@
 return {
   {
-    "williamboman/mason.nvim",
-    lazy = false,
-    keys = {
-      { "<leader>m", "<cmd>Mason<cr>" },
-    },
-    config = function()
-      require("mason").setup()
-    end,
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    lazy = false,
-    config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "ruby_lsp" },
-      })
-    end,
-  },
-  {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
     config = function()
-      require("copilot").setup({})
-    end,
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-    lazy = false,
-    event = "InsertEnter",
-    config = function()
-      require("copilot_cmp").setup()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
+      require("copilot").setup()
     end,
   },
   {
@@ -58,50 +27,38 @@ return {
     end,
   },
   {
+    "sheerun/vim-polyglot",
+    lazy = false,
+  },
+  {
     "neovim/nvim-lspconfig",
     lazy = false,
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      local lspconfig = require("lspconfig")
+      local lspconfig = require('lspconfig')
 
-      -- Function to disable LSP for oil buffer
-      local function disable_lsp_for_oil_buffer(client, bufnr)
-        local bufname = vim.api.nvim_buf_get_name(bufnr)
-        if bufname:match("oil://") then
-          vim.lsp.stop_client(client.id)
-        end
+      local common_options = {
+        capabilities = capabilities,
+      }
+
+      local function setup_lsp(server_name, options)
+        options = options or {}
+        lspconfig[server_name].setup(vim.tbl_extend('force', common_options, options))
       end
 
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities,
-        on_attach = disable_lsp_for_oil_buffer,
-      })
-      lspconfig.ruby_lsp.setup({
-        capabilities = capabilities,
-        on_attach = disable_lsp_for_oil_buffer,
-      })
-      lspconfig.rubocop.setup({
-        capabilities = capabilities,
-        on_attach = disable_lsp_for_oil_buffer,
-      })
-      lspconfig.ts_ls.setup({
-        capabilities = capabilities,
-        on_attach = disable_lsp_for_oil_buffer,
-      })
-      lspconfig.ltex.setup({
+      setup_lsp('lua_ls')
+      setup_lsp('ruby_lsp')
+      setup_lsp('rubocop')
+      setup_lsp('ts_ls')
+      setup_lsp('ltex', {
         cmd = { "ltex-ls" },
         filetypes = { "markdown", "text", "cff", "tex" },
         flags = { debounce_text_changes = 299 },
-        on_attach = disable_lsp_for_oil_buffer,
       })
-      lspconfig.astro.setup({
-        on_attach = disable_lsp_for_oil_buffer,
-      })
-      lspconfig.rust_analyzer.setup({
-        capabilities = capabilities,
-        on_attach = disable_lsp_for_oil_buffer,
-      })
+      setup_lsp('astro')
+      setup_lsp('rust_analyzer')
+
       lspconfig.solargraph.setup({
         capabilities = capabilities,
         cmd = {
@@ -121,7 +78,6 @@ return {
             symbols = true,
           },
         },
-        on_attach = disable_lsp_for_oil_buffer,
       })
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
@@ -261,7 +217,6 @@ return {
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources({
-          { name = "copilot", group_index = 2 },
           { name = "nvim_lsp" },
           { name = "luasnip" },
         }, {
