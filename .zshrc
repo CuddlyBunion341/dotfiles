@@ -183,7 +183,7 @@ alias c="code"
 alias bat="bat --style plain --theme OneHalfDark"
 alias cat="bat"
 alias gdu="git diff @{upstream}"
-alias spf="~/bin/spf"
+alias spf="superfile"
 alias clines="find . -type f -name '*.txt' -exec wc -l {} +"
 
 alias gch="git checkout"

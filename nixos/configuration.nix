@@ -68,6 +68,7 @@
 
       fbterm
       eza
+      superfile
 
       bun
 
