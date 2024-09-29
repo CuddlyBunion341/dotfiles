@@ -31,13 +31,14 @@ return {
 		config = function()
 			require("copilot_cmp").setup()
 			require("copilot").setup({
-				suggestion = { enabled = false },
+				suggestion = { enabled = true },
 				panel = { enabled = false },
 			})
 		end,
 	},
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
+    lazy = false,
 		dependencies = {
 			{ "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
 			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
@@ -174,12 +175,12 @@ return {
 			-- lspconfig.standardrb.setup({ capabilities = capabilities })
 			-- lspconfig.rubocop.setup({ capabilities = capabilities })
 			-- lspconfig.rust_analyzer.setup({ capabilities = capabilities })
-			lspconfig.ltex.setup({
-				cmd = { "ltex-ls" },
-				filetypes = { "markdown", "text", "cff", "tex" },
-				flags = { debounce_text_changes = 299 },
-			})
-			lspconfig.astro.setup({})
+			-- lspconfig.ltex.setup({
+			-- 	cmd = { "ltex-ls" },
+			-- 	filetypes = { "markdown", "text", "cff", "tex" },
+			-- 	flags = { debounce_text_changes = 299 },
+			-- })
+			-- lspconfig.astro.setup({})
 
 			lspconfig.solargraph.setup({
 				capabilities = capabilities,
@@ -296,20 +297,13 @@ return {
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
 				}),
 				sources = cmp.config.sources({
-					{ name = "copilot", group_index = 2 },
+					-- { name = "copilot", group_index = 2 },
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
 				}, {
 					{ name = "buffer" },
 				}),
 			})
-		end,
-	},
-	{
-		"zbirenbaum/copilot-cmp",
-		event = "InsertEnter",
-		config = function()
-			require("copilot_cmp").setup()
 		end,
 	},
 	-- {

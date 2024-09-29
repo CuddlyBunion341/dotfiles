@@ -464,12 +464,12 @@ return {
     lazy = false,
   },
   { "echasnovski/mini.ai", version = false, lazy = false },
-  {
-    'nvim-lualine/lualine.nvim',
-    lazy = false,
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      require("lualine").setup()
-    end
-  }
+  -- {
+  --   'nvim-lualine/lualine.nvim',
+  --   lazy = false,
+  --   dependencies = { 'nvim-tree/nvim-web-devicons' },
+  --   config = function()
+  --     require("lualine").setup()
+  --   end
+  -- }
 }
