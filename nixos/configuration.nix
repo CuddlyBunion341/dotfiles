@@ -12,9 +12,22 @@
 
 # console.font = "Lat2-Terminus16";
 
-  networking.hostName = "nixos";
+  networking = {
+    hostName = "nixos";
+    networkmanager = {
+      enable = true;
+    };
+    wireless = {
+      enable = false;
+      networks = {};
+    };
+  };
 
-  networking.networkmanager.enable = true;
+  # networking.hostName = "nixos";
+  #
+  # networking.networkmanager.enable = true;
+  # networking.wireless.enable = false;
+  # networking.useDHCP = true;
 
   time.timeZone = "Europe/Zurich";
 
