@@ -67,7 +67,7 @@ const formatedCommits = sortedCommits.map(commit => {
   const formatedDate = new Date(commit.date).toLocaleTimeString()
 
   return {
-    branch: textElipsis(commit.branch, 20),
+    branch: textElipsis(commit.branch, 40),
     author: textElipsis(commit.author_name, 10),
     hash: commit.hash.slice(0, 7),
     date: formatedDate,
