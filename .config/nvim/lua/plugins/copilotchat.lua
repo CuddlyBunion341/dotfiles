@@ -27,6 +27,7 @@ return {
   },
   opts = {
     temperature = 0.3,
+    auto_insert_mode = true,
     mappings = {
       reset = {
         normal = "<C-r>",
