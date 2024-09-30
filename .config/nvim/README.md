@@ -33,7 +33,7 @@ I am using the lazyvim plugin manager to manage plugins.
 
 #### File Exploring
 - **bufexplorer**: Buffer explorer / picker.
-- **Nvim-tree**: A file explorer tree.
+- **Oil**: A text buffer based file explorer.
 
 #### Autocompletion
 - **nvim-cmp**: Autocompletion framework.
