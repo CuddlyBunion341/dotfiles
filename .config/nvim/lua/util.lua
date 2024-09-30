@@ -2,7 +2,6 @@ local function get_current_line()
 	return vim.api.nvim_get_current_line()
 end
 
--- Function to extract the attribute name from the current line
 local function extract_attribute_name(line)
 	return line:match("%s*(%w+)%s*;")
 end
@@ -32,10 +31,8 @@ local function define_getter_setter_macros()
 	end
 end
 
--- Call the function to define the macros
 define_getter_setter_macros()
 
--- highlighted yank
 vim.api.nvim_create_autocmd("TextYankPost", {
 	group = vim.api.nvim_create_augroup("highlight_yank", {}),
 	desc = "Hightlight selection on yank",
@@ -44,8 +41,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank({ higroup = "IncSearch", timeout = 100 })
 	end,
 })
-
--- hybrid line numbers
 
 local numbertoggle_group = vim.api.nvim_create_augroup("numbertoggle", { clear = true })
 
@@ -79,10 +74,8 @@ function toggle_terminal()
 	end
 
 	if term_bufnr then
-		-- If terminal is open, close it
 		vim.api.nvim_buf_delete(term_bufnr, { force = true })
 	else
-		-- If terminal is not open, open it in a vertical split
 		vim.cmd("vsplit | terminal")
 	end
 end

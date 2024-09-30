@@ -1,4 +1,3 @@
--- warnings
 require("settings")
 require("util")
 
