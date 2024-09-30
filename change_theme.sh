@@ -10,31 +10,30 @@ if [ ! -f "$ALACRITTY_CONFIG_FILE" ]; then
     exit 1
 fi
 
-NVIM_CONFIG_FILE="$HOME/.config/nvim/init.lua"
+NVIM_THEME_FILE="$HOME/.config/nvim/lua/theme.lua"
 NVIM_LIGHT_THEME='solarized'
-NVIM_DARK_THEME='moonfly'
+NVIM_DARK_THEME='tokyodark'
 
-NVIM_LIGHT_THEME_CONFIG="vim.cmd.colorscheme(\"$NVIM_LIGHT_THEME\")"
-NVIM_DARK_THEME_CONFIG="vim.cmd.colorscheme(\"$NVIM_DARK_THEME\")"
-NVIM_LIGHT_BACKGROUND_CONFIG='vim.opt.background = "light"'
-NVIM_DARK_BACKGROUND_CONFIG='vim.opt.background = "dark"'
+# Check if NVIM_THEME_FILE exists
+if [ ! -f "$NVIM_THEME_FILE" ]; then
+    echo "File not found: $NVIM_THEME_FILE"
+    exit 1
+fi
 
 NVIM_SERVERS=$(nvr --serverlist)
 
 if grep -q "$ALACRITTY_LIGHT_THEME" "$ALACRITTY_CONFIG_FILE"; then
     # switch to dark theme
-    sed -i "s|$ALACRITTY_LIGHT_THEME|$ALACRITTY_DARK_THEME|g" "$ALACRITTY_CONFIG_FILE"
-    sed -i "s|$NVIM_LIGHT_BACKGROUND_CONFIG|$NVIM_DARK_BACKGROUND_CONFIG|g" "$NVIM_CONFIG_FILE"
-    sed -i "s|$NVIM_LIGHT_THEME_CONFIG|$NVIM_DARK_THEME_CONFIG|g" "$NVIM_CONFIG_FILE"
+    sed -i '' "s|$ALACRITTY_LIGHT_THEME|$ALACRITTY_DARK_THEME|g" "$ALACRITTY_CONFIG_FILE"
+    sed -i '' "s|local USE_DARKMODE = false|local USE_DARKMODE = true|g" "$NVIM_THEME_FILE"
     for server in $NVIM_SERVERS; do
         nvr --servername $server --remote-send ":colorscheme $NVIM_DARK_THEME<CR>:set background=dark<CR>"
     done
     echo "Changed to dark theme"
 else
     # switch to light theme
-    sed -i "s|$ALACRITTY_DARK_THEME|$ALACRITTY_LIGHT_THEME|g" "$ALACRITTY_CONFIG_FILE"
-    sed -i "s|$NVIM_DARK_THEME_CONFIG|$NVIM_LIGHT_THEME_CONFIG|g" "$NVIM_CONFIG_FILE"
-    sed -i "s|$NVIM_DARK_BACKGROUND_CONFIG|$NVIM_LIGHT_BACKGROUND_CONFIG|g" "$NVIM_CONFIG_FILE"
+    sed -i '' "s|$ALACRITTY_DARK_THEME|$ALACRITTY_LIGHT_THEME|g" "$ALACRITTY_CONFIG_FILE"
+    sed -i '' "s|local USE_DARKMODE = true|local USE_DARKMODE = false|g" "$NVIM_THEME_FILE"
     for server in $NVIM_SERVERS; do
         nvr --servername $server --remote-send ":colorscheme $NVIM_LIGHT_THEME<CR>:set background=light<CR>"
     done

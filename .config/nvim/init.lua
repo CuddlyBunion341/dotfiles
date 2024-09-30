@@ -22,3 +22,4 @@ local plugins = {
 local opts = { defaults = { lazy = true }, change_detection = { notify = false } }
 
 require("lazy").setup(plugins, opts)
+require("theme")
