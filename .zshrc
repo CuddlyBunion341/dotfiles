@@ -9,6 +9,6 @@ source ~/.zsh/zinit.sh
 set -o vi
 
 eval "$(fzf --zsh)"
-bindkey -r "^t" # Unbind fzf keybinding
-compinit -C
+bindkey -r "^t"
 
+compinit -C
