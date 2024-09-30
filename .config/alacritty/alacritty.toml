@@ -1,6 +1,4 @@
-import = [
-  "/Users/dani/.asdf/installs/nodejs/18.14.2/lib/node_modules/alacritty-themes/themes/Solarized-Light.toml"
-]
+import = [ "/Users/dani/.config/alacritty/current-theme.toml" ]
 
 [env]
 TERM = "xterm-256color"
@@ -63,16 +61,36 @@ action = "DecreaseFontSize"
 key = "Minus"
 mods = "Command"
 
-# [[keyboard.bindings]]
-# key = "T"
-# mods = "Command"
-# command = { program = "/opt/homebrew/bin/tmux", args = ["new-window", "/bin/zsh"] }
-# 
-# [[keyboard.bindings]]
-# key = "W"
-# mods = "Command"
-# command = { program = "/opt/homebrew/bin/tmux", args = ["kill-pane"] }
-# 
+[[keyboard.bindings]]
+key = "T"
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["new-window"] }
+
+[[keyboard.bindings]]
+key = "["
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["previous-window"] }
+
+[[keyboard.bindings]]
+key = "]"
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["next-window"] }
+
+[[keyboard.bindings]]
+key = "d"
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["split", "-h"] }
+
+[[keyboard.bindings]]
+key = "e"
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["split", "-v"] }
+
+[[keyboard.bindings]]
+key = "W"
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["kill-pane"] }
+
 [shell]
 # args = ["-l", "-c", "session_name=$(tmux ls | grep -v \"(attached)\" | head -n 1 | cut -d: -f1); [ -n \"$session_name\" ] && tmux attach -t \"$session_name\" || tmux new-session"]
 program = "/run/current-system/sw/bin/zsh"

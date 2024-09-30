@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+!/usr/bin/env bash
 #===============================================================================
 #   Author: CuddlyBunion341
 #  Created: 2024-04-13 22:25
@@ -13,8 +13,10 @@ tmux_set() {
 	tmux set-option -gq "$1" "$2"
 }
 
-color1="#fdf6e3"
-color2=""
+color1="#fcf6e5"
+# color1="#fdf6e3"
+# color1="#000000"
+color2="black"
 color3="black"
 color4="black"
 
