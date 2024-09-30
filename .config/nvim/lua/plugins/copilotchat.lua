@@ -60,7 +60,7 @@ return {
   },
   keys = {
     {
-      "<leader>P",
+      "<leader>p",
       "<cmd>CopilotChat<cr>",
       desc = "CopilotChat - Quick chat",
     },

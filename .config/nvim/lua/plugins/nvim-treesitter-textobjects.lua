@@ -53,9 +53,9 @@ return {
             ["<leader>nm"] = "@function.outer", -- swap function with next
           },
           swap_previous = {
-            ["<leader>pa"] = "@parameter.inner", -- swap parameters/argument with prev
-            ["<leader>p:"] = "@property.outer", -- swap object property with prev
-            ["<leader>pm"] = "@function.outer", -- swap function with previous
+            ["<leader>Pa"] = "@parameter.inner", -- swap parameters/argument with prev
+            ["<leader>P:"] = "@property.outer", -- swap object property with prev
+            ["<leader>Pm"] = "@function.outer", -- swap function with previous
           },
         },
       },
