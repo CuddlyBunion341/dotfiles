@@ -1,7 +1,7 @@
 return {
 	"stevearc/oil.nvim",
 	dependencies = { { "echasnovski/mini.icons", opts = {} } },
-	lazy = false,
+	lazy = false, -- nvim /dir/name does not work otherwise
 	config = function()
 		require("oil").setup({
 			columns = {
