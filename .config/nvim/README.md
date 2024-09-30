@@ -1,9 +1,15 @@
 # Nvim Config
 
-This is my own nvim config.
-
-It is strongly opinionated and tailored to my own needs.
+This is my own nvim config. It is strongly opinionated and tailored to my own needs.
     
+## Philosophy
+
+This configuration is a no-nonsense, bare-knuckle beast that prioritizes raw performance and simplicity above all else. It doesn't have time for fancy status lines like `lualine` or bloated file explorers like `Neotree`. No sir, there are no animations or other frivolous distractions that could bog down the editor.
+
+Yes, there are plugins like `gitsigns` that might add a bit of overhead, but nothing that would significantly impact performance. And there's absolutely no room for fancy markdown rendering or over-engineered find and replace tools. It's all about keeping it simple and efficient.
+
+The goal here is pure, unadulterated SPEED. Every plugin and setting has been chosen and tweaked with this in mind. If it doesn't make the editing experience faster and more efficient, it doesn't make the cut.
+
 ## Overview
 
 I have been using Neovim as my primary editor for a while now and I have been customizing it to my own needs, adding and removing plugins, and tweaking settings to make it more efficient and productive.
