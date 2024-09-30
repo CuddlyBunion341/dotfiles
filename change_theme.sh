@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-ALACRITTY_DARK_THEME="/Users/dani/.asdf/installs/nodejs/18.14.2/lib/node_modules/alacritty-themes/themes/Campbell.toml"
-ALACRITTY_LIGHT_THEME="/Users/dani/.asdf/installs/nodejs/18.14.2/lib/node_modules/alacritty-themes/themes/Solarized-Light.toml"
-ALACRITTY_CONFIG_FILE="$HOME/.config/alacritty/alacritty.toml"
+ALACRITTY_LIGHT_THEME="solarized_light"
+ALACRITTY_DARK_THEME="tokyonight"
+ALACRITTY_CONFIG_FILE="$HOME/.config/alacritty/current-theme.toml"
 
 # Check if ALACRITTY_CONFIG_FILE exists
 if [ ! -f "$ALACRITTY_CONFIG_FILE" ]; then

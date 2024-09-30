@@ -1,6 +1,4 @@
-import = [
-  "/Users/dani/.asdf/installs/nodejs/18.14.2/lib/node_modules/alacritty-themes/themes/Campbell.toml"
-]
+import = [ "/Users/dani/.config/alacritty/current-theme.toml" ]
 
 [env]
 TERM = "xterm-256color"
