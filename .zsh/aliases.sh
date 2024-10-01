@@ -14,6 +14,7 @@ alias ctmux='nvim ~/.tmux.conf'
 alias clazygit='nvim ~/Library/Application\ Support/lazygit/config.yml'
 alias cneovide='nvim ~/.config/neovide/config.toml'
 alias chypr='nvim ~/.config/hypr/hyprland.conf'
+alias ff="fastfetch"
 alias cnix="sudo nvim /etc/nixos/configuration.nix"
 alias nxs="sudo nixos-rebuild switch"
 alias nv='neovide'
