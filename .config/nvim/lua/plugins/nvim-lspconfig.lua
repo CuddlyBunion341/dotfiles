@@ -29,19 +29,27 @@ return {
     local lspconfig = require("lspconfig")
 
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
-    -- print(vim.inspect(capabilities))  -- Debug the capabilities
+
     lspconfig.lua_ls.setup({ capabilities = capabilities })
     require("lspconfig")["lua_ls"].setup({
       capabilities = capabilities,
       cmd = { "/run/current-system/sw/bin/lua-language-server" },
-      on_attach = function()
-      end,
       settings = {
         Lua = {
+          runtime = {
+            version = 'LuaJIT',
+            path = vim.split(package.path, ';'),
+          },
           diagnostics = {
-            globals = { "vim" }
-          }
-        }
+            globals = { 'vim' },
+          },
+          workspace = {
+            library = {
+              [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+              [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+            },
+          },
+        },
       }
     })
 
