@@ -8,7 +8,7 @@ return {
   "neovim/nvim-lspconfig",
   lazy = false,
   dependencies = {
-    -- "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-nvim-lsp",
     {
       "williamboman/mason.nvim",
       commands = { "Mason" },
@@ -18,7 +18,7 @@ return {
     },
     {
       "williamboman/mason-lspconfig.nvim",
-      config = function() 
+      config = function()
         require("mason-lspconfig").setup({
           ensure_installed = lsp_servers
         })
@@ -30,8 +30,7 @@ return {
 
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-    lspconfig.lua_ls.setup({ capabilities = capabilities })
-    require("lspconfig")["lua_ls"].setup({
+    lspconfig["lua_ls"].setup({
       capabilities = capabilities,
       cmd = { "/run/current-system/sw/bin/lua-language-server" },
       settings = {
