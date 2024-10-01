@@ -16,6 +16,7 @@ alias cneovide='nvim ~/.config/neovide/config.toml'
 alias chypr='nvim ~/.config/hypr/hyprland.conf'
 alias ff="fastfetch"
 alias cnix="sudo nvim /etc/nixos/configuration.nix"
+alias pkgsearch="nix search nixpkgs"
 alias nxs="sudo nixos-rebuild switch"
 alias nv='neovide'
 alias cgit='nvim ~/.gitconfig'
