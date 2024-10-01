@@ -6,7 +6,7 @@ Other than the dotfiles, I also have a few scripts that I use to automate some t
 ## Configuration
 
 * [Alacritty](./.config/alacritty/alacritty.toml)
-* [Nvim](./.config/nvim/README.md)
+* [Nvim](./.config/nvim/)
 * [Lazygit](./lazygit/config.yml)
 * [Tmux](./.tmux.conf)
 * [Zsh profile](./.zshrc)
