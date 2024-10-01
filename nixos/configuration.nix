@@ -100,6 +100,7 @@
 
       lua-language-server
       rust-analyzer
+      bundix
       cargo
       ];
 
