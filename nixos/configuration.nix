@@ -97,7 +97,10 @@
       discord
 
       hyprland
+
       lua-language-server
+      rust-analyzer
+      cargo
       ];
 
   programs.zsh.enable = true;
