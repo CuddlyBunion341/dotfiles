@@ -97,6 +97,7 @@
       discord
 
       hyprland
+      lua-language-server
       ];
 
   programs.zsh.enable = true;
