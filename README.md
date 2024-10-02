@@ -6,8 +6,15 @@ Other than the dotfiles, I also have a few scripts that I use to automate some t
 ## Configuration
 
 * [Alacritty](./.config/alacritty/alacritty.toml)
-* [Nvim](./.config/nvim/init.lua)
+* [Nvim](./.config/nvim/)
 * [Lazygit](./lazygit/config.yml)
 * [Tmux](./.tmux.conf)
-* [Zsh](./.zshrc)
+* [Zsh profile](./.zshrc)
 * [Utility Scripts](./scripts/)
+* [NixOS Configuration](./nixos/configuration.nix)
+* [NixOS Hardware Configuration](./nixos/hardware-configuration.nix)
+* [Hyprland Configuration](./.config/hypr/hyprland.conf)
+
+## License
+
+The code in this repository is licensed under the MIT license. See [LICENSE](./LICENSE) for more information.

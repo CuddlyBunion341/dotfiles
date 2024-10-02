@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    SED_COMMAND='sed -i ""'
+else
+    SED_COMMAND='sed -i'
+fi
+
+replace() {
+    $SED_COMMAND "s|$1|$2|g" "$3"
+}
+
 ALACRITTY_LIGHT_THEME="solarized_light"
 ALACRITTY_DARK_THEME="tokyonight"
 ALACRITTY_CONFIG_FILE="$HOME/.config/alacritty/current-theme.toml"
 
-# Check if ALACRITTY_CONFIG_FILE exists
 if [ ! -f "$ALACRITTY_CONFIG_FILE" ]; then
     echo "File not found: $ALACRITTY_CONFIG_FILE"
     exit 1
@@ -14,7 +23,6 @@ NVIM_THEME_FILE="$HOME/.config/nvim/lua/theme.lua"
 NVIM_LIGHT_THEME='solarized'
 NVIM_DARK_THEME='tokyodark'
 
-# Check if NVIM_THEME_FILE exists
 if [ ! -f "$NVIM_THEME_FILE" ]; then
     echo "File not found: $NVIM_THEME_FILE"
     exit 1
@@ -24,16 +32,16 @@ NVIM_SERVERS=$(nvr --serverlist)
 
 if grep -q "$ALACRITTY_LIGHT_THEME" "$ALACRITTY_CONFIG_FILE"; then
     # switch to dark theme
-    sed -i '' "s|$ALACRITTY_LIGHT_THEME|$ALACRITTY_DARK_THEME|g" "$ALACRITTY_CONFIG_FILE"
-    sed -i '' "s|local USE_DARKMODE = false|local USE_DARKMODE = true|g" "$NVIM_THEME_FILE"
+    replace "$ALACRITTY_LIGHT_THEME" "$ALACRITTY_DARK_THEME" "$ALACRITTY_CONFIG_FILE"
+    replace "local USE_DARKMODE = false" "local USE_DARKMODE = true" "$NVIM_THEME_FILE"
     for server in $NVIM_SERVERS; do
         nvr --servername $server --remote-send ":colorscheme $NVIM_DARK_THEME<CR>:set background=dark<CR>"
     done
     echo "Changed to dark theme"
 else
     # switch to light theme
-    sed -i '' "s|$ALACRITTY_DARK_THEME|$ALACRITTY_LIGHT_THEME|g" "$ALACRITTY_CONFIG_FILE"
-    sed -i '' "s|local USE_DARKMODE = true|local USE_DARKMODE = false|g" "$NVIM_THEME_FILE"
+    replace "$ALACRITTY_DARK_THEME" "$ALACRITTY_LIGHT_THEME" "$ALACRITTY_CONFIG_FILE"
+    replace "local USE_DARKMODE = true" "local USE_DARKMODE = false" "$NVIM_THEME_FILE"
     for server in $NVIM_SERVERS; do
         nvr --servername $server --remote-send ":colorscheme $NVIM_LIGHT_THEME<CR>:set background=light<CR>"
     done
