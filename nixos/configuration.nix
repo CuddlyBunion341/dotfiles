@@ -44,7 +44,7 @@
   # services.displayManager.sddm.enable = true;
   # services.displayManager.sddm.wayland.enable = true;
   # services.displayManager.sddm.theme = "where_is_my_sddm_theme";
-  #
+  
   users.users.dani = {
     isNormalUser = true;
     description = "Dani";
@@ -74,12 +74,12 @@
       gcc
       lsof
 
-      nodejs_22
+      # nodejs_22
 
       fbterm
       eza
       bat
-      superfile
+      # superfile
 
       bun
 
@@ -107,7 +107,7 @@
       ripgrep
 
       firefox
-      kdePackages.dolphin
+      # kdePackages.dolphin
       discord
 
       hyprland
