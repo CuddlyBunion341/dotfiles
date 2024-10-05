@@ -97,6 +97,7 @@
       discord
 
       hyprland
+      hyprpaper
 
       lua-language-server
       rust-analyzer
