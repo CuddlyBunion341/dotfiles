@@ -38,6 +38,11 @@
     variant = "";
   };
 
+  services.displayManager.enable = true;
+  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
+  services.displayManager.sddm.theme = "where_is_my_sddm_theme";
+
   users.users.dani = {
     isNormalUser = true;
     description = "Dani";
@@ -87,6 +92,9 @@
       tmux
       lynx
       hyprland
+      sddm
+      where-is-my-sddm-theme
+
       lynx
       fastfetch
       git
