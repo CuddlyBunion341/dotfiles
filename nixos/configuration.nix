@@ -40,11 +40,11 @@
     variant = "";
   };
 
-  services.displayManager.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  services.displayManager.sddm.theme = "where_is_my_sddm_theme";
-
+  # services.displayManager.enable = true;
+  # services.displayManager.sddm.enable = true;
+  # services.displayManager.sddm.wayland.enable = true;
+  # services.displayManager.sddm.theme = "where_is_my_sddm_theme";
+  #
   users.users.dani = {
     isNormalUser = true;
     description = "Dani";
