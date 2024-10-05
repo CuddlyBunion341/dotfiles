@@ -12,7 +12,7 @@ source ~/.zsh/zinit.sh
 
 set -o vi
 
-eval "$(fzf --zsh)"
+# eval "$(fzf --zsh)"
 bindkey -r "^t"
 
 compinit -C
