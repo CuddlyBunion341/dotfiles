@@ -41,7 +41,7 @@
   users.users.dani = {
     isNormalUser = true;
     description = "Dani";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "sound" "audio" "video" ];
     packages = with pkgs; [];
   };
 
@@ -55,6 +55,8 @@
   environment.systemPackages = with pkgs; [
     krusader
       bemenu
+      pulseaudio
+      pulsemixer
       nnn
 
       lz4
