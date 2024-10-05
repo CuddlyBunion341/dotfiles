@@ -65,11 +65,13 @@
       bundix
       gnumake
       gcc
+      lsof
 
       nodejs_22
 
       fbterm
       eza
+      bat
       superfile
 
       bun
