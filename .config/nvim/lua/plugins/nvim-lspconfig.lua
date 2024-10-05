@@ -1,7 +1,8 @@
 local lsp_servers = {
   "ts_ls",
   "lua_ls",
-  "ruby_lsp"
+  "ruby_lsp",
+  "standardrb"
 }
 
 return {
@@ -22,7 +23,11 @@ return {
         require("mason-lspconfig").setup({
           ensure_installed = lsp_servers
         })
-      end
+      end,
+      keys = {
+        { "<leader>li", "<cmd>LspInfo<cr>" },
+        { "<leader>ll", "<cmd>LspLog<cr>" },
+      }
     }
   },
   config = function()
@@ -32,7 +37,7 @@ return {
 
     lspconfig["lua_ls"].setup({
       capabilities = capabilities,
-      cmd = { "/run/current-system/sw/bin/lua-language-server" },
+      -- cmd = { "/run/current-system/sw/bin/lua-language-server" },
       settings = {
         Lua = {
           runtime = {
@@ -52,6 +57,15 @@ return {
       }
     })
 
+    lspconfig["ruby_lsp"].setup({
+      cmd = { "/Users/dani/.asdf/shims/ruby-lsp"},
+      capabilities = capabilities
+    })
+
+    lspconfig["standardrb"].setup({
+      capabilities = capabilities
+    })
+
     lspconfig["rust_analyzer"].setup({
       capabilities = capabilities,
       settings = {
@@ -61,6 +75,12 @@ return {
           }
         }
       }
+    })
+
+    lspconfig["jdtls"].setup({
+      capabilities = capabilities,
+      cmd = { "/opt/homebrew/bin/jdtls" },
+      root_dir = lspconfig.util.root_pattern("pom.xml", "gradle.build", ".git"),
     })
 
     vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
