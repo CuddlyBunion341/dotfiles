@@ -1,5 +1,7 @@
 return {
-	"stevearc/oil.nvim",
+	-- "stevearc/oil.nvim", -- revert to original repository once https://github.com/stevearc/oil.nvim/issues/435 is resolved
+	"jelmansouri/oil.nvim", -- revert to original repository once https://github.com/stevearc/oil.nvim/issues/435 is resolved
+  branch = "feat/scratch-preview", -- revert to original repository once https://github.com/stevearc/oil.nvim/issues/435 is resolved
 	dependencies = { { "echasnovski/mini.icons", opts = {} } },
 	lazy = false, -- nvim /dir/name does not work otherwise
 	config = function()
@@ -13,7 +15,7 @@ return {
 			constrain_cursor = "name",
 			skip_confirm_for_simple_edits = true,
 			prompt_save_on_select_new_entry = true,
-			watch_for_changes = true,
+			watch_for_changes = false,
 			keymaps = {
 				["g?"] = "actions.show_help",
 				["<CR>"] = "actions.select",
@@ -47,6 +49,9 @@ return {
 			view_options = {
 				show_hidden = true,
 			},
+      lsp_file_methods = {
+        enabled = false,
+      }
 		})
 	end,
 	keys = {
