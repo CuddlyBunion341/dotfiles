@@ -32,7 +32,6 @@ return {
 				["-"] = "actions.parent",
 				["_"] = "actions.open_cwd",
 				["`"] = "actions.cd",
-				["<C-~>"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory" },
 				["gs"] = "actions.change_sort",
 				["<C-o>"] = {
 					"actions.open_cmdline",
@@ -41,6 +40,8 @@ return {
 					},
 					desc = "Open file",
 				},
+        ["K"] = "actions.preview_scroll_up",
+        ["J"] = "actions.preview_scroll_down",
 			},
 			use_default_keymaps = false,
 			view_options = {
