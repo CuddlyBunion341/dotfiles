@@ -1,1 +1,1 @@
-import = [ "/Users/dani/.config/alacritty/themes/tokyonight.toml" ]
+import = [ "~/.config/alacritty/themes/tokyonight.toml" ]

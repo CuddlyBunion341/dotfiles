@@ -1,4 +1,4 @@
-import = [ "/home/dani/.config/alacritty/current-theme.toml" ]
+import = [ "~/.config/alacritty/current-theme.toml" ]
 
 [env]
 TERM = "xterm-256color"
@@ -92,7 +92,7 @@ mods = "Command"
 command = { program = "/opt/homebrew/bin/tmux", args = ["kill-pane"] }
 
 [shell]
-# args = ["-l", "-c", "session_name=$(tmux ls | grep -v \"(attached)\" | head -n 1 | cut -d: -f1); [ -n \"$session_name\" ] && tmux attach -t \"$session_name\" || tmux new-session"]
+args = ["-l", "-c", "session_name=$(tmux ls | grep -v \"(attached)\" | head -n 1 | cut -d: -f1); [ -n \"$session_name\" ] && tmux attach -t \"$session_name\" || tmux new-session"]
 program = "/opt/homebrew/bin/zsh"
 
 [window]

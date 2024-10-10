@@ -1,6 +1,6 @@
 return {
 	{
-		"tiagovla/tokyodark.nvim",
+		"ghifarit53/tokyonight-vim",
 		lazy = false,
 		priority = 1000,
 	},
