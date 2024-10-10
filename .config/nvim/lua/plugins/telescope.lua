@@ -3,6 +3,7 @@ return {
   dependencies = { "nvim-lua/plenary.nvim" },
   keys = {
     { "<leader>f", "<cmd>Telescope find_files hidden=true<cr>" },
+    { "<leader>e", "<cmd>Telescope find_files hidden=false<cr>" },
     { "<leader>w", "<cmd>Telescope live_grep<cr>" },
     { "<leader>r", function()
       local current_word = vim.fn.expand("<cword>")

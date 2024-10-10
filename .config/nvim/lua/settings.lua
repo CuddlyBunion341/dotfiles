@@ -12,8 +12,11 @@ vim.opt.scrolloff = 10
 vim.opt.autowrite = true
 vim.opt.autowriteall = true
 vim.opt.list = false -- whitespace
+vim.o.clipboard = "unnamedplus"
+vim.o.timeoutlen = 200
 
--- nav
+-- keyap to toggle line numbers (set nonumber and set norelativenumber)
+vim.keymap.set("n", "<C-i>", ":set invnumber<cr>:set invrelativenumber<cr>")
 
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
@@ -57,7 +60,7 @@ vim.opt.shortmess:append("A") -- https://stackoverflow.com/questions/1098159/vim
 
 -- commands
 
-vim.keymap.set("n", "L", ":Lazy<cr>")
+vim.keymap.set("n", "<leader>L", ":Lazy<cr>")
 
 -- splits
 

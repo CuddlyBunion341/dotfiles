@@ -5,12 +5,16 @@ return {
     "nvim-neotest/nvim-nio",
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
-    "olimorris/neotest-rspec"
+    "olimorris/neotest-rspec",
+    "rcasia/neotest-java",
   },
   config = function()
     require("neotest").setup({
       adapters = {
-        require("neotest-rspec")
+        require("neotest-rspec"),
+        ["neotest-java"] = {
+          ignore_wrapper = true
+        }
       }
     })
   end,

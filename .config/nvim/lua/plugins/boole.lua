@@ -13,6 +13,7 @@ return {
         {'if', 'unless'},
         {'true', 'false'},
         {'&&', '||'},
+        {'private', 'public', 'protected'},
       },
     })
   end
