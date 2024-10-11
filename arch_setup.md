@@ -16,6 +16,12 @@
 ```shell
 fdisk -l / fdisk -x      # List partition tables for all devices
 cfdisk /dev/nvme0n1      # Interactive partition table manipulator for /dev/nvme0n1
+
+mkfs.ext4 /dev/<root_partition_name>
+mkfs.ext4 /dev/<backup_partition_name>
+mkfs.fat -F32 /dev/<efi_partition_name>
+mkswap /dev/<swap_partition_name>
+swapon /dev/<swap_partition_name>
 ```
 
 ### Network:
@@ -30,3 +36,29 @@ cfdisk /dev/nvme0n1      # Interactive partition table manipulator for /dev/nvme
 
 When selecting bootable medium, select UEFI usb disk instead of BIOS when installing Arch on a UEFI system.
 
+
+## Step2: Base Arch Installation
+
+### Commands
+
+Setup network
+
+```
+wctl
+# Run these commands in interactive mode
+station list
+station wlan0 scan
+station wlan0 connect <SSID>
+station wlan0 show
+# Exit interactive mode
+```
+
+Install base system
+
+```shell
+pacman -Sy
+archinstall
+# Partition configuration -> Manual, verify mount points
+# Create user (username: dani), set password, set root password
+# Set profile to desktop -> hyprland -> sddm
+```
