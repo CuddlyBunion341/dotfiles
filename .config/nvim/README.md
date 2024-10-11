@@ -71,5 +71,6 @@ I am using the lazyvim plugin manager to manage plugins.
 - **markdown.nvim**: Markdown support.
 - **plantuml-previewer.vim**: PlantUML previewer.
 - **solarized.nvim**: Solarized color scheme.
-- **tokyodark.nvim**: Tokyo Night color scheme.
+- **tokyonight.nvim**: Tokyo Night color scheme.
+- **text-case.nvim**: Simple text transformations with Telescope.
 
