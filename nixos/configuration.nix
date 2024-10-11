@@ -25,8 +25,8 @@
     };
   };
 
-  # networking.hostName = "nixos";
-  #
+  networking.hostName = "cb341-linux-desktop";
+
   # networking.networkmanager.enable = true;
   # networking.wireless.enable = false;
   # networking.useDHCP = true;
