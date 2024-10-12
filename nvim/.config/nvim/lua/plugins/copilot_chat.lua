@@ -1,7 +1,13 @@
 return {
   "CopilotC-Nvim/CopilotChat.nvim",
   dependencies = {
-    { "zbirenbaum/copilot.lua" },
+    {
+      "zbirenbaum/copilot.lua",
+      event = "BufRead",
+      config = function()
+        require("copilot").setup({})
+      end
+    },
     { "nvim-lua/plenary.nvim" },
   },
   commands = {

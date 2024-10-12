@@ -13,15 +13,15 @@ I used to use [NixOS](https://nixos.org) for my development setup. But now I use
 
 ## Configuration
 
-* [Alacritty](./.config/alacritty/alacritty.toml)
-* [Nvim](./.config/nvim/)
-* [Lazygit](./lazygit/config.yml)
-* [Tmux](./.tmux.conf)
-* [Zsh profile](./.zshrc)
-* [Utility Scripts](./scripts/)
+* [Alacritty](./alacritty/.config/alacritty/alacritty.toml)
+* [Nvim](./nvim/.config/nvim/)
+* [Lazygit](./lazygit/.config/lazygit/config.yml)
+* [Tmux](./tmux/.tmux.conf)
+* [Zsh](./zsh/)
+* [Utility Scripts](./util/scripts/)
 * [NixOS Configuration](./nixos/configuration.nix)
 * [NixOS Hardware Configuration](./nixos/hardware-configuration.nix)
-* [Hyprland Configuration](./.config/hypr/hyprland.conf)
+* [Hyprland Configuration](./hypr/.config/hypr/hyprland.conf)
 
 ## License
 
