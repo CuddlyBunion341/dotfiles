@@ -14,7 +14,7 @@ install_macos_packages() {
   if ! command -v brew &> /dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
-  brew install nvim alacritty stow rustup asdf
+  brew install nvim alacritty stow rustup asdf luarocks
   rustup component add rust-analyzer
   asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
   asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
@@ -25,13 +25,20 @@ install_macos_packages() {
 
 install_linux_packages() {
   if command -v pacman &> /dev/null; then
-    sudo pacman -S bat eza github-cli stow zsh tmux kitty alacritty vim neovim fzf fd npm nodejs bun hyprland
+    sudo pacman -S bat eza github-cli stow zsh tmux kitty alacritty vim
+    sudo pacman -S neovim fzf fd npm nodejs bun luarocks wl-clipboard
     rustup component add rust-analyzer
     npm install -g lua-language-server
   else
     echo "Error: pacman not found."
     exit 1
   fi
+}
+
+configure_linux_desktop_environment() {
+  sudo pacman -S hyprland
+  sudo pacman -S hyprpaper ninja gcc wayland-protocols libjpeg-turbo libwebp pango cairo pkgconf cmake libglvnd wayland hyprutils hyprwayland-scanner hyprlang
+  curl -s -o ~/wallpaper.png https://raw.githubusercontent.com/pablocorbalann/arch-minimal-wallpapers/refs/heads/main/wallpapers/4k/onedark.png
 }
 
 handle_stow_adoption() {
@@ -77,6 +84,7 @@ main() {
     install_macos_packages
   elif [[ "$OS" == "Linux" ]]; then
     install_linux_packages
+    configure_linux_desktop_environment
   else
     echo "Error: Unsupported OS."
     exit 1
