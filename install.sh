@@ -66,6 +66,10 @@ setup_neovim() {
   nvim --headless +TSUpdate +qall
 }
 
+install_gh_plugins() {
+  gh extension upgrade markdown-preview
+}
+
 main() {
   install_bun
 
@@ -81,6 +85,7 @@ main() {
   handle_stow_adoption
   setup_config_files
   setup_neovim
+  install_gh_plugins
 }
 
 main
