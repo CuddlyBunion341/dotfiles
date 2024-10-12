@@ -15,4 +15,4 @@ set -o vi
 eval "$(fzf --zsh)"
 bindkey -r "^t"
 
-compinit -C
+# compinit -C
