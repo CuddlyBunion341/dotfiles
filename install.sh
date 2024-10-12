@@ -60,6 +60,12 @@ setup_config_files() {
   fi
 }
 
+setup_neovim() {
+  # TODO: check if this actually works :/
+  nvim --headless +MasonInstall +qall
+  nvim --headless +TSUpdate +qall
+}
+
 main() {
   install_bun
 
@@ -74,6 +80,7 @@ main() {
 
   handle_stow_adoption
   setup_config_files
+  setup_neovim
 }
 
 main
