@@ -25,7 +25,7 @@ install_macos_packages() {
 
 install_linux_packages() {
   if command -v pacman &> /dev/null; then
-    sudo pacman -S bat eza github-cli stow zsh tmux kitty alacritty vim neovim fzf npm nodejs bun hyprland
+    sudo pacman -S bat eza github-cli stow zsh tmux kitty alacritty vim neovim fzf fd npm nodejs bun hyprland
     rustup component add rust-analyzer
     npm install -g lua-language-server
   else
