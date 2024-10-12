@@ -93,7 +93,7 @@ command = { program = "/opt/homebrew/bin/tmux", args = ["kill-pane"] }
 
 [shell]
 # args = ["-l", "-c", "session_name=$(tmux ls | grep -v \"(attached)\" | head -n 1 | cut -d: -f1); [ -n \"$session_name\" ] && tmux attach -t \"$session_name\" || tmux new-session"]
-program = "/run/current-system/sw/bin/zsh"
+program = "/usr/bin/zsh"
 # 
 [window]
 decorations = "buttonless"
