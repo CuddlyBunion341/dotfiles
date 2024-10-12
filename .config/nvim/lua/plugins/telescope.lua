@@ -2,12 +2,10 @@ return {
   "nvim-telescope/telescope.nvim", tag = "0.1.8",
   dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-ui-select.nvim", },
   config = function()
-    -- This is your opts table
     require("telescope").setup {
       extensions = {
         ["ui-select"] = {
           require("telescope.themes").get_dropdown {
-            -- even more opts
           }
         }
       }
@@ -29,5 +27,6 @@ return {
     { "<leader>at", "<cmd>Telescope find_files prompt_title=Specs cwd=spec/ hidden=true<cr>" },
     { "<leader>af", "<cmd>Telescope find_files prompt_title=Specs cwd=spec/factories hidden=true<cr>" },
     { "<leader>av", "<cmd>Telescope find_files prompt_title=Views cwd=app/views hidden=true<cr>" },
+    { "<leader>l", "<cmd>Telescope lsp_document_symbols"}
   }
 }
