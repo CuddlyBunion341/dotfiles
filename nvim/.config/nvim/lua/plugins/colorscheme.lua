@@ -1,6 +1,6 @@
 return {
 	{
-		"tiagovla/tokyodark.nvim",
+		"folke/tokyonight.nvim",
 		lazy = false,
 		priority = 1000,
 	},

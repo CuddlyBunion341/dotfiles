@@ -1,7 +1,7 @@
 local USE_DARKMODE = true
 
 if USE_DARKMODE then
-    vim.cmd("colorscheme tokyodark")
+    vim.cmd("colorscheme tokyonight-night")
     vim.cmd("set bg=dark")
 else
     vim.cmd("colorscheme solarized")
