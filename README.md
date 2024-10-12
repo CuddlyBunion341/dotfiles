@@ -7,9 +7,9 @@ Other than the dotfiles, I also have a few scripts that I use to automate some t
 
 I used to use [NixOS](https://nixos.org) for my development setup. But now I use [Arch Linux](https://archlinux.org) (btw) and [MacOS](https://www.apple.com/macos/).
 
-* Arch Linux setup [here](./arch_setup.md).
-* NixOS (old) setup [here](./nixos_setup.md).
-* macOS setup [here](./macos_setup.md).
+* Arch Linux setup [here](./doc/arch_setup.md).
+* NixOS (old) setup [here](./doc/nixos_setup.md).
+* macOS setup [here](./doc/macos_setup.md).
 
 ## Configuration
 
