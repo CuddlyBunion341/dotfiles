@@ -1,7 +1,8 @@
 local lsp_servers = {
   "ts_ls",
   "lua_ls",
-  "ruby_lsp"
+  "ruby_lsp",
+  "rust_analyzer"
 }
 
 return {
@@ -32,7 +33,7 @@ return {
 
     lspconfig["lua_ls"].setup({
       capabilities = capabilities,
-      cmd = { "/run/current-system/sw/bin/lua-language-server" },
+      -- cmd = { "lua-language-server" },
       settings = {
         Lua = {
           runtime = {
