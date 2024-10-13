@@ -9,7 +9,7 @@ offset.x = 0
 offset.y = 0
 
 [font.normal]
-family = "Monospace"
+family = "CaskaydiaCoveNerdFont"
 
 [[keyboard.bindings]]
 action = "CreateNewWindow"
