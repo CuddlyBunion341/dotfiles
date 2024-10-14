@@ -15,7 +15,10 @@
   ],
   "clock": {
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format-alt": "{:%Y-%m-%d-%s}"
+    "format-alt": "{:%Y-%m-%d}",
+    "interval": 1,
+    "format": "{:%H:%M:%S}",
+    "max-length": 25
   },
   "network": {
     "format-wifi": "{essid} ({signalStrength}%) ",
