@@ -1,6 +1,7 @@
 // -*- mode: jsonc -*-
 {
   "position": "bottom",
+  "spacing": 10,
   "modules-left": [
     "hyprland/workspaces",
     "hyprland/submap",
