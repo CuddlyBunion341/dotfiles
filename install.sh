@@ -38,8 +38,7 @@ install_linux_packages() {
 configure_linux_desktop_environment() {
   sudo pacman -S hyprland
   sudo pacman -S hyprpaper ninja gcc wayland-protocols libjpeg-turbo libwebp pango cairo pkgconf cmake libglvnd wayland hyprutils hyprwayland-scanner hyprlang
-  curl -s -o ~/wallpaper.png https://raw.githubusercontent.com/pablocorbalann/arch-minimal-wallpapers/refs/heads/main/wallpapers/4k/onedark.png
-}
+  curl -s -o ~/wallpaper.png https://raw.githubusercontent.com/pablocorbalann/arch-minimal-wallpapers/refs/heads/main/wallpapers/8k/base16-default-dark.png
 
 handle_stow_adoption() {
   if [[ "$ADOPT_STOW" == "--adopt" ]]; then
