@@ -1,4 +1,3 @@
-import = [ "~/.config/alacritty/current-theme.toml" ]
 
 [env]
 TERM = "xterm-256color"
@@ -91,7 +90,7 @@ mods = "Command"
 # mods = "Command"
 # command = { program = "tmux", args = ["kill-pane"] }
 #
-[shell]
+[terminal.shell]
 # args = ["-l", "-c", "session_name=$(tmux ls | grep -v \"(attached)\" | head -n 1 | cut -d: -f1); [ -n \"$session_name\" ] && tmux attach -t \"$session_name\" || tmux new-session"]
 program = "/usr/bin/zsh"
 # 
@@ -105,3 +104,8 @@ opacity = 1
 [window.padding]
 x = 10
 y = 10
+
+[general]
+import = [ "~/.config/alacritty/current-theme.toml" ]
+
+[terminal]
