@@ -10,6 +10,8 @@ fi
 source ~/.zsh/utils.sh
 source ~/.zsh/zinit.sh
 
+source ~/.local-zshrc.sh
+
 set -o vi
 
 eval "$(fzf --zsh)"
