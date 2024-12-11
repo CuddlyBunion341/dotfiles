@@ -4,5 +4,8 @@ return {
   dependencies = {
     "nvim-telescope/telescope.nvim",
   },
-  opts = { }
+  opts = { },
+  keys = {
+    { "<C-x>", "<cmd>SessionDelete<cr>" }
+  }
 }

@@ -16,3 +16,6 @@ eval "$(fzf --zsh)"
 bindkey -r "^t"
 
 compinit -C
+
+# test -e "${HOME}/.iterm2_shell_integration.zh" && source "${HOME}/.iterm2_shell_integration.zsh"
+

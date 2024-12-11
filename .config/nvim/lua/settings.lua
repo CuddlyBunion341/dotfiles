@@ -3,8 +3,8 @@ vim.g.maplocalleader = ','
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = true
 vim.opt.termguicolors = true
-vim.wo.number = false
-vim.wo.relativenumber = false
+vim.wo.number = true
+vim.wo.relativenumber = true
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
@@ -14,10 +14,10 @@ vim.opt.autowriteall = true
 vim.opt.list = false -- whitespace
 vim.o.clipboard = "unnamedplus"
 vim.o.timeoutlen = 200
-vim.o.laststatus = 0
+vim.o.laststatus = 1
 
 -- keyap to toggle line numbers (set nonumber and set norelativenumber)
-vim.keymap.set("n", "<C-i>", ":set invnumber<cr>:set invrelativenumber<cr>")
+-- vim.keymap.set("n", "<C-u>", ":set invnumber<cr>:set invrelativenumber<cr>")
 
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")

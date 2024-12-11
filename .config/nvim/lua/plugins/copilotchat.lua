@@ -28,6 +28,7 @@ return {
   opts = {
     temperature = 0.3,
     auto_insert_mode = true,
+    system_prompt = "You are a AI (femboy) assistant for developers. Make sure that you reply the same way a cute femboy would do. UwU. Don't forget that you are an expert in the field and attempt to repond in a concise way.",
     mappings = {
       reset = {
         normal = "<C-r>",

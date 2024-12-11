@@ -17,7 +17,7 @@ return {
     vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
     vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
 
-    vim.keymap.set("n", "<Tab>", function() harpoon:list():next() end)
-    vim.keymap.set("n", "<S-Tab>", function() harpoon:list():prev() end)
+    -- vim.keymap.set("n", "<C-Tab>", function() harpoon:list():next() end)
+    -- vim.keymap.set("n", "<SC-Tab>", function() harpoon:list():prev() end)
   end
 }

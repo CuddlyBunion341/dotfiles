@@ -7,10 +7,10 @@ return {
 	config = function()
 		require("oil").setup({
 			columns = {
-				"icon",
-				"permissions",
-				"size",
-				"mtime",
+				-- "icon",
+				-- "permissions",
+				-- "size",
+				-- "mtime",
 			},
 			constrain_cursor = "name",
 			skip_confirm_for_simple_edits = true,

@@ -2,6 +2,7 @@ local lsp_servers = {
   "ts_ls",
   "lua_ls",
   "ruby_lsp",
+  -- "rubocop",
   "standardrb"
 }
 
@@ -10,6 +11,7 @@ return {
   lazy = false,
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
+    "VonHeikemen/lsp-zero.nvim",
     {
       "williamboman/mason.nvim",
       commands = { "Mason" },
@@ -32,6 +34,7 @@ return {
   },
   config = function()
     local status, err = pcall(function()
+      require("lsp-zero").setup()
       local lspconfig = require("lspconfig")
 
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -62,9 +65,9 @@ return {
         capabilities = capabilities
       })
 
-      lspconfig["standardrb"].setup({
-        capabilities = capabilities
-      })
+      -- lspconfig["rubocop"].setup({
+      --   capabilities = capabilities
+      -- })
 
       lspconfig["rust_analyzer"].setup({
         capabilities = capabilities,

@@ -34,6 +34,7 @@ alias bra="bundle exec rubocop -A" # [b]undle exec [r]ubocop -[A]
 alias spec="be rspec"
 alias f="fork ." 
 alias cnvim="cd ~/.config/nvim && nvim init.lua" # [c]onfigure [nvim]
+alias vimrc="nvim ~/.vimrc"
 alias yabairc="v ~/.yabairc"
 alias skhdrc="v ~/.config/skhd/skhdrc"
 alias dbreset="bundle exec rails db:drop db:create db:schema:load db:seed" # [d]ata[b]ase [reset]
