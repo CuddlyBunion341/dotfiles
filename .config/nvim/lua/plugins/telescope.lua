@@ -47,6 +47,7 @@ return {
     { desc = "Open harpoon window" })
   end,
   keys = {
+    { "<C-p>", "<cmd>Telescope commands<cr>" },
     { "<leader>f", "<cmd>Telescope find_files hidden=true<cr>" },
     { "<leader>e", "<cmd>Telescope find_files hidden=false<cr>" },
     { "<leader>w", "<cmd>Telescope live_grep<cr>" },
