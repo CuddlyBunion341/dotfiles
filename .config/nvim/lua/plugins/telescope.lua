@@ -54,7 +54,7 @@ return {
       local current_word = vim.fn.expand("<cword>")
       require("telescope.builtin").grep_string({ search = current_word })
     end },
-    { "<leader>c", "<cmd>Telescope git_commits<cr>" },
+    { "<leader>cc", "<cmd>Telescope git_commits<cr>" },
     { "<leader>ac", "<cmd>Telescope find_files prompt_title=Controllers cwd=app/controllers/ hidden=true<cr>" },
     { "<leader>ah", "<cmd>Telescope find_files prompt_title=Controllers cwd=app/helpers/ hidden=true<cr>" },
     { "<leader>am", "<cmd>Telescope find_files prompt_title=Models cwd=app/models/ hidden=true<cr>" },
