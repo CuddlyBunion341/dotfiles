@@ -48,6 +48,7 @@ return {
   end,
   keys = {
     { "<C-p>", "<cmd>Telescope commands<cr>" },
+    { "<C-s>", "<cmd>Telescope lsp_document_symbols<cr>" },
     { "<leader>f", "<cmd>Telescope find_files hidden=true<cr>" },
     { "<leader>e", "<cmd>Telescope find_files hidden=false<cr>" },
     { "<leader>w", "<cmd>Telescope live_grep<cr>" },
