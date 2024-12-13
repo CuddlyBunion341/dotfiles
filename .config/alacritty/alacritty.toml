@@ -1,0 +1,107 @@
+import = [ "~/.config/alacritty/current-theme.toml" ]
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 17.0
+offset.x = 0
+offset.y = 0
+
+[font.normal]
+family = "JetBrainsMono NF"
+
+[[keyboard.bindings]]
+action = "CreateNewWindow"
+key = "N"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "SearchForward"
+key = "F"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "alacritty -e 'btop' & \r"
+key = "P"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "search_history \r"
+key = "Slash"
+mode = "AppCursor"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001Bb"
+key = "Left"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001Bf"
+key = "Right"
+mods = "Alt"
+[[keyboard.bindings]]
+key = "T"
+mods = "Command"
+chars = "\u0013\u0003"
+
+[[keyboard.bindings]]
+action = "ResetFontSize"
+key = "Key0"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "IncreaseFontSize"
+key = "Equals"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "DecreaseFontSize"
+key = "Minus"
+mods = "Command"
+
+[[keyboard.bindings]]
+key = "T"
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["new-window"] }
+
+[[keyboard.bindings]]
+key = "["
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["previous-window"] }
+
+[[keyboard.bindings]]
+key = "]"
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["next-window"] }
+
+[[keyboard.bindings]]
+key = "d"
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["split", "-h"] }
+
+[[keyboard.bindings]]
+key = "e"
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["split", "-v"] }
+
+[[keyboard.bindings]]
+key = "W"
+mods = "Command"
+command = { program = "/opt/homebrew/bin/tmux", args = ["kill-pane"] }
+
+[shell]
+args = ["-l", "-c", "session_name=$(tmux ls | grep -v \"(attached)\" | head -n 1 | cut -d: -f1); [ -n \"$session_name\" ] && tmux attach -t \"$session_name\" || tmux new-session"]
+program = "/opt/homebrew/bin/zsh"
+
+[window]
+decorations = "buttonless"
+decorations_theme_variant = "None"
+dynamic_padding = false
+dynamic_title = true
+opacity = 1
+
+[window.padding]
+x = 10
+y = 10

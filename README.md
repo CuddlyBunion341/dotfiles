@@ -1,4 +1,20 @@
-# Dotfiles
+# dotfiles
 
-You are currently on the main branch which doesn't contain any of my dotfiles in order not to affect my GitHub contributions counter.
-If you want to visit my real dotfiles, just visit this branch: [dotfiles](https://github.com/CuddlyBunion341/dotfiles/tree/main)
+This is a collection of my dotfiles for my personal development setup.
+Other than the dotfiles, I also have a few scripts that I use to automate some tasks.
+
+## Configuration
+
+* [Alacritty](./.config/alacritty/alacritty.toml)
+* [Nvim](./.config/nvim/)
+* [Lazygit](./lazygit/config.yml)
+* [Tmux](./.tmux.conf)
+* [Zsh profile](./.zshrc)
+* [Utility Scripts](./scripts/)
+* [NixOS Configuration](./nixos/configuration.nix)
+* [NixOS Hardware Configuration](./nixos/hardware-configuration.nix)
+* [Hyprland Configuration](./.config/hypr/hyprland.conf)
+
+## License
+
+The source files in this repository is licensed under the MIT license. See [LICENSE](./LICENSE) for more information.
