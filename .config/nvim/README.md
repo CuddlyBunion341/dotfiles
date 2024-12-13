@@ -72,4 +72,3 @@ I am using the lazyvim plugin manager to manage plugins.
 - **plantuml-previewer.vim**: PlantUML previewer.
 - **solarized.nvim**: Solarized color scheme.
 - **tokyodark.nvim**: Tokyo Night color scheme.
-

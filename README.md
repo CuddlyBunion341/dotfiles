@@ -17,4 +17,4 @@ Other than the dotfiles, I also have a few scripts that I use to automate some t
 
 ## License
 
-The code in this repository is licensed under the MIT license. See [LICENSE](./LICENSE) for more information.
+The source files in this repository is licensed under the MIT license. See [LICENSE](./LICENSE) for more information.
