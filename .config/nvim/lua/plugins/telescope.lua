@@ -47,6 +47,8 @@ return {
     { desc = "Open harpoon window" })
   end,
   keys = {
+    { "<C-p>", "<cmd>Telescope commands<cr>" },
+    { "<C-s>", "<cmd>Telescope lsp_document_symbols<cr>" },
     { "<leader>f", "<cmd>Telescope find_files hidden=true<cr>" },
     { "<leader>e", "<cmd>Telescope find_files hidden=false<cr>" },
     { "<leader>w", "<cmd>Telescope live_grep<cr>" },
@@ -54,7 +56,7 @@ return {
       local current_word = vim.fn.expand("<cword>")
       require("telescope.builtin").grep_string({ search = current_word })
     end },
-    { "<leader>c", "<cmd>Telescope git_commits<cr>" },
+    { "<leader>cc", "<cmd>Telescope git_commits<cr>" },
     { "<leader>ac", "<cmd>Telescope find_files prompt_title=Controllers cwd=app/controllers/ hidden=true<cr>" },
     { "<leader>ah", "<cmd>Telescope find_files prompt_title=Controllers cwd=app/helpers/ hidden=true<cr>" },
     { "<leader>am", "<cmd>Telescope find_files prompt_title=Models cwd=app/models/ hidden=true<cr>" },

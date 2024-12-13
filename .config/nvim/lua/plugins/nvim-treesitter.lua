@@ -15,6 +15,9 @@ return {
           node_decremental = "<S-tab>",
         },
       },
+      highlight = {
+        enable = true
+      }
     }
   end,
 }
