@@ -1,9 +1,0 @@
-local USE_DARKMODE = false
-
-if USE_DARKMODE then
-    vim.cmd("colorscheme tokyodark")
-    vim.cmd("set bg=dark")
-else
-    vim.cmd("colorscheme solarized")
-    vim.cmd("set bg=light")
-end

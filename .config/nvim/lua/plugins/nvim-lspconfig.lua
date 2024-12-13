@@ -1,15 +1,9 @@
-local lsp_servers = {
-  "ts_ls",
-  "lua_ls",
-  "ruby_lsp",
-  "standardrb"
-}
-
 return {
   "neovim/nvim-lspconfig",
   lazy = false,
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
+    "VonHeikemen/lsp-zero.nvim",
     {
       "williamboman/mason.nvim",
       commands = { "Mason" },
@@ -21,7 +15,7 @@ return {
       "williamboman/mason-lspconfig.nvim",
       config = function()
         require("mason-lspconfig").setup({
-          ensure_installed = lsp_servers
+          ensure_installed = { 'lua_ls', 'rust_analyzer' },
         })
       end,
       keys = {
@@ -31,67 +25,39 @@ return {
     }
   },
   config = function()
-    local status, err = pcall(function()
-      local lspconfig = require("lspconfig")
+    local lspconfig = require('lspconfig')
 
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    local lspconfig_defaults = lspconfig.util.default_config
+    lspconfig_defaults.capabilities = vim.tbl_deep_extend(
+      'force',
+      lspconfig_defaults.capabilities,
+      require('cmp_nvim_lsp').default_capabilities()
+    )
 
-      lspconfig["lua_ls"].setup({
-        capabilities = capabilities,
-        settings = {
-          Lua = {
-            runtime = {
-              version = 'LuaJIT',
-              path = vim.split(package.path, ';'),
-            },
-            diagnostics = {
-              globals = { 'vim' },
-            },
-            workspace = {
-              library = {
-                [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-              },
-            },
-          },
-        }
-      })
+    require('mason-lspconfig').setup_handlers({
+      function(server)
+        lspconfig[server].setup({})
+      end,
+    })
 
-      lspconfig["ruby_lsp"].setup({
-        cmd = { "/Users/dani/.asdf/shims/ruby-lsp"},
-        capabilities = capabilities
-      })
-
-      lspconfig["standardrb"].setup({
-        capabilities = capabilities
-      })
-
-      lspconfig["rust_analyzer"].setup({
-        capabilities = capabilities,
-        settings = {
-          ["rust-analyzer"] = {
-            cachePriming = {
-              enable = false
-            }
-          }
-        }
-      })
-
-      lspconfig["jdtls"].setup({
-        capabilities = capabilities,
-        cmd = { "/opt/homebrew/bin/jdtls" },
-        root_dir = lspconfig.util.root_pattern("pom.xml", "gradle.build", ".git"),
-      })
-
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-      vim.keymap.set("n", "<leader>cn", vim.lsp.buf.rename, {})
-    end)
-
-    if not status then
-      print("Error in LSP config: " .. err)
-    end
+    vim.api.nvim_create_autocmd('LspAttach', {
+      desc = 'LSP actions',
+      callback = function(event)
+        local opts = { buffer = event.buf }
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+        vim.keymap.set('n', 'go', vim.lsp.buf.type_definition, opts)
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+        vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, opts)
+        vim.keymap.set('n', '<leader>cn', vim.lsp.buf.rename, opts)
+        vim.keymap.set({ 'n', 'x' }, '<leader>F', function()
+          vim.lsp.buf.format({ async = true })
+        end, opts)
+        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+      end,
+    })
   end
 }
+

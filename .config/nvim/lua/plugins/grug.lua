@@ -4,8 +4,8 @@ return  {
     require('grug-far').setup({});
   end,
   keys = {
-    { "<leader>Rf",function() require("grug-far").open() end},
-    { "<leader>Rw", function() 
+    { "<leader>sp",function() require("grug-far").open() end},
+    { "<leader>sw", function()
       require('grug-far').open({ prefills = { search = vim.fn.expand("<cword>") } })
     end
   }

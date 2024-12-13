@@ -6,11 +6,13 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
     "olimorris/neotest-rspec",
+    "zidhuss/neotest-minitest",
     "rcasia/neotest-java",
   },
   config = function()
     require("neotest").setup({
       adapters = {
+        require("neotest-minitest"),
         require("neotest-rspec"),
         ["neotest-java"] = {
           ignore_wrapper = true
