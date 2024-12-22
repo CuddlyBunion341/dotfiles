@@ -6,33 +6,6 @@ local function extract_attribute_name(line)
 	return line:match("%s*(%w+)%s*;")
 end
 
-local function define_getter_setter_macros()
-	local line = get_current_line()
-	local attribute_name = extract_attribute_name(line)
-	if attribute_name then
-		local getter = string.format(
-			"o// Getter method for %s^Mpublic String get%s() {^M  return this.%s;^M}",
-			attribute_name,
-			attribute_name:gsub("^%l", string.upper),
-			attribute_name
-		)
-		local setter = string.format(
-			"o// Setter method for %s^Mpublic void set%s(String %s) {^M  this.%s = %s;^M}",
-			attribute_name,
-			attribute_name:gsub("^%l", string.upper),
-			attribute_name,
-			attribute_name,
-			attribute_name
-		)
-		vim.cmd(string.format("let @g = '%s'", getter))
-		vim.cmd(string.format("let @s = '%s'", setter))
-	else
-		print("No attribute name found on the current line.")
-	end
-end
-
--- define_getter_setter_macros()
-
 vim.api.nvim_create_autocmd("TextYankPost", {
 	group = vim.api.nvim_create_augroup("highlight_yank", {}),
 	desc = "Hightlight selection on yank",
