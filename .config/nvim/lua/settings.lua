@@ -14,7 +14,7 @@ vim.opt.autowriteall = true
 vim.opt.list = false -- whitespace
 vim.o.clipboard = "unnamedplus"
 vim.o.timeoutlen = 200
-vim.o.laststatus = 1
+vim.opt.cmdheight = 0
 
 -- keyap to toggle line numbers (set nonumber and set norelativenumber)
 -- vim.keymap.set("n", "<C-u>", ":set invnumber<cr>:set invrelativenumber<cr>")
@@ -76,19 +76,19 @@ vim.keymap.set("n", "<C-e>", ":wincmd =<cr>", { silent = true })
 vim.keymap.set("n", "<leader>v", ":wincmd v<cr>", { silent = true })
 vim.keymap.set("n", "<leader>V", ":wincmd s<cr>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>o", function()
-	-- get the current line content
-	local line = vim.api.nvim_get_current_line()
+  -- get the current line content
+  local line = vim.api.nvim_get_current_line()
 
-	-- extract the string (either single-quoted or double-quoted)
-	local str = line:match("'(.-)'") or line:match('"(.-)"')
+  -- extract the string (either single-quoted or double-quoted)
+  local str = line:match("'(.-)'") or line:match('"(.-)"')
 
-	if str then
-		-- Construct the GitHub URL
-		local url = "https://github.com/" .. str
+  if str then
+    -- Construct the GitHub URL
+    local url = "https://github.com/" .. str
 
-		-- use the open shell command to open the URL
-		os.execute("open " .. url)
-	else
-		print("No valid string found on the current line.")
-	end
+    -- use the open shell command to open the URL
+    os.execute("open " .. url)
+  else
+    print("No valid string found on the current line.")
+  end
 end)

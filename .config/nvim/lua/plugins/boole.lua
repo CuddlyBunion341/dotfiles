@@ -14,6 +14,7 @@ return {
         {'true', 'false'},
         {'&&', '||'},
         {'private', 'public', 'protected'},
+        {'const', 'let'},
       },
     })
   end
