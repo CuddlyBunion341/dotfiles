@@ -1,5 +1,6 @@
 return {
-  "nvim-telescope/telescope.nvim", tag = "0.1.8",
+  "nvim-telescope/telescope.nvim",
+  tag = "0.1.8",
   dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-ui-select.nvim", },
   config = function()
     require("telescope").setup {
@@ -18,6 +19,9 @@ return {
           }
         }
       },
+      defaults = {
+        file_ignore_patterns = { ".git/" }, -- Ignore the .git directory
+      }
     }
 
     require("telescope").load_extension("ui-select")
@@ -44,11 +48,11 @@ return {
     end
 
     vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end,
-    { desc = "Open harpoon window" })
+      { desc = "Open harpoon window" })
   end,
   keys = {
-    { "<C-p>", "<cmd>Telescope commands<cr>" },
-    { "<C-s>", "<cmd>Telescope lsp_document_symbols<cr>" },
+    { "<C-p>",     "<cmd>Telescope commands<cr>" },
+    { "<C-s>",     "<cmd>Telescope lsp_document_symbols<cr>" },
     { "<leader>f", "<cmd>Telescope find_files hidden=true<cr>" },
     { "<leader>e", "<cmd>Telescope find_files hidden=false<cr>" },
     { "<leader>w", "<cmd>Telescope live_grep<cr>" },
@@ -63,6 +67,6 @@ return {
     { "<leader>at", "<cmd>Telescope find_files prompt_title=Specs cwd=spec/ hidden=true<cr>" },
     { "<leader>af", "<cmd>Telescope find_files prompt_title=Specs cwd=spec/factories hidden=true<cr>" },
     { "<leader>av", "<cmd>Telescope find_files prompt_title=Views cwd=app/views hidden=true<cr>" },
-    { "<leader>l", "<cmd>Telescope lsp_document_symbols"}
+    { "<leader>l",  "<cmd>Telescope lsp_document_symbols" }
   }
 }

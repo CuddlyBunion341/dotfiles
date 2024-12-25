@@ -14,7 +14,7 @@ vim.opt.autowriteall = true
 vim.opt.list = false -- whitespace
 vim.o.clipboard = "unnamedplus"
 vim.o.timeoutlen = 200
-vim.opt.cmdheight = 0
+-- vim.opt.cmdheight = 0
 
 -- keyap to toggle line numbers (set nonumber and set norelativenumber)
 -- vim.keymap.set("n", "<C-u>", ":set invnumber<cr>:set invrelativenumber<cr>")
