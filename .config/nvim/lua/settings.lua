@@ -32,6 +32,12 @@ vim.keymap.set("n", "<leader>/", "<cmd>noh<cr>")
 vim.keymap.set("n", "<C-`>", ":vert terminal<cr>", { noremap = true })
 vim.keymap.set("t", "<C-q>", "<C-\\><C-n>", { noremap = true })
 
+-- move
+vim.api.nvim_set_keymap('x', '<C-j>', ':move \'>+<CR>gv=gv', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-k>', ':move -2<CR>==', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-j>', ':move +<CR>==', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('x', '<C-k>', ':move -2<CR>gv=gv', { noremap = true, silent = true })
+
 -- saving / quitting
 
 vim.keymap.set("n", "Q", ":quit<cr>")
