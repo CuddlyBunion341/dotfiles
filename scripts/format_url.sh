@@ -12,13 +12,13 @@ FORMAT=""
 # Extract necessary parts based on the URL structure
 if [[ $URL =~ https?://[^/]+\.atlassian\.net/browse/([^ ]+) ]]; then
     TICKET="${BASH_REMATCH[1]}"
-    FORMAT="[$TICKET]($URL)"
+    FORMAT="<a href=\"$URL\">$TICKET</a>"
 elif [[ $URL =~ https?://[^/]+\.bitbucket\.org/[^/]+/pull-requests/([0-9]+) ]]; then
     PR_NUMBER="${BASH_REMATCH[1]}"
-    FORMAT="[#${PR_NUMBER}]($URL)"
+    FORMAT="<a href=\"$URL\">#$PR_NUMBER</a>"
 elif [[ $URL =~ https?://[^/]+\.bitbucket\.org/[^/]+/commits/([0-9a-f]+) ]]; then
     COMMIT_HASH="${BASH_REMATCH[1]}"
-    FORMAT="[${COMMIT_HASH:0:7}]($URL)"
+    FORMAT="<a href=\"$URL\">${COMMIT_HASH:0:7}</a>"
 else
     echo "Unsupported URL structure."
     exit 1
