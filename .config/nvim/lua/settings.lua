@@ -69,6 +69,9 @@ vim.opt.shortmess:append("A") -- https://stackoverflow.com/questions/1098159/vim
 -- commands
 
 vim.keymap.set("n", "<leader>L", ":Lazy<cr>")
+vim.keymap.set("n", "cp", "cp :let @+=expand('%:p')<cr>")
+vim.keymap.set("n", "cm", ":cnext<cr>")
+vim.keymap.set("n", "cl", ":cprev<cr>")
 
 -- splits
 

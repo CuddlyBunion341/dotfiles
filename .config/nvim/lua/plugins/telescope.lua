@@ -21,6 +21,11 @@ return {
       },
       defaults = {
         file_ignore_patterns = { ".git/" }, -- Ignore the .git directory
+        mappings = {
+          n = {
+            ["<C-q>"] = require("telescope.actions").send_selected_to_qflist + require("telescope.actions").open_qflist,
+          }
+        }
       }
     }
 
