@@ -59,7 +59,7 @@ return {
     { "<C-p>",     "<cmd>Telescope commands<cr>" },
     { "<C-s>",     "<cmd>Telescope lsp_document_symbols<cr>" },
     { "<leader>f", "<cmd>Telescope find_files hidden=true<cr>" },
-    { "<leader>e", "<cmd>Telescope find_files hidden=false<cr>" },
+    -- { "<leader>e", "<cmd>Telescope find_files hidden=false<cr>" },
     { "<leader>w", "<cmd>Telescope live_grep<cr>" },
     { "<leader>r", function()
       local current_word = vim.fn.expand("<cword>")
@@ -72,6 +72,6 @@ return {
     { "<leader>at", "<cmd>Telescope find_files prompt_title=Specs cwd=spec/ hidden=true<cr>" },
     { "<leader>af", "<cmd>Telescope find_files prompt_title=Specs cwd=spec/factories hidden=true<cr>" },
     { "<leader>av", "<cmd>Telescope find_files prompt_title=Views cwd=app/views hidden=true<cr>" },
-    { "<leader>l",  "<cmd>Telescope lsp_document_symbols" }
+    { "<leader>l",  "<cmd>Telescope lsp_document_symbols<cr>" }
   }
 }

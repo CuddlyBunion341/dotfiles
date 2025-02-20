@@ -16,6 +16,11 @@ return {
       config = function()
         require("mason-lspconfig").setup({
           ensure_installed = { 'lua_ls', 'rust_analyzer' },
+          defaults = {
+            rust_analyzer = {
+              cargo = { features = "*" }
+            },
+          }
         })
       end,
       keys = {
@@ -60,4 +65,3 @@ return {
     })
   end
 }
-
