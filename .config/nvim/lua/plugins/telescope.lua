@@ -56,22 +56,24 @@ return {
       { desc = "Open harpoon window" })
   end,
   keys = {
-    { "<C-p>",     "<cmd>Telescope commands<cr>" },
-    { "<C-s>",     "<cmd>Telescope lsp_document_symbols<cr>" },
-    { "<leader>f", "<cmd>Telescope find_files hidden=true<cr>" },
-    -- { "<leader>e", "<cmd>Telescope find_files hidden=false<cr>" },
-    { "<leader>w", "<cmd>Telescope live_grep<cr>" },
+    { "<C-p>",     "<cmd>Telescope find_files<cr>", desc = "Find files" },
+    { "<C-b>",     "<cmd>Telescope buffers<cr>", desc = "Find buffer" },
+    { "<leader>C",     "<cmd>Telescope commands<cr>", desc = "Find commands" },
+    { "<C-s>",     "<cmd>Telescope lsp_document_symbols<cr>", desc = "Find symbols" },
+    { "<leader>f", "<cmd>Telescope find_files hidden=true<cr>", desc = "Find files" },
+    -- { "<leader>e", "<cmd>Telescope find_files hidden=false<cr>", desc = "Find all files" },
+    { "<leader>w", "<cmd>Telescope live_grep<cr>", desc = "Find substring" },
     { "<leader>r", function()
       local current_word = vim.fn.expand("<cword>")
       require("telescope.builtin").grep_string({ search = current_word })
     end },
-    { "<leader>cc", "<cmd>Telescope git_commits<cr>" },
-    { "<leader>ac", "<cmd>Telescope find_files prompt_title=Controllers cwd=app/controllers/ hidden=true<cr>" },
-    { "<leader>ah", "<cmd>Telescope find_files prompt_title=Controllers cwd=app/helpers/ hidden=true<cr>" },
-    { "<leader>am", "<cmd>Telescope find_files prompt_title=Models cwd=app/models/ hidden=true<cr>" },
-    { "<leader>at", "<cmd>Telescope find_files prompt_title=Specs cwd=spec/ hidden=true<cr>" },
-    { "<leader>af", "<cmd>Telescope find_files prompt_title=Specs cwd=spec/factories hidden=true<cr>" },
-    { "<leader>av", "<cmd>Telescope find_files prompt_title=Views cwd=app/views hidden=true<cr>" },
-    { "<leader>l",  "<cmd>Telescope lsp_document_symbols<cr>" }
+    { "<leader>cc", "<cmd>Telescope git_commits<cr>", desc = "Find git commits" },
+    { "<leader>ac", "<cmd>Telescope find_files prompt_title=Controllers cwd=app/controllers/ hidden=true<cr>", desc = "Find Rails controllers" },
+    { "<leader>ah", "<cmd>Telescope find_files prompt_title=Controllers cwd=app/helpers/ hidden=true<cr>", desc = "Find Rails helpers" },
+    { "<leader>am", "<cmd>Telescope find_files prompt_title=Models cwd=app/models/ hidden=true<cr>", desc = "Find Rails models" },
+    { "<leader>at", "<cmd>Telescope find_files prompt_title=Specs cwd=spec/ hidden=true<cr>", desc = "Find Rails specs" },
+    { "<leader>af", "<cmd>Telescope find_files prompt_title=Specs cwd=spec/factories hidden=true<cr>", desc = "Find Rails factories" },
+    { "<leader>av", "<cmd>Telescope find_files prompt_title=Views cwd=app/views hidden=true<cr>", desc = "Find Rails views" },
+    { "<leader>l",  "<cmd>Telescope lsp_document_symbols<cr>", desc = "Find symbols" },
   }
 }
