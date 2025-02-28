@@ -9,4 +9,9 @@ return {
 		lazy = false,
 		priority = 1000,
 	},
+  {
+    "habamax/vim-polar",
+    lazy = false,
+    priority = 1000,
+  }
 }

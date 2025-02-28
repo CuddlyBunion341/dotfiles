@@ -33,27 +33,27 @@ vim.keymap.set("n", "<C-`>", ":vert terminal<cr>", { noremap = true })
 vim.keymap.set("t", "<C-q>", "<C-\\><C-n>", { noremap = true })
 
 -- move
-vim.api.nvim_set_keymap('x', '<C-j>', ':move \'>+<CR>gv=gv', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-k>', ':move -2<CR>==', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-j>', ':move +<CR>==', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('x', '<C-k>', ':move -2<CR>gv=gv', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('x', '<C-j>', ':move \'>+<CR>gv=gv', { noremap = true, silent = true, desc = "Move line down" })
+vim.api.nvim_set_keymap('n', '<C-k>', ':move -2<CR>==', { noremap = true, silent = true, desc = "Move line up" })
+vim.api.nvim_set_keymap('n', '<C-j>', ':move +<CR>==', { noremap = true, silent = true, desc = "Move line down" })
+vim.api.nvim_set_keymap('x', '<C-k>', ':move -2<CR>gv=gv', { noremap = true, silent = true, desc = "Move line up" })
 
 -- saving / quitting
 
-vim.keymap.set("n", "Q", ":quit<cr>")
-vim.keymap.set("n", "<leader>Q", ":q!<cr>")
-vim.keymap.set("n", "<leader>W", ":wq<cr>")
-vim.keymap.set("n", "<leader>q", ":quitall<cr>")
-vim.keymap.set("n", "<leader>s", ":w<cr>")
+vim.keymap.set("n", "Q", ":quit<cr>", { desc = "Quit" })
+vim.keymap.set("n", "<leader>Q", ":q!<cr>", { desc = "Quit without saving" })
+vim.keymap.set("n", "<leader>W", ":wq<cr>", { desc = "Save and quit" })
+vim.keymap.set("n", "<leader>q", ":quitall<cr>", { desc = "Quit all" })
+vim.keymap.set("n", "<leader>s", ":w<cr>", { desc = "Save" })
 
 -- formatting
 
-vim.keymap.set("n", "g=", "ggVG=<C-o>")
-vim.keymap.set("n", "zt", "<cmd>%s/\t/  /g<cr><C-o>")
-vim.keymap.set("n", "vag", "ggVG")
-vim.keymap.set("n", "dag", "ggVGd")
-vim.keymap.set("n", "yag", "ggVGy")
-vim.keymap.set("n", "cag", "ggVGc")
+vim.keymap.set("n", "g=", "ggVG=<C-o>", { desc = "Fix indentation in file" })
+vim.keymap.set("n", "zt", "<cmd>%s/\t/  /g<cr><C-o>", { desc = "Replace tabs with spaces" })
+vim.keymap.set("n", "vag", "ggVG", { desc = "Visual select file contents" })
+vim.keymap.set("n", "dag", "ggVGd", { desc = "Delete file contents" })
+vim.keymap.set("n", "yag", "ggVGy", { desc = "Format paragraph" })
+vim.keymap.set("n", "cag", "ggVGc", { desc = "Format paragraph" })
 vim.keymap.set("n", "gJ", "Jx")
 
 -- macro

@@ -6,6 +6,6 @@ return {
   },
   opts = { },
   keys = {
-    { "<C-x>", "<cmd>SessionDelete<cr>" }
+    { "<C-x>", "<cmd>SessionDelete<cr>", desc = "Delete session" },
   }
 }

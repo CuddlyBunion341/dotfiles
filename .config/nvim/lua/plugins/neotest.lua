@@ -21,10 +21,10 @@ return {
     })
   end,
   keys = {
-    { "<leader>tt", "<cmd>Neotest run file<cr>" },
-    { "<leader>tr", "<cmd>Neotest run<cr>" },
-    { "<leader>to", "<cmd>Neotest output<cr>" },
-    { "<leader>tO", "<cmd>Neotest output-panel<cr>" },
-    { "<leader>ts", "<cmd>Neotest stop<cr>" },
+    { "<leader>tt", "<cmd>Neotest run file<cr>",     desc = "Test file" },
+    { "<leader>tr", "<cmd>Neotest run<cr>",          desc = "Run closest test" },
+    { "<leader>to", "<cmd>Neotest output<cr>",       desc = "Test output" },
+    { "<leader>tO", "<cmd>Neotest output-panel<cr>", desc = "Test output panel" },
+    { "<leader>ts", "<cmd>Neotest stop<cr>",         desc = "Stop test" },
   }
 }

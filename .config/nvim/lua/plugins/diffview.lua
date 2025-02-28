@@ -4,6 +4,6 @@ return {
     "DiffviewOpen"
   },
   keys = {
-    { "<leader>do", "<cmd>DiffviewOpen<cr>" }
+    { "<leader>do", "<cmd>DiffviewOpen<cr>", desc = "Open diffview" },
   }
 }

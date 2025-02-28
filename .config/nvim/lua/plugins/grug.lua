@@ -4,10 +4,12 @@ return  {
     require('grug-far').setup({});
   end,
   keys = {
-    { "<leader>sp",function() require("grug-far").open() end},
+    { "<C-f>",function() require("grug-far").open() end, desc = "Find and replace" },
+    { "<leader>sp",function() require("grug-far").open() end, desc = "Find and replace" },
     { "<leader>sw", function()
       require('grug-far').open({ prefills = { search = vim.fn.expand("<cword>") } })
-    end
+    end,
+    desc = "Find and replace word under cursor"
   }
 }
 }

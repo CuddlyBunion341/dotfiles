@@ -6,7 +6,7 @@ return {
     require("telescope").load_extension("textcase")
   end,
   keys = {
-    { "co", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "x" }, desc = "Telescope" },
+    { "co", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "x" }, desc = "Open TextCase Telescope" },
   },
   cmd = {
     "Subs",
