@@ -1,4 +1,4 @@
-  return {
-    "jlanzarotta/bufexplorer",
-    lazy = false,
-  }
+return {
+	"jlanzarotta/bufexplorer",
+	lazy = false,
+}

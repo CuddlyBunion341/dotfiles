@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-vim.g.maplocalleader = ','
+vim.g.maplocalleader = ","
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = true
 vim.opt.termguicolors = true
@@ -33,10 +33,10 @@ vim.keymap.set("n", "<C-`>", ":vert terminal<cr>", { noremap = true })
 vim.keymap.set("t", "<C-q>", "<C-\\><C-n>", { noremap = true })
 
 -- move
-vim.api.nvim_set_keymap('x', '<C-j>', ':move \'>+<CR>gv=gv', { noremap = true, silent = true, desc = "Move line down" })
-vim.api.nvim_set_keymap('n', '<C-k>', ':move -2<CR>==', { noremap = true, silent = true, desc = "Move line up" })
-vim.api.nvim_set_keymap('n', '<C-j>', ':move +<CR>==', { noremap = true, silent = true, desc = "Move line down" })
-vim.api.nvim_set_keymap('x', '<C-k>', ':move -2<CR>gv=gv', { noremap = true, silent = true, desc = "Move line up" })
+vim.api.nvim_set_keymap("x", "<C-j>", ":move '>+<CR>gv=gv", { noremap = true, silent = true, desc = "Move line down" })
+vim.api.nvim_set_keymap("n", "<C-k>", ":move -2<CR>==", { noremap = true, silent = true, desc = "Move line up" })
+vim.api.nvim_set_keymap("n", "<C-j>", ":move +<CR>==", { noremap = true, silent = true, desc = "Move line down" })
+vim.api.nvim_set_keymap("x", "<C-k>", ":move -2<CR>gv=gv", { noremap = true, silent = true, desc = "Move line up" })
 
 -- saving / quitting
 
@@ -85,19 +85,19 @@ vim.keymap.set("n", "<C-e>", ":wincmd =<cr>", { silent = true })
 vim.keymap.set("n", "<leader>v", ":wincmd v<cr>", { silent = true })
 vim.keymap.set("n", "<leader>V", ":wincmd s<cr>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>o", function()
-  -- get the current line content
-  local line = vim.api.nvim_get_current_line()
+	-- get the current line content
+	local line = vim.api.nvim_get_current_line()
 
-  -- extract the string (either single-quoted or double-quoted)
-  local str = line:match("'(.-)'") or line:match('"(.-)"')
+	-- extract the string (either single-quoted or double-quoted)
+	local str = line:match("'(.-)'") or line:match('"(.-)"')
 
-  if str then
-    -- Construct the GitHub URL
-    local url = "https://github.com/" .. str
+	if str then
+		-- Construct the GitHub URL
+		local url = "https://github.com/" .. str
 
-    -- use the open shell command to open the URL
-    os.execute("open " .. url)
-  else
-    print("No valid string found on the current line.")
-  end
+		-- use the open shell command to open the URL
+		os.execute("open " .. url)
+	else
+		print("No valid string found on the current line.")
+	end
 end)

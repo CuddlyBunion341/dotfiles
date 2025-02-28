@@ -1,4 +1,4 @@
 return {
-  "chiedo/vim-case-convert",
-  lazy = false,
+	"chiedo/vim-case-convert",
+	lazy = false,
 }

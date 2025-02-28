@@ -1,4 +1,4 @@
 return {
-  "mg979/vim-visual-multi",
-  lazy = false
+	"mg979/vim-visual-multi",
+	lazy = false,
 }
