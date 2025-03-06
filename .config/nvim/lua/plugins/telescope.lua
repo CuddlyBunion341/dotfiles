@@ -59,7 +59,7 @@ return {
 		end, { desc = "Open harpoon window" })
 	end,
 	keys = {
-		{ "<C-p>", "<cmd>Telescope find_files<cr>", desc = "Find files" },
+		{ "<C-p>", '<cmd>Telescope find_files path_display={"smart"}<cr>', desc = "Find files" },
 		{ "<C-b>", "<cmd>Telescope buffers<cr>", desc = "Find buffer" },
 		{ "<leader>C", "<cmd>Telescope commands<cr>", desc = "Find commands" },
 		{ "<C-s>", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Find symbols" },
