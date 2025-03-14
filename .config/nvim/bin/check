@@ -1,3 +1,4 @@
 #!/bin/bash
 
 stylua --check .
+nvim --headless -c "checkhealth" -c "qa"
