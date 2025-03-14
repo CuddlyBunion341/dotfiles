@@ -1,0 +1,47 @@
+name: Neovim Checks
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.config/nvim/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '.config/nvim/**'
+  workflow_dispatch:
+
+jobs:
+  nvim-checks:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Neovim
+      uses: rhysd/action-setup-vim@v1
+      with:
+        neovim: true
+        version: stable
+    
+    - uses: asdf-vm/actions/setup@v3
+    
+    - name: Install asdf plugins
+      run: |
+        asdf plugin add nodejs || true
+        asdf plugin add ruby || true
+    
+    - name: Install versions from .tool-versions
+      working-directory: .config/nvim
+      run: asdf install
+    
+    - name: Install StyLua
+      run: cargo install stylua
+    
+    - name: Run fast checks (linting)
+      working-directory: .config/nvim
+      run: ./bin/lint
+    
+    - name: Run health checks
+      working-directory: .config/nvim
+      run: ./bin/check
