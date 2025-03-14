@@ -41,6 +41,9 @@ jobs:
     - name: Run fast checks (linting)
       working-directory: .config/nvim
       run: ./bin/lint
+
+    - name: Sync Lazy
+      run: nvim --headless "+Lazy sync" +qall
     
     - name: Run health checks
       working-directory: .config/nvim
