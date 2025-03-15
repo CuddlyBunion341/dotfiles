@@ -3,8 +3,8 @@ name: Neovim Checks
 on:
   push:
     branches: [ main ]
-    paths:
-      - '.config/nvim/**'
+    #paths:
+    #  - '.config/nvim/**'
   pull_request:
     branches: [ main ]
     # paths:
