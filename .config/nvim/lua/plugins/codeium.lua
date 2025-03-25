@@ -1,2 +1,2 @@
-return {'Exafunction/codeium.vim', lazy=false}
- -- Call :Codeium Auth after installation to get Token ID
+return { "Exafunction/codeium.vim", lazy = false }
+-- sall :Codeium Auth after installation to get Token ID
