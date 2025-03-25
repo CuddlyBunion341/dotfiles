@@ -1,0 +1,80 @@
+name: MacOS Dotfiles Setup
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  macos-setup:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Full history for potential git-based configurations
+    
+    - name: Setup Homebrew
+      run: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        echo "/opt/homebrew/bin" >> $GITHUB_PATH
+        brew update
+    
+    - uses: asdf-vm/actions/setup@v3
+    
+    - name: Install asdf plugins
+      run: |
+        asdf plugin add nodejs || true
+        asdf plugin add ruby || true
+    
+    - name: Install versions from .tool-versions
+      run: asdf install
+    
+    - name: Setup Neovim
+      run: |
+        brew install neovim
+        nvim --version
+    
+    - name: Install dotfiles dependencies
+      run: |
+        brew bundle install || true
+        
+    - name: Symlink dotfiles
+      run: |
+        # Create necessary directories
+        mkdir -p ~/.config
+        
+        # Symlink common configurations
+        for file in $(find . -maxdepth 1 -name ".*" -not -name ".git" -not -name ".github"); do
+          ln -sfn "$PWD/$file" "$HOME/$(basename $file)"
+        done
+        
+        # Symlink .config directory contents
+        for dir in .config/*; do
+          if [ -d "$dir" ]; then
+            ln -sfn "$PWD/$dir" "$HOME/.config/$(basename $dir)"
+          fi
+        done
+    
+    - name: Verify Neovim setup
+      run: |
+        nvim --headless "+Lazy sync" +qall
+        cd ~/.config/nvim && ./bin/check || true
+        cd ~/.config/nvim && ./bin/lint
+    
+    - name: Verify zsh setup
+      run: |
+        zsh -c 'source ~/.zshrc && echo "ZSH loaded successfully"'
+    
+    - name: Check for common issues
+      run: |
+        # Check if important dotfiles are properly linked
+        test -L ~/.zshrc && echo "✓ .zshrc is linked" || exit 1
+        test -L ~/.config/nvim && echo "✓ nvim config is linked" || exit 1
+        
+        # Check if key tools are available
+        which nvim && echo "✓ neovim is available" || exit 1
+        which brew && echo "✓ homebrew is available" || exit 1
+        which git && echo "✓ git is available" || exit 1 
