@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# Exit on error
+set -e
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+# Function to check if a command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Function to install a package if it doesn't exist
+install_package() {
+    if ! command_exists "$1"; then
+        echo -e "${YELLOW}Installing $1...${NC}"
+        brew install "$1"
+    fi
+}
+
+# Install required packages
+install_package "shellcheck"
+install_package "shfmt"
+install_package "markdownlint-cli"
+install_package "prettier"
+install_package "taplo"
+
+# Function to lint files
+lint_files() {
+    local dir="$1"
+    local ext="$2"
+    local cmd="$3"
+    
+    find "$dir" -type f -name "*.$ext" -not -path "*/\.*" | while read -r file; do
+        echo -e "${YELLOW}Linting $file...${NC}"
+        eval "$cmd \"$file\""
+    done
+}
+
+# Lint bash files
+lint_files "." "sh" "shellcheck -f gcc"
+
+# Format bash files
+lint_files "." "sh" "shfmt -i 2 -bn -ci -w"
+
+# Lint markdown files
+lint_files "." "md" "markdownlint"
+
+# Lint and format TypeScript files
+lint_files "." "ts" "prettier --write"
+
+# Lint and format TOML files
+lint_files "." "toml" "taplo fmt"
+
+# Lint Lua files (using stylua)
+if command_exists "stylua"; then
+    lint_files "." "lua" "stylua"
+fi
+
+echo -e "${GREEN}Linting complete!${NC}"

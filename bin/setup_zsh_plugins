@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Exit on error
+set -e
+
+# Colors for output
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+# Create plugins directory if it doesn't exist
+PLUGINS_DIR="$HOME/.oh-my-zsh/custom/plugins"
+mkdir -p "$PLUGINS_DIR"
+
+# List of plugins to install
+declare -A plugins=(
+    ["zsh-autosuggestions"]="https://github.com/zsh-users/zsh-autosuggestions"
+    ["zsh-syntax-highlighting"]="https://github.com/zsh-users/zsh-syntax-highlighting"
+    ["zsh-completions"]="https://github.com/zsh-users/zsh-completions"
+    ["zsh-history-substring-search"]="https://github.com/zsh-users/zsh-history-substring-search"
+    ["zsh-navigation-tools"]="https://github.com/hchbaw/zsh-navigation-tools"
+    ["zsh-docker-aliases"]="https://github.com/webyneter/docker-aliases"
+    ["zsh-git-flow-completion"]="https://github.com/bobthecow/git-flow-completion"
+    ["zsh-kubectl"]="https://github.com/plugins/kubectl"
+    ["zsh-docker"]="https://github.com/plugins/docker"
+    ["zsh-docker-compose"]="https://github.com/plugins/docker-compose"
+)
+
+# Install or update plugins
+for plugin in "${!plugins[@]}"; do
+    plugin_dir="$PLUGINS_DIR/$plugin"
+    if [ ! -d "$plugin_dir" ]; then
+        echo -e "${YELLOW}Installing $plugin...${NC}"
+        git clone "${plugins[$plugin]}" "$plugin_dir"
+    else
+        echo -e "${YELLOW}Updating $plugin...${NC}"
+        cd "$plugin_dir" && git pull && cd -
+    fi
+done
+
+echo -e "${GREEN}Zsh plugins setup complete!${NC}"
