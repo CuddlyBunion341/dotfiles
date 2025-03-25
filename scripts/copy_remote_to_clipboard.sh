@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 # Get the git remote origin URL
 remote_url=$(git remote -v | awk '/origin.*fetch/ { print $2 }')

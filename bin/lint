@@ -14,51 +14,77 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# Function to install a package if it doesn't exist
-install_package() {
-    if ! command_exists "$1"; then
-        echo -e "${YELLOW}Installing $1...${NC}"
-        brew install "$1"
+# Function to ensure asdf is available
+ensure_asdf() {
+    if ! command_exists "asdf"; then
+        echo -e "${RED}Error: asdf is not installed. Please install asdf first.${NC}"
+        exit 1
     fi
 }
 
-# Install required packages
-install_package "shellcheck"
-install_package "shfmt"
-install_package "markdownlint-cli"
-install_package "prettier"
-install_package "taplo"
-
-# Function to lint files
-lint_files() {
-    local dir="$1"
-    local ext="$2"
-    local cmd="$3"
+# Ensure correct versions are installed
+setup_environment() {
+    ensure_asdf
+    echo -e "${YELLOW}Setting up environment...${NC}"
+    asdf install
     
-    find "$dir" -type f -name "*.$ext" -not -path "*/\.*" | while read -r file; do
-        echo -e "${YELLOW}Linting $file...${NC}"
-        eval "$cmd \"$file\""
-    done
+    if ! command_exists "bun"; then
+        echo -e "${YELLOW}Installing Bun...${NC}"
+        curl -fsSL https://bun.sh/install | bash
+    fi
 }
 
-# Lint bash files
-lint_files "." "sh" "shellcheck -f gcc"
+# Function to install a package if it doesn't exist
+install_package() {
+    local cmd=$1
+    local pkg=$2
+    
+    if ! command_exists "$cmd"; then
+        echo -e "${YELLOW}Installing $cmd...${NC}"
+        case "$cmd" in
+            "shellcheck"|"shfmt")
+                brew install "$cmd"
+                ;;
+            *)
+                bun add -g "$pkg"
+                ;;
+        esac
+    fi
+}
 
-# Format bash files
-lint_files "." "sh" "shfmt -i 2 -bn -ci -w"
+# Setup environment
+setup_environment
 
-# Lint markdown files
-lint_files "." "md" "markdownlint"
+# Install required packages
+install_package "shellcheck" "shellcheck"
+install_package "shfmt" "shfmt"
+install_package "markdownlint" "markdownlint-cli"
+install_package "prettier" "@prettier/plugin-typescript"
+install_package "taplo" "@taplo/cli"
 
-# Lint and format TypeScript files
-lint_files "." "ts" "prettier --write"
+echo -e "${YELLOW}Starting linting and formatting...${NC}"
 
-# Lint and format TOML files
-lint_files "." "toml" "taplo fmt"
+# Format and lint shell scripts
+echo -e "${YELLOW}Processing shell scripts...${NC}"
+find . -type f -name "*.sh" -not -path "*/\.*" -exec shfmt -i 2 -bn -ci -w {} \;
+find . -type f -name "*.sh" -not -path "*/\.*" -exec shellcheck {} \; || true
 
-# Lint Lua files (using stylua)
+# Format and lint markdown
+echo -e "${YELLOW}Processing markdown files...${NC}"
+find . -type f -name "*.md" -not -path "*/\.*" -exec markdownlint --fix {} \; || true
+
+# Format TypeScript/JavaScript files
+echo -e "${YELLOW}Processing TypeScript/JavaScript files...${NC}"
+find . \( -name "*.ts" -o -name "*.js" -o -name "*.tsx" -o -name "*.jsx" \) -not -path "*/\.*" -exec prettier --write {} \;
+
+# Format TOML files
+echo -e "${YELLOW}Processing TOML files...${NC}"
+find . -type f -name "*.toml" -not -path "*/\.*" -exec taplo fmt {} \;
+
+# Format Lua files
 if command_exists "stylua"; then
-    lint_files "." "lua" "stylua"
+    echo -e "${YELLOW}Processing Lua files...${NC}"
+    find . -type f -name "*.lua" -not -path "*/\.*" -exec stylua {} \;
 fi
 
-echo -e "${GREEN}Linting complete!${NC}"
+echo -e "${GREEN}Linting and formatting complete!${NC}"
