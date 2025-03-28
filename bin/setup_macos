@@ -58,33 +58,9 @@ fi
 echo -e "${YELLOW}Setting up Zsh plugins...${NC}"
 "$SCRIPT_DIR/setup_zsh_plugins"
 
-# Symlink dotfiles
-echo -e "${YELLOW}Symlinking dotfiles...${NC}"
-mkdir -p ~/.config
-
-# Symlink common configurations
-for file in $(find "$DOTFILES_DIR" -maxdepth 1 -name ".*" -not -name ".git" -not -name ".github" -not -name ".DS_Store"); do
-    ln -sfn "$file" "$HOME/$(basename $file)"
-    echo "Linked $(basename $file)"
-done
-
-# Symlink .config directory contents
-for dir in "$DOTFILES_DIR"/*; do
-    if [ -d "$dir" ] && [ "$(basename $dir)" != ".git" ] && [ "$(basename $dir)" != ".github" ] && [ "$(basename $dir)" != "bin" ] && [ "$(basename $dir)" != "scripts" ]; then
-        if [ -d "$dir/.config" ]; then
-            for config in "$dir/.config"/*; do
-                if [ -d "$config" ]; then
-                    mkdir -p "$HOME/.config"
-                    ln -sfn "$config" "$HOME/.config/$(basename $config)"
-                    echo "Linked .config/$(basename $config)"
-                fi
-            done
-        elif [ "$(basename $dir)" != "nixos" ]; then
-            ln -sfn "$dir" "$HOME/.config/$(basename $dir)"
-            echo "Linked .config/$(basename $dir)"
-        fi
-    fi
-done
+# Use stow to symlink dotfiles
+echo -e "${YELLOW}Symlinking dotfiles using GNU Stow...${NC}"
+"$SCRIPT_DIR/setup_stow"
 
 # Setup Neovim
 echo -e "${YELLOW}Setting up Neovim...${NC}"

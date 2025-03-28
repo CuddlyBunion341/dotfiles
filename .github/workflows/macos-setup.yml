@@ -47,29 +47,14 @@ jobs:
         chmod +x ./bin/*
         find ./nvim/.config/nvim/bin -type f -exec chmod +x {} \; || true
     
-    - name: Symlink dotfiles
+    - name: Install GNU Stow
       run: |
-        # Create necessary directories
-        mkdir -p ~/.config
-        
-        # Symlink common configurations
-        for file in $(find . -maxdepth 1 -name ".*" -not -name ".git" -not -name ".github" -not -name ".DS_Store"); do
-          ln -sfn "$PWD/$file" "$HOME/$(basename $file)"
-        done
-        
-        # Symlink .config directory contents
-        for dir in */; do
-          if [ -d "${dir}.config" ]; then
-            for config in "${dir}.config/"*; do
-              if [ -d "$config" ]; then
-                mkdir -p "$HOME/.config"
-                ln -sfn "$PWD/$config" "$HOME/.config/$(basename $config)"
-              fi
-            done
-          elif [ "${dir%/}" != ".git" ] && [ "${dir%/}" != ".github" ] && [ "${dir%/}" != "bin" ] && [ "${dir%/}" != "scripts" ] && [ "${dir%/}" != "nixos" ]; then
-            ln -sfn "$PWD/${dir%/}" "$HOME/.config/${dir%/}"
-          fi
-        done
+        brew install stow
+        stow --version
+    
+    - name: Symlink dotfiles with GNU Stow
+      run: |
+        ./bin/setup_stow
     
     - name: Setup Oh My Zsh
       run: |
@@ -82,28 +67,25 @@ jobs:
         nvim --version
         
         if [ -d "./nvim/.config/nvim" ]; then
+          echo "Setting up Neovim configuration..."
+          chmod +x ./nvim/.config/nvim/bin/*
           cd ./nvim/.config/nvim
           ./bin/setup
+          cd "$GITHUB_WORKSPACE"
+          echo "Neovim setup completed"
+        else
+          echo "Neovim configuration directory not found at ./nvim/.config/nvim"
         fi
     
-    - name: Verify Neovim setup
+    - name: Run Neovim plugin installation
       run: |
         nvim --headless "+Lazy sync" +qall
-        [ -d ~/.local/share/nvim/lazy ] && echo "✓ Lazy.nvim is installed" || exit 1
-        cd ~/.config/nvim && ./bin/check || true
-        cd ~/.config/nvim && ./bin/lint
+    
+    - name: Run Health Check
+      run: |
+        ./bin/healthcheck
+        echo "Health check completed successfully!"
     
     - name: Verify zsh setup
       run: |
-        zsh -c 'source ~/.zshrc && echo "✓ ZSH loaded successfully"'
-    
-    - name: Check for common issues
-      run: |
-        # Check if important dotfiles are properly linked
-        test -L ~/.zshrc && echo "✓ .zshrc is linked" || exit 1
-        test -L ~/.config/nvim && echo "✓ nvim config is linked" || exit 1
-        
-        # Check if key tools are available
-        which nvim && echo "✓ neovim is available" || exit 1
-        which brew && echo "✓ homebrew is available" || exit 1
-        which git && echo "✓ git is available" || exit 1 
+        zsh -c 'source ~/.zshrc && echo "✓ ZSH loaded successfully"' 

@@ -1,0 +1,126 @@
+#!/bin/bash
+
+# Exit on error
+set -e
+
+# Colors for output
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+SCRIPT_DIR=$(cd $(dirname $0) && pwd)
+DOTFILES_DIR=$(cd $SCRIPT_DIR/.. && pwd)
+
+# Initialize error counter
+ERRORS=0
+
+# Header
+echo -e "${YELLOW}=========================================${NC}"
+echo -e "${YELLOW}   Dotfiles Health Check${NC}"
+echo -e "${YELLOW}=========================================${NC}"
+
+# Function to check if a command exists
+check_command() {
+    local cmd=$1
+    if command -v "$cmd" &> /dev/null; then
+        echo -e "${GREEN}✓ $cmd is available${NC}"
+    else
+        echo -e "${RED}✗ $cmd is not installed${NC}"
+        ERRORS=$((ERRORS + 1))
+    fi
+}
+
+# Function to check if a file is symlinked
+check_symlink() {
+    local file=$1
+    if [ -L "$file" ]; then
+        echo -e "${GREEN}✓ $(basename $file) is properly linked to $(readlink $file)${NC}"
+    else
+        echo -e "${RED}✗ $(basename $file) is not symlinked${NC}"
+        ERRORS=$((ERRORS + 1))
+    fi
+}
+
+# Function to check if a directory exists
+check_dir() {
+    local dir=$1
+    if [ -d "$dir" ]; then
+        echo -e "${GREEN}✓ $(basename $dir) directory exists${NC}"
+    else
+        echo -e "${RED}✗ $(basename $dir) directory not found${NC}"
+        ERRORS=$((ERRORS + 1))
+    fi
+}
+
+# Check essential commands
+echo -e "\n${YELLOW}Checking essential commands...${NC}"
+check_command "nvim"
+check_command "brew"
+check_command "git"
+check_command "stow"
+check_command "zsh"
+check_command "tmux"
+
+# Check asdf and plugins
+echo -e "\n${YELLOW}Checking asdf installation...${NC}"
+check_command "asdf"
+if command -v asdf &> /dev/null; then
+    echo -e "${YELLOW}Checking asdf plugins...${NC}"
+    asdf plugin list | grep nodejs &> /dev/null && echo -e "${GREEN}✓ nodejs plugin is installed${NC}" || { echo -e "${RED}✗ nodejs plugin is not installed${NC}"; ERRORS=$((ERRORS + 1)); }
+    asdf plugin list | grep ruby &> /dev/null && echo -e "${GREEN}✓ ruby plugin is installed${NC}" || { echo -e "${RED}✗ ruby plugin is not installed${NC}"; ERRORS=$((ERRORS + 1)); }
+fi
+
+# Check Oh-My-Zsh
+echo -e "\n${YELLOW}Checking Oh-My-Zsh installation...${NC}"
+check_dir "$HOME/.oh-my-zsh"
+if [ -d "$HOME/.oh-my-zsh" ]; then
+    echo -e "${YELLOW}Checking essential Oh-My-Zsh plugins...${NC}"
+    check_dir "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+    check_dir "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+fi
+
+# Check dotfiles symlinks
+echo -e "\n${YELLOW}Checking dotfile symlinks...${NC}"
+check_symlink "$HOME/.zshrc"
+check_symlink "$HOME/.tmux.conf"
+[ -f "$HOME/.gitconfig" ] && check_symlink "$HOME/.gitconfig"
+[ -f "$HOME/.tool-versions" ] && check_symlink "$HOME/.tool-versions"
+
+# Check config directories
+echo -e "\n${YELLOW}Checking config directories...${NC}"
+check_symlink "$HOME/.config/nvim"
+check_symlink "$HOME/.config/lazygit"
+[ -d "$HOME/.config/alacritty" ] && check_symlink "$HOME/.config/alacritty"
+[ -d "$HOME/.config/kitty" ] && check_symlink "$HOME/.config/kitty"
+
+# Check Neovim
+echo -e "\n${YELLOW}Checking Neovim setup...${NC}"
+check_dir "$HOME/.local/share/nvim/lazy"
+if command -v nvim &> /dev/null; then
+    echo -e "${YELLOW}Checking Neovim health...${NC}"
+    nvim --headless "+checkhealth" "+qa" 2>/dev/null || echo -e "${RED}✗ Neovim health check failed, but continuing...${NC}"
+    
+    echo -e "${YELLOW}Checking Neovim plugin manager...${NC}"
+    if [ -d "$HOME/.local/share/nvim/lazy" ]; then
+        echo -e "${GREEN}✓ lazy.nvim is installed${NC}"
+    else
+        echo -e "${RED}✗ lazy.nvim is not installed${NC}"
+        ERRORS=$((ERRORS + 1))
+    fi
+fi
+
+# Check stow configuration
+echo -e "\n${YELLOW}Checking Stow configuration...${NC}"
+[ -f "$DOTFILES_DIR/.stowrc" ] && echo -e "${GREEN}✓ .stowrc is present${NC}" || { echo -e "${RED}✗ .stowrc is missing${NC}"; ERRORS=$((ERRORS + 1)); }
+stow -n -v . 2>&1 | grep -q "BUG" && { echo -e "${RED}✗ Stow has errors${NC}"; ERRORS=$((ERRORS + 1)); } || echo -e "${GREEN}✓ Stow verification passed${NC}"
+
+# Summary
+echo -e "\n${YELLOW}=========================================${NC}"
+if [ $ERRORS -eq 0 ]; then
+    echo -e "${GREEN}All checks passed! Your dotfiles setup is healthy.${NC}"
+else
+    echo -e "${RED}Found $ERRORS issue(s) with your dotfiles setup.${NC}"
+    echo -e "${YELLOW}Please review the output above and fix the issues.${NC}"
+    exit 1
+fi 

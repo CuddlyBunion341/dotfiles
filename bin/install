@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# Exit on error
+set -e
+
+# Colors for output
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+SCRIPT_DIR=$(cd $(dirname $0) && pwd)
+DOTFILES_DIR=$(cd $SCRIPT_DIR/.. && pwd)
+
+print_banner() {
+    echo -e "${YELLOW}=========================================${NC}"
+    echo -e "${YELLOW}   Dotfiles Installation${NC}"
+    echo -e "${YELLOW}=========================================${NC}"
+}
+
+print_banner
+
+# Get OS type
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo -e "${YELLOW}Detected macOS system. Running macOS setup...${NC}"
+    "$SCRIPT_DIR/setup_macos"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    echo -e "${YELLOW}Detected Linux system.${NC}"
+    
+    # Check if we're on NixOS
+    if [ -f "/etc/nixos/configuration.nix" ]; then
+        echo -e "${YELLOW}Detected NixOS. Please use the NixOS configuration.${NC}"
+        exit 0
+    else
+        echo -e "${RED}Linux setup script not yet implemented. Please use the individual setup scripts:${NC}"
+        echo -e "  - ${YELLOW}./bin/setup_stow${NC} for dotfiles symlinking"
+        echo -e "  - ${YELLOW}./bin/setup_zsh_plugins${NC} for ZSH plugins"
+        echo -e "  - ${YELLOW}cd nvim/.config/nvim && ./bin/setup${NC} for Neovim configuration"
+    fi
+else
+    echo -e "${RED}Unsupported OS: $OSTYPE${NC}"
+    exit 1
+fi
+
+# Run healthcheck
+echo -e "\n${YELLOW}Verifying installation...${NC}"
+"$SCRIPT_DIR/healthcheck" || {
+    echo -e "${RED}Healthcheck failed. Please check the issues above.${NC}"
+    exit 1
+}
+
+echo -e "\n${GREEN}Installation completed successfully!${NC}"
+echo -e "${YELLOW}Please restart your terminal for all changes to take effect.${NC}" 
