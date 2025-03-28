@@ -1,0 +1,100 @@
+#!/bin/bash
+
+# Exit on error
+set -e
+
+# Colors for output
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+# Get script directory
+SCRIPT_DIR=$(cd $(dirname $0) && pwd)
+DOTFILES_DIR=$(cd $SCRIPT_DIR/.. && pwd)
+
+echo -e "${YELLOW}Setting up macOS environment...${NC}"
+
+# Install Homebrew if not installed
+if ! command -v brew &> /dev/null; then
+    echo -e "${YELLOW}Installing Homebrew...${NC}"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    
+    # Add Homebrew to PATH
+    if [[ "$(uname -m)" == "arm64" ]]; then
+        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    else
+        echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
+fi
+
+# Install dependencies via Homebrew
+echo -e "${YELLOW}Installing dependencies with Homebrew...${NC}"
+brew update
+brew bundle install --file="$DOTFILES_DIR/Brewfile" || true
+
+# Install asdf if not installed via Homebrew
+if ! command -v asdf &> /dev/null; then
+    echo -e "${YELLOW}Setting up asdf...${NC}"
+    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.13.1
+    . "$HOME/.asdf/asdf.sh"
+fi
+
+# Install asdf plugins and tools
+echo -e "${YELLOW}Installing asdf plugins...${NC}"
+asdf plugin add nodejs || true
+asdf plugin add ruby || true
+asdf install
+
+# Setup Oh My Zsh if not installed
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo -e "${YELLOW}Installing Oh My Zsh...${NC}"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
+
+# Setup Zsh plugins
+echo -e "${YELLOW}Setting up Zsh plugins...${NC}"
+"$SCRIPT_DIR/setup_zsh_plugins"
+
+# Symlink dotfiles
+echo -e "${YELLOW}Symlinking dotfiles...${NC}"
+mkdir -p ~/.config
+
+# Symlink common configurations
+for file in $(find "$DOTFILES_DIR" -maxdepth 1 -name ".*" -not -name ".git" -not -name ".github" -not -name ".DS_Store"); do
+    ln -sfn "$file" "$HOME/$(basename $file)"
+    echo "Linked $(basename $file)"
+done
+
+# Symlink .config directory contents
+for dir in "$DOTFILES_DIR"/*; do
+    if [ -d "$dir" ] && [ "$(basename $dir)" != ".git" ] && [ "$(basename $dir)" != ".github" ] && [ "$(basename $dir)" != "bin" ] && [ "$(basename $dir)" != "scripts" ]; then
+        if [ -d "$dir/.config" ]; then
+            for config in "$dir/.config"/*; do
+                if [ -d "$config" ]; then
+                    mkdir -p "$HOME/.config"
+                    ln -sfn "$config" "$HOME/.config/$(basename $config)"
+                    echo "Linked .config/$(basename $config)"
+                fi
+            done
+        elif [ "$(basename $dir)" != "nixos" ]; then
+            ln -sfn "$dir" "$HOME/.config/$(basename $dir)"
+            echo "Linked .config/$(basename $dir)"
+        fi
+    fi
+done
+
+# Setup Neovim
+echo -e "${YELLOW}Setting up Neovim...${NC}"
+if [ -d "$DOTFILES_DIR/nvim/.config/nvim" ]; then
+    cd "$DOTFILES_DIR/nvim/.config/nvim"
+    ./bin/setup
+fi
+
+# Fix permissions if needed
+find "$DOTFILES_DIR/bin" -type f -exec chmod +x {} \;
+
+echo -e "${GREEN}macOS setup completed successfully!${NC}"
+echo -e "${YELLOW}You may need to restart your terminal for all changes to take effect.${NC}" 

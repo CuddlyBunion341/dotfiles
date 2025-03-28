@@ -2,13 +2,22 @@ name: MacOS Dotfiles Setup
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - 'nvim/**'
+      - '.zshrc'
+      - 'bin/**'
+      - 'Brewfile'
+      - '.github/workflows/macos-setup.yml'
 
 jobs:
   macos-setup:
     runs-on: macos-14-arm64
     
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0  # Full history for potential git-based configurations
     
@@ -18,7 +27,8 @@ jobs:
         echo "/opt/homebrew/bin" >> $GITHUB_PATH
         brew update
     
-    - uses: asdf-vm/actions/setup@v3
+    - name: Setup asdf
+      uses: asdf-vm/actions/setup@v3
     
     - name: Install asdf plugins
       run: |
@@ -28,41 +38,64 @@ jobs:
     - name: Install versions from .tool-versions
       run: asdf install
     
-    - name: Setup Neovim
-      run: |
-        brew install neovim
-        nvim --version
-    
-    - name: Install dotfiles dependencies
+    - name: Install dependencies
       run: |
         brew bundle install || true
         
+    - name: Make scripts executable
+      run: |
+        chmod +x ./bin/*
+        find ./nvim/.config/nvim/bin -type f -exec chmod +x {} \; || true
+    
     - name: Symlink dotfiles
       run: |
         # Create necessary directories
         mkdir -p ~/.config
         
         # Symlink common configurations
-        for file in $(find . -maxdepth 1 -name ".*" -not -name ".git" -not -name ".github"); do
+        for file in $(find . -maxdepth 1 -name ".*" -not -name ".git" -not -name ".github" -not -name ".DS_Store"); do
           ln -sfn "$PWD/$file" "$HOME/$(basename $file)"
         done
         
         # Symlink .config directory contents
-        for dir in .config/*; do
-          if [ -d "$dir" ]; then
-            ln -sfn "$PWD/$dir" "$HOME/.config/$(basename $dir)"
+        for dir in */; do
+          if [ -d "${dir}.config" ]; then
+            for config in "${dir}.config/"*; do
+              if [ -d "$config" ]; then
+                mkdir -p "$HOME/.config"
+                ln -sfn "$PWD/$config" "$HOME/.config/$(basename $config)"
+              fi
+            done
+          elif [ "${dir%/}" != ".git" ] && [ "${dir%/}" != ".github" ] && [ "${dir%/}" != "bin" ] && [ "${dir%/}" != "scripts" ] && [ "${dir%/}" != "nixos" ]; then
+            ln -sfn "$PWD/${dir%/}" "$HOME/.config/${dir%/}"
           fi
         done
+    
+    - name: Setup Oh My Zsh
+      run: |
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+        ./bin/setup_zsh_plugins
+    
+    - name: Setup Neovim
+      run: |
+        brew install neovim
+        nvim --version
+        
+        if [ -d "./nvim/.config/nvim" ]; then
+          cd ./nvim/.config/nvim
+          ./bin/setup
+        fi
     
     - name: Verify Neovim setup
       run: |
         nvim --headless "+Lazy sync" +qall
+        [ -d ~/.local/share/nvim/lazy ] && echo "✓ Lazy.nvim is installed" || exit 1
         cd ~/.config/nvim && ./bin/check || true
         cd ~/.config/nvim && ./bin/lint
     
     - name: Verify zsh setup
       run: |
-        zsh -c 'source ~/.zshrc && echo "ZSH loaded successfully"'
+        zsh -c 'source ~/.zshrc && echo "✓ ZSH loaded successfully"'
     
     - name: Check for common issues
       run: |
