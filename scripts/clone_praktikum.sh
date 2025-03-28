@@ -1,11 +1,10 @@
 #!/bin/bash
 
 ORG_NAME="prog1-kurs"
-GH_USER="bengldan"
 GH_HOST="github.zhaw.ch"
 
 for cmd in gh jq fzf; do
-  if ! command -v $cmd &> /dev/null; then
+  if ! command -v $cmd &>/dev/null; then
     echo "Error: $cmd is not installed." >&2
     exit 1
   fi

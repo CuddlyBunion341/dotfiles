@@ -13,4 +13,3 @@
 
 open -a "Slack"
 open -a "Spark Mail"
-

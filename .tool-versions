@@ -1,2 +1,6 @@
 ruby 3.2.3
-nodejs 20.11.0
+nodejs 20.11.1
+lua 5.4.6
+python 3.12.2
+golang 1.22.0
+rust 1.76.0

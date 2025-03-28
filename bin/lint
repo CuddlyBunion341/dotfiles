@@ -1,0 +1,90 @@
+#!/bin/bash
+
+# Exit on error
+set -e
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+# Function to check if a command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Function to ensure asdf is available
+ensure_asdf() {
+    if ! command_exists "asdf"; then
+        echo -e "${RED}Error: asdf is not installed. Please install asdf first.${NC}"
+        exit 1
+    fi
+}
+
+# Ensure correct versions are installed
+setup_environment() {
+    ensure_asdf
+    echo -e "${YELLOW}Setting up environment...${NC}"
+    asdf install
+    
+    if ! command_exists "bun"; then
+        echo -e "${YELLOW}Installing Bun...${NC}"
+        curl -fsSL https://bun.sh/install | bash
+    fi
+}
+
+# Function to install a package if it doesn't exist
+install_package() {
+    local cmd=$1
+    local pkg=$2
+    
+    if ! command_exists "$cmd"; then
+        echo -e "${YELLOW}Installing $cmd...${NC}"
+        case "$cmd" in
+            "shellcheck"|"shfmt")
+                brew install "$cmd"
+                ;;
+            *)
+                bun add -g "$pkg"
+                ;;
+        esac
+    fi
+}
+
+# Setup environment
+setup_environment
+
+# Install required packages
+install_package "shellcheck" "shellcheck"
+install_package "shfmt" "shfmt"
+install_package "markdownlint" "markdownlint-cli"
+install_package "prettier" "@prettier/plugin-typescript"
+install_package "taplo" "@taplo/cli"
+
+echo -e "${YELLOW}Starting linting and formatting...${NC}"
+
+# Format and lint shell scripts
+echo -e "${YELLOW}Processing shell scripts...${NC}"
+find . -type f -name "*.sh" -not -path "*/\.*" -exec shfmt -i 2 -bn -ci -w {} \;
+find . -type f -name "*.sh" -not -path "*/\.*" -exec shellcheck {} \; || true
+
+# Format and lint markdown
+echo -e "${YELLOW}Processing markdown files...${NC}"
+find . -type f -name "*.md" -not -path "*/\.*" -exec markdownlint --fix {} \; || true
+
+# Format TypeScript/JavaScript files
+echo -e "${YELLOW}Processing TypeScript/JavaScript files...${NC}"
+find . \( -name "*.ts" -o -name "*.js" -o -name "*.tsx" -o -name "*.jsx" \) -not -path "*/\.*" -exec prettier --write {} \;
+
+# Format TOML files
+echo -e "${YELLOW}Processing TOML files...${NC}"
+find . -type f -name "*.toml" -not -path "*/\.*" -exec taplo fmt {} \;
+
+# Format Lua files
+if command_exists "stylua"; then
+    echo -e "${YELLOW}Processing Lua files...${NC}"
+    find . -type f -name "*.lua" -not -path "*/\.*" -exec stylua {} \;
+fi
+
+echo -e "${GREEN}Linting and formatting complete!${NC}"

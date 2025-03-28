@@ -1,0 +1,102 @@
+#!/bin/bash
+
+# Exit on error
+set -e
+
+# Colors for output
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+SCRIPT_DIR=$(cd $(dirname $0) && pwd)
+DOTFILES_DIR=$(cd $SCRIPT_DIR/.. && pwd)
+
+# Default target directory is HOME
+TARGET_DIR="${TARGET_DIR:-$HOME}"
+
+# Check if stow is installed
+if ! command -v stow &> /dev/null; then
+    echo -e "${RED}GNU Stow is not installed. Installing...${NC}"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        brew install stow
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        if command -v apt-get &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y stow
+        elif command -v dnf &> /dev/null; then
+            sudo dnf install -y stow
+        elif command -v pacman &> /dev/null; then
+            sudo pacman -S --noconfirm stow
+        else
+            echo -e "${RED}Could not install stow. Please install it manually.${NC}"
+            exit 1
+        fi
+    else
+        echo -e "${RED}Unsupported OS. Please install stow manually.${NC}"
+        exit 1
+    fi
+fi
+
+# Determine which packages to stow based on OS
+PACKAGES="nvim lazygit tmux alacritty kitty"
+
+# Include OS-specific packages
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo -e "${YELLOW}Detected macOS, including macOS-specific packages...${NC}"
+    # Add macOS specific packages here
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    echo -e "${YELLOW}Detected Linux, including Linux-specific packages...${NC}"
+    PACKAGES="$PACKAGES hypr"
+fi
+
+# Always include these dotfiles
+DOTFILES=".zshrc .tmux.conf .gitconfig .tool-versions .stowrc"
+
+# Create .stowrc if it doesn't exist
+if [ ! -f "$DOTFILES_DIR/.stowrc" ]; then
+    echo -e "${YELLOW}Creating .stowrc file...${NC}"
+    cat > "$DOTFILES_DIR/.stowrc" << EOF
+--target=$TARGET_DIR
+--ignore='.git'
+--ignore='.github'
+--ignore='.gitignore'
+--ignore='.DS_Store'
+--verbose=1
+--dotfiles
+EOF
+fi
+
+# Change to dotfiles directory
+cd "$DOTFILES_DIR"
+
+# Stow each package
+echo -e "${YELLOW}Stowing packages...${NC}"
+for package in $PACKAGES; do
+    if [ -d "$package" ]; then
+        echo -e "${YELLOW}Stowing $package...${NC}"
+        stow -R "$package"
+        echo -e "${GREEN}✓ Stowed $package${NC}"
+    else
+        echo -e "${RED}Package $package not found, skipping...${NC}"
+    fi
+done
+
+# Stow individual dotfiles
+echo -e "${YELLOW}Stowing individual dotfiles...${NC}"
+for dotfile in $DOTFILES; do
+    if [ -f "$DOTFILES_DIR/$dotfile" ]; then
+        # Create a temporary directory
+        tmpdir=$(mktemp -d)
+        # Move the dotfile to the temp directory
+        cp "$DOTFILES_DIR/$dotfile" "$tmpdir/"
+        # Stow from the temp directory
+        cd "$tmpdir"
+        stow -t "$TARGET_DIR" --no-folding .
+        # Clean up
+        cd "$DOTFILES_DIR"
+        rm -rf "$tmpdir"
+        echo -e "${GREEN}✓ Stowed $dotfile${NC}"
+    fi
+done
+
+echo -e "${GREEN}All dotfiles have been symlinked using GNU Stow!${NC}" 

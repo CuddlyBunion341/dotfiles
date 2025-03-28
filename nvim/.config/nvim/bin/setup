@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Exit on error
+set -e
+
+# Colors for output
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+SCRIPT_DIR=$(cd $(dirname $0) && pwd)
+NVIM_DIR=$(cd $SCRIPT_DIR/.. && pwd)
+
+echo -e "${YELLOW}Setting up Neovim configuration...${NC}"
+
+# Check if Neovim is installed
+if ! command -v nvim &> /dev/null; then
+    echo -e "${RED}Neovim is not installed. Please install it first.${NC}"
+    exit 1
+fi
+
+# Check if Git is installed
+if ! command -v git &> /dev/null; then
+    echo -e "${RED}Git is not installed. Please install it first.${NC}"
+    exit 1
+fi
+
+# Install Lazy.nvim (plugin manager)
+LAZY_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/lazy/lazy.nvim"
+if [ ! -d "$LAZY_PATH" ]; then
+    echo -e "${YELLOW}Installing Lazy.nvim plugin manager...${NC}"
+    git clone --filter=blob:none https://github.com/folke/lazy.nvim.git --branch=stable "$LAZY_PATH"
+fi
+
+# Install or update plugins (non-interactive)
+echo -e "${YELLOW}Installing/updating plugins...${NC}"
+nvim --headless "+Lazy sync" +qa
+
+echo -e "${GREEN}Neovim setup completed successfully!${NC}"
+echo -e "${YELLOW}Run 'nvim' to start using Neovim.${NC}"
+
+# Make the check and lint scripts executable
+chmod +x "$SCRIPT_DIR/check"
+chmod +x "$SCRIPT_DIR/lint" 

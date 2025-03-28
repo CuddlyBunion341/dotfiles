@@ -1,0 +1,6 @@
+--target=$HOME
+--ignore='\.git'
+--ignore='\.gitignore'
+--ignore='\.DS_Store'
+--verbose=1
+--dotfiles 

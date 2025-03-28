@@ -1,0 +1,91 @@
+name: MacOS Dotfiles Setup
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - 'nvim/**'
+      - '.zshrc'
+      - 'bin/**'
+      - 'Brewfile'
+      - '.github/workflows/macos-setup.yml'
+
+jobs:
+  macos-setup:
+    runs-on: macos-14-arm64
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Full history for potential git-based configurations
+    
+    - name: Setup Homebrew
+      run: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        echo "/opt/homebrew/bin" >> $GITHUB_PATH
+        brew update
+    
+    - name: Setup asdf
+      uses: asdf-vm/actions/setup@v3
+    
+    - name: Install asdf plugins
+      run: |
+        asdf plugin add nodejs || true
+        asdf plugin add ruby || true
+    
+    - name: Install versions from .tool-versions
+      run: asdf install
+    
+    - name: Install dependencies
+      run: |
+        brew bundle install || true
+        
+    - name: Make scripts executable
+      run: |
+        chmod +x ./bin/*
+        find ./nvim/.config/nvim/bin -type f -exec chmod +x {} \; || true
+    
+    - name: Install GNU Stow
+      run: |
+        brew install stow
+        stow --version
+    
+    - name: Symlink dotfiles with GNU Stow
+      run: |
+        ./bin/setup_stow
+    
+    - name: Setup Oh My Zsh
+      run: |
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+        ./bin/setup_zsh_plugins
+    
+    - name: Setup Neovim
+      run: |
+        brew install neovim
+        nvim --version
+        
+        if [ -d "./nvim/.config/nvim" ]; then
+          echo "Setting up Neovim configuration..."
+          chmod +x ./nvim/.config/nvim/bin/*
+          cd ./nvim/.config/nvim
+          ./bin/setup
+          cd "$GITHUB_WORKSPACE"
+          echo "Neovim setup completed"
+        else
+          echo "Neovim configuration directory not found at ./nvim/.config/nvim"
+        fi
+    
+    - name: Run Neovim plugin installation
+      run: |
+        nvim --headless "+Lazy sync" +qall
+    
+    - name: Run Health Check
+      run: |
+        ./bin/healthcheck
+        echo "Health check completed successfully!"
+    
+    - name: Verify zsh setup
+      run: |
+        zsh -c 'source ~/.zshrc && echo "✓ ZSH loaded successfully"' 
