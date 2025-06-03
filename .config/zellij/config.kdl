@@ -4,6 +4,21 @@
 
 pane_frames false
 keybinds clear-defaults=true {
+  normal {
+    bind "Super [" { GoToPreviousTab; }
+    bind "Super ]" { GoToNextTab; }
+    bind "Super w" { CloseFocus; }
+    bind "Super n" { NewTab; }
+    bind "Super t" { NewTab; }
+    bind "Super z" { ToggleFocusFullscreen; }
+    bind "Super d" { NewPane "right"; }
+    bind "Super D" { NewPane "down"; }
+    bind "Super k" { Clear; }
+    bind "Ctrl h" { MoveFocusOrTab "left"; }
+    bind "Ctrl j" { MoveFocus "down"; }
+    bind "Ctrl k" { MoveFocus "up"; }
+    bind "Ctrl l" { MoveFocusOrTab "right"; }
+  }
     locked {
         bind "Alt g" { SwitchToMode "normal"; }
     }
@@ -489,14 +504,14 @@ theme "tokyo-night-dark"
  
 show_startup_tips false
 show_release_notes false
-    normal {
-        bind "Super c" { Copy; }
-        bind "Super [" { GoToPreviousTab; }
-        bind "Super ]" { GoToNextTab; }
-        bind "Super w" { CloseFocus; }
-        bind "Super n" { NewTab; }
-        bind "Super t" { NewTab; }
-        bind "Super d" { NewPane "right"; }
-        bind "Super D" { NewPane "down"; }
-        bind "Super k" { Clear; }
-    }
+// keybinds {
+//     bind "Super c" { Copy; }
+//     bind "Super [" { GoToPreviousTab; }
+//     bind "Super ]" { GoToNextTab; }
+//     bind "Super w" { CloseFocus; }
+//     bind "Super n" { NewTab; }
+//     bind "Super t" { NewTab; }
+//     bind "Super d" { NewPane "right"; }
+//     bind "Super D" { NewPane "down"; }
+//     bind "Super k" { Clear; }
+// }
