@@ -6,32 +6,28 @@ return {
 		"VonHeikemen/lsp-zero.nvim",
 		{
 			"williamboman/mason.nvim",
-			commands = { "Mason" },
 			config = function()
 				require("mason").setup()
 			end,
 		},
 		{
 			"williamboman/mason-lspconfig.nvim",
-			config = function()
-				require("mason-lspconfig").setup({
-					ensure_installed = { "lua_ls", "rust_analyzer" },
-					defaults = {
-						rust_analyzer = {
-							cargo = { features = "*" },
-						},
-					},
-				})
-			end,
-			keys = {
-				{ "<leader>li", "<cmd>LspInfo<cr>", desc = "Lsp info" },
-				{ "<leader>ll", "<cmd>LspLog<cr>", desc = "Lsp log" },
-			},
+			dependencies = { "williamboman/mason.nvim" },
 		},
 	},
+	keys = {
+		{ "<leader>li", "<cmd>LspInfo<cr>", desc = "Lsp info" },
+		{ "<leader>ll", "<cmd>LspLog<cr>", desc = "Lsp log" },
+	},
 	config = function()
-		local lspconfig = require("lspconfig")
+		-- Setup mason-lspconfig with v2.0 API
+		require("mason-lspconfig").setup({
+			ensure_installed = { "lua_ls", "rust_analyzer" },
+			automatic_enable = true, -- This automatically enables installed servers
+		})
 
+		-- Setup LSP capabilities for autocompletion
+		local lspconfig = require("lspconfig")
 		local lspconfig_defaults = lspconfig.util.default_config
 		lspconfig_defaults.capabilities = vim.tbl_deep_extend(
 			"force",
@@ -39,12 +35,16 @@ return {
 			require("cmp_nvim_lsp").default_capabilities()
 		)
 
-		require("mason-lspconfig").setup_handlers({
-			function(server)
-				lspconfig[server].setup({})
-			end,
+		-- Configure ruby-lsp using the new vim.lsp.config API
+		vim.lsp.config('ruby-lsp', {
+			init_options = {
+				settings = {
+					-- Server settings should go here
+				}
+			}
 		})
 
+		-- LSP keymaps and autocmds
 		vim.api.nvim_create_autocmd("LspAttach", {
 			desc = "LSP actions",
 			callback = function(event)

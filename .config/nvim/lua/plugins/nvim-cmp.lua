@@ -72,7 +72,7 @@ return {
 				-- { name = 'treesitter' },
 				{ name = "luasnip" },
 			}, {
-				-- { name = 'buffer' },
+				{ name = 'buffer' },
 				{ name = "path" },
 			}),
 		})
