@@ -38,7 +38,13 @@ return {
 		-- Configure ruby-lsp using the new vim.lsp.config API
 		vim.lsp.config('ruby-lsp', {
 			init_options = {
+        addonSettings = {
+          ["Ruby LSP Rails"] = {
+            enablePendingMigrationsPrompt = false,
+          },
+        },
 				settings = {
+
 					-- Server settings should go here
 				}
 			}
