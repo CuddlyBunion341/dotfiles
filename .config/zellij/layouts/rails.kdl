@@ -1,0 +1,26 @@
+layout {
+  default_tab_template {
+    children
+    pane size=1 borderless=true {
+      plugin location="compact-bar"
+    }
+  }
+  tab name="Editor" {
+    pane command="/opt/homebrew/bin/nvim"
+  }
+  tab name="run" focus=true {
+    pane command="tail" {
+      args "-f" "./log/development.log"
+    }
+    pane command="/Users/dani/.local/bin/mise" {
+      args "exec" "-c" "bundle exec rails console"
+    }
+    pane
+  }
+  tab name="srv" {
+    pane command="/Users/dani/.local/bin/mise" {
+      args "exec" "-c" "bundle exec rails server"
+    } 
+  }
+}
+

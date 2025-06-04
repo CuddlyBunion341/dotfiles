@@ -13,7 +13,11 @@ return {
 		require("neotest").setup({
 			adapters = {
 				require("neotest-minitest"),
-				require("neotest-rspec"),
+				require("neotest-rspec")({
+          rspec_cmd = function()
+            return { "mise", "exec", "--", "bundle", "exec", "rspec" }
+          end
+        }),
 				["neotest-java"] = {
 					ignore_wrapper = true,
 				},
