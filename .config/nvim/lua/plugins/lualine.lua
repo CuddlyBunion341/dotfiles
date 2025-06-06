@@ -11,6 +11,7 @@ return {
 
     -- Color table for highlights
     -- stylua: ignore
+    -- dark
     local colors = {
       bg       = '#202328',
       fg       = '#bbc2cf',
@@ -24,6 +25,22 @@ return {
       blue     = '#51afef',
       red      = '#ec5f67',
     }
+
+    if vim.o.background == "light" then
+      colors = {
+        bg       = '#FFFFFF',  -- Light background
+        fg       = '#2E2E2E',  -- Darker foreground for contrast
+        yellow   = '#7F6D3A',  -- Softer yellow
+        cyan     = '#009B9F',  -- Softer cyan
+        darkblue = '#2C3E50',  -- Softer dark blue
+        green    = '#5C9E3E',  -- Softer green
+        orange   = '#E76E27',  -- Softer orange
+        violet   = '#8E9DCC',  -- Softer violet
+        magenta  = '#D25D91',  -- Softer magenta
+        blue     = '#6BB6E8',  -- Softer blue
+        red      = '#E53A35',  -- Softer red
+      }
+    end
 
     local conditions = {
       buffer_not_empty = function()

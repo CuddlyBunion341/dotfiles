@@ -327,7 +327,9 @@ simplified_ui true
 // Choose the theme that is specified in the themes section.
 // Default: default
 // 
-theme "tokyo-night-dark"
+// theme "tokyo-night-dark"
+// theme "ayu-light"
+theme "iceberg-light"
 
 // Choose the base input mode of zellij.
 // Default: normal

@@ -21,5 +21,6 @@ local plugins = {
 
 local opts = { defaults = { lazy = true }, change_detection = { notify = false } }
 
+require("theme-flag")
 require("lazy").setup(plugins, opts)
 require("theme")
