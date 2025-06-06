@@ -9,11 +9,13 @@ layout {
     pane command="/opt/homebrew/bin/nvim"
   }
   tab name="run" focus=true {
-    pane command="tail" {
-      args "-f" "./log/development.log"
-    }
-    pane command="/Users/dani/.local/bin/mise" {
-      args "exec" "-c" "bundle exec rails console"
+    pane split_direction="vertical" {
+      pane command="tail" {
+        args "-f" "./log/development.log"
+      }
+      pane command="/Users/dani/.local/bin/mise" {
+        args "exec" "-c" "bundle exec rails console"
+      }
     }
     pane
   }
