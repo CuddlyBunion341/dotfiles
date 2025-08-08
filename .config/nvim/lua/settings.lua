@@ -73,6 +73,8 @@ vim.keymap.set("n", "cp", "cp :let @+=expand('%:p')<cr>")
 vim.keymap.set("n", "cm", ":cnext<cr>")
 vim.keymap.set("n", "cl", ":cprev<cr>")
 
+vim.api.nvim_create_user_command('Kms', 'execute "SessionDelete" | quit', {})
+
 -- splits
 
 vim.opt.splitright = true
