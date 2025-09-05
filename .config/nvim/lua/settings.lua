@@ -103,3 +103,7 @@ vim.keymap.set("n", "<leader>o", function()
 		print("No valid string found on the current line.")
 	end
 end)
+
+vim.keymap.set('n', '<C-r>', ':let @+ = "rspec " . substitute(expand("%:p"), getcwd() . "/", "", "") . ":" . line(".")<CR>')
+vim.keymap.set('n', '<C-S-r>', ':let @+ = "rspec " . substitute(expand("%:p"), getcwd() . "/", "", "")<CR>')
+vim.keymap.set('n', '<C-S-c>', ':let @+ = "rubocop " . substitute(expand("%:p"), getcwd() . "/", "", "")<CR>')

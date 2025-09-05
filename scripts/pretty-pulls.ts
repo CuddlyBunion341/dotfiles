@@ -12,9 +12,6 @@ curl -L \
 
 let data = '';
 
-process.stdin.resume();
-process.stdin.setEncoding('utf8');
-
 process.stdin.on('data', (chunk) => {
   data += chunk;
 });
