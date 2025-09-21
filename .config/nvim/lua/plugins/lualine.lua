@@ -12,35 +12,48 @@ return {
     -- Color table for highlights
     -- stylua: ignore
     -- dark
-    local colors = {
-      bg       = '#202328',
-      fg       = '#bbc2cf',
-      yellow   = '#ECBE7B',
-      cyan     = '#008080',
-      darkblue = '#081633',
-      green    = '#98be65',
-      orange   = '#FF8800',
-      violet   = '#a9a1e1',
-      magenta  = '#c678dd',
-      blue     = '#51afef',
-      red      = '#ec5f67',
-    }
+    -- local colors = {
+    --   bg       = '#202328',
+    --   fg       = '#bbc2cf',
+    --   yellow   = '#ECBE7B',
+    --   cyan     = '#008080',
+    --   darkblue = '#081633',
+    --   green    = '#98be65',
+    --   orange   = '#FF8800',
+    --   violet   = '#a9a1e1',
+    --   magenta  = '#c678dd',
+    --   blue     = '#51afef',
+    --   red      = '#ec5f67',
+    -- }
+    --
+    -- if vim.o.background == "light" then
+    --   colors = {
+    --     bg       = '#FFFFFF',  -- Light background
+    --     fg       = '#2E2E2E',  -- Darker foreground for contrast
+    --     yellow   = '#7F6D3A',  -- Softer yellow
+    --     cyan     = '#009B9F',  -- Softer cyan
+    --     darkblue = '#2C3E50',  -- Softer dark blue
+    --     green    = '#5C9E3E',  -- Softer green
+    --     orange   = '#E76E27',  -- Softer orange
+    --     violet   = '#8E9DCC',  -- Softer violet
+    --     magenta  = '#D25D91',  -- Softer magenta
+    --     blue     = '#6BB6E8',  -- Softer blue
+    --     red      = '#E53A35',  -- Softer red
+    --   }
+    -- end
 
-    if vim.o.background == "light" then
-      colors = {
-        bg       = '#FFFFFF',  -- Light background
-        fg       = '#2E2E2E',  -- Darker foreground for contrast
-        yellow   = '#7F6D3A',  -- Softer yellow
-        cyan     = '#009B9F',  -- Softer cyan
-        darkblue = '#2C3E50',  -- Softer dark blue
-        green    = '#5C9E3E',  -- Softer green
-        orange   = '#E76E27',  -- Softer orange
-        violet   = '#8E9DCC',  -- Softer violet
-        magenta  = '#D25D91',  -- Softer magenta
-        blue     = '#6BB6E8',  -- Softer blue
-        red      = '#E53A35',  -- Softer red
-      }
-    end
+    local colors = {
+      black        = '#282828',
+      white        = '#ebdbb2',
+      red          = '#fb4934',
+      green        = '#b8bb26',
+      blue         = '#83a598',
+      yellow       = '#fe8019',
+      gray         = '#a89984',
+      darkgray     = '#3c3836',
+      lightgray    = '#504945',
+      inactivegray = '#7c6f64',
+    }
 
     local conditions = {
       buffer_not_empty = function()
@@ -78,6 +91,7 @@ return {
         lualine_z = {},
         -- These will be filled later
         lualine_c = {},
+        -- lualine_x = { require("yaml_nvim").get_yaml_key },
         lualine_x = {},
       },
       inactive_sections = {
@@ -87,6 +101,7 @@ return {
         lualine_y = {},
         lualine_z = {},
         lualine_c = {},
+        -- lualine_x = { require("yaml_nvim").get_yaml_key },
         lualine_x = {},
       },
     }
@@ -112,7 +127,7 @@ return {
     ins_left {
       -- mode component
       function()
-        return ''
+        return '󰊠'
       end,
       color = function()
         -- auto change color according to neovims mode

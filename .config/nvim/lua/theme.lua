@@ -2,7 +2,8 @@ if vim.o.background == "dark" then
     vim.g.tokyonight_style = "night"
     vim.g.tokyonight_transparent_background = 1
     vim.g.tokyonight_enable_italic = 1
-    vim.cmd("colorscheme tokyonight")
+    vim.cmd("colorscheme gruvbox")
+    -- vim.cmd("colorscheme vim")
     vim.cmd("set bg=dark")
 else
     vim.o.background = "light"

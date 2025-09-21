@@ -313,9 +313,9 @@ plugins {
 // Plugins to load in the background when a new session starts
 // eg. "file:/path/to/my-plugin.wasm"
 // eg. "https://example.com/my-plugin.wasm"
-// load_plugins {
-//   "https://github.com/dj95/zjstatus/releases/download/latest/zjstatus.wasm"
-// }
+load_plugins {
+  "https://github.com/dj95/zjstatus/releases/download/latest/zjstatus.wasm"
+}
 
 // Use a simplified UI without special fonts (arrow glyphs)
 // Options:
@@ -328,8 +328,9 @@ simplified_ui true
 // Default: default
 // 
 // theme "tokyo-night-dark"
+theme "gruvbox-dark"
 // theme "ayu-light"
-theme "iceberg-light"
+// theme "iceberg-light"
 
 // Choose the base input mode of zellij.
 // Default: normal
@@ -513,3 +514,4 @@ show_release_notes false
 //     bind "Super D" { NewPane "down"; }
 //     bind "Super k" { Clear; }
 // }
+

@@ -44,10 +44,17 @@ return {
           },
         },
 				settings = {
-
-					-- Server settings should go here
+          formatter = {
+            enabled = true
+          }
 				}
 			}
+		})
+
+    -- herb?
+		vim.lsp.config('herb_ls', {
+      cmd = { "herb-language-server", "--stdio" },
+      filetypes = { 'erb'},
 		})
 
 		-- LSP keymaps and autocmds
