@@ -2,59 +2,141 @@ name: Neovim Checks
 
 on:
   push:
-    branches: [ main ]
+  # push:
+  #   branches: [ main ]
     #paths:
     #  - '.config/nvim/**'
-  pull_request:
-    branches: [ main ]
+  # pull_request:
+  #   branches: [ main ]
     # paths:
     #   - '.config/nvim/**'
-  workflow_dispatch:
+  # workflow_dispatch:
 
 jobs:
   setup:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    env:
+      NONINTERACTIVE: "1"
+      GIT_TERMINAL_PROMPT: "0"
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Restore Homebrew and downloads cache
-      uses: actions/cache@v4
-      with:
-        path: |
-          /home/linuxbrew/.linuxbrew
-          /home/linuxbrew/.cache/Homebrew
-        key: linuxbrew-${{ runner.os }}-${{ hashFiles('Brewfile') }}
-        restore-keys: |
-          linuxbrew-${{ runner.os }}-
+      - name: Restore Homebrew cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            /home/linuxbrew/.linuxbrew
+            /home/linuxbrew/.cache/Homebrew
+          key: linuxbrew-${{ runner.os }}-${{ hashFiles('Brewfile') }}
+          restore-keys: |
+            linuxbrew-${{ runner.os }}-
 
-    - name: Install Homebrew if missing
-      run: |
-        if [ ! -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        fi
-        echo "/home/linuxbrew/.linuxbrew/bin" >> $GITHUB_PATH
-        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $GITHUB_ENV
+      - name: Install Homebrew
+        run: |
+          set -euo pipefail
+          if [ ! -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          fi
 
-    - name: Restore Neovim Cache
-      uses: actions/cache@v4
-      with:
-        path: |
-          ~/.local/share/nvim
-          ~/.cache/nvim
-          ~/.config/nvim/lazy-lock.json
-        key: nvim-cache-${{ runner.os }}-${{ hashFiles('.config/nvim/lazy-lock.json', '.config/nvim/init.lua') }}
-        restore-keys: |
-          nvim-cache-${{ runner.os }}-
+          echo "/home/linuxbrew/.linuxbrew/bin" >> "$GITHUB_PATH"
+          echo "/home/linuxbrew/.linuxbrew/sbin" >> "$GITHUB_PATH"
+          {
+            echo "HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew"
+            echo "HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar"
+            echo "HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew"
+          } >> "$GITHUB_ENV"
 
-    - name: Setup Neovim
-      run: |
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        brew install neovim
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          brew update --force --quiet
+          brew analytics off
 
-        # check neovim installation
-        nvim --version || exit 1
-        nvim --headless "+checkhealth" +qall || exit 1
+      - name: Restore Neovim cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/nvim
+            ~/.cache/nvim
+            ~/.config/nvim/lazy-lock.json
+          key: nvim-cache-${{ runner.os }}-${{ hashFiles('.config/nvim/lazy-lock.json', '.config/nvim/init.lua') }}
+          restore-keys: |
+            nvim-cache-${{ runner.os }}-
 
-        mkdir -p ~/.config
-        cp -r ./.config/nvim ~/.config/nvim
-        nvim --headless "+checkhealth" +qall || exit 1
+      - name: Install and configure Neovim
+        run: |
+          set -euo pipefail
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+          brew install neovim python node ruby
+          nvim --version
+          python3 --version
+          node --version
+          ruby --version
+
+          PIP_BREAK_SYSTEM_PACKAGES=1 python3 -m pip install --upgrade pip pynvim
+          npm install --global neovim
+          gem install --no-document neovim
+
+          CONFIG_SRC=""
+          if [ -d "./neovim" ]; then
+            CONFIG_SRC="./neovim"
+          elif [ -d "./.config/neovim" ]; then
+            CONFIG_SRC="./.config/neovim"
+          elif [ -d "./.config/nvim" ]; then
+            CONFIG_SRC="./.config/nvim"
+          fi
+
+          if [ -z "$CONFIG_SRC" ]; then
+            echo "Unable to locate Neovim configuration in repository" >&2
+            exit 1
+          fi
+
+          rm -rf ~/.config/neovim ~/.config/nvim
+          mkdir -p ~/.config/neovim ~/.config/nvim
+          cp -a "$CONFIG_SRC"/. ~/.config/neovim/
+          cp -a "$CONFIG_SRC"/. ~/.config/nvim/
+
+          nvim --headless -c "if exists(':Lazy') | Lazy! sync | endif" -c "qa"
+
+      - name: Run Neovim healthcheck
+        run: |
+          set -euo pipefail
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+          nvim --headless -c "checkhealth" -c "silent w! health_report.txt" -c "qa"
+
+          if [ ! -f health_report.txt ]; then
+            echo "Health check did not produce a report" >&2
+            exit 1
+          fi
+
+          if grep -qiE '(^\s*[\-X][[:space:]]*(ERROR|FAIL)|ERROR:)' health_report.txt; then
+            echo "Neovim healthcheck reported errors:" >&2
+            cat health_report.txt >&2
+            exit 1
+          fi
+
+          echo "=== Neovim Health Report ==="
+          cat health_report.txt
+          echo "============================"
+
+      - name: Upload health report
+        if: ${{ always() && !env.ACT }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: nvim-health-report
+          path: health_report.txt
+
+      - name: Save Neovim cache
+        if: always()
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/nvim
+            ~/.cache/nvim
+            ~/.config/nvim/lazy-lock.json
+          key: nvim-cache-${{ runner.os }}-${{ hashFiles('.config/nvim/lazy-lock.json', '.config/nvim/init.lua') }}
+          restore-keys: |
+            nvim-cache-${{ runner.os }}-
