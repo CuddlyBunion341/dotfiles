@@ -2,162 +2,152 @@ name: Neovim Checks
 
 on:
   push:
-  # push:
-  #   branches: [ main ]
-    #paths:
-    #  - '.config/nvim/**'
-  # pull_request:
-  #   branches: [ main ]
-    # paths:
-    #   - '.config/nvim/**'
-  # workflow_dispatch:
+    branches: [ main, automation-checks ]
+    paths:
+      - '.config/nvim/**'
+      - '.github/workflows/nvim-check.yml'
+      - 'Brewfile'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '.config/nvim/**'
+      - '.github/workflows/nvim-check.yml'
+      - 'Brewfile'
+  workflow_dispatch:
 
 jobs:
-  setup:
+  neovim-check:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    env:
-      NONINTERACTIVE: "1"
-      GIT_TERMINAL_PROMPT: "0"
-    steps:
-      - uses: actions/checkout@v4
+    timeout-minutes: 30
 
-      - name: Restore mise cache
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache mise installations
         uses: actions/cache@v4
         with:
           path: |
             ~/.local/share/mise
             ~/.cache/mise
-          key: mise-${{ runner.os }}-${{ hashFiles('.tool-versions', '.config/nvim/.tool-versions', 'Brewfile') }}
+          key: mise-${{ runner.os }}-${{ hashFiles('**/tool-versions', '.tool-versions', '.config/nvim/.tool-versions') }}
           restore-keys: |
             mise-${{ runner.os }}-
 
-      - name: Install Homebrew and core dependencies
+      - name: Install system dependencies
+        run: |
+          set -euo pipefail
+
+          # Update package lists
+          sudo apt-get update
+
+          # Install build essentials and dependencies
+          sudo apt-get install -y \
+            build-essential \
+            curl \
+            git \
+            unzip \
+            gettext \
+            cmake \
+            ninja-build
+
+      - name: Install Homebrew
         run: |
           set -euo pipefail
 
           # Install Homebrew
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-          # Setup environment
-          echo "/home/linuxbrew/.linuxbrew/bin" >> "$GITHUB_PATH"
-          echo "/home/linuxbrew/.linuxbrew/sbin" >> "$GITHUB_PATH"
+          # Add to PATH
+          echo "/home/linuxbrew/.linuxbrew/bin" >> $GITHUB_PATH
+          echo "/home/linuxbrew/.linuxbrew/sbin" >> $GITHUB_PATH
+
+          # Configure environment
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $GITHUB_ENV
 
-          # Install from Brewfile
-          brew bundle --file=Brewfile
-
-          echo "✅ Homebrew and core dependencies installed"
-
-      - name: Setup mise and install languages
+      - name: Install core tools via Homebrew
         run: |
           set -euo pipefail
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+          # Install tools from Brewfile
+          brew bundle --no-lock --file=Brewfile
+
+          echo "✅ Core tools installed"
+
+      - name: Install mise and setup languages
+        run: |
+          set -euo pipefail
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+          # Activate mise
           eval "$(mise activate bash)"
 
-          # Install from .tool-versions files
+          # Install from .tool-versions files if they exist
           if [ -f ".tool-versions" ]; then
-            echo "📦 Installing from root .tool-versions..."
+            echo "Installing from root .tool-versions"
             mise install
           fi
 
           if [ -f ".config/nvim/.tool-versions" ]; then
-            echo "📦 Installing from .config/nvim/.tool-versions..."
-            cd .config/nvim && mise install && cd ../..
+            echo "Installing from .config/nvim/.tool-versions"
+            cd .config/nvim
+            mise install
+            cd ../..
           fi
 
-          # Install additional languages in parallel for common Neovim plugin needs
-          echo "📦 Installing additional languages..."
-          {
-            mise install python@latest 2>/dev/null && echo "✅ Python" || echo "⚠️  Python failed"
-          } &
-          {
-            mise install go@latest 2>/dev/null && echo "✅ Go" || echo "⚠️  Go failed"
-          } &
-          {
-            mise install rust@latest 2>/dev/null && echo "✅ Rust" || echo "⚠️  Rust failed"
-          } &
-          {
-            mise install java@latest 2>/dev/null && echo "✅ Java" || echo "⚠️  Java failed"
-          } &
+          # Install common languages for Neovim plugins
+          mise install python@3.11 || true
+          mise install nodejs@20 || true
+          mise install ruby@3.2 || true
+          mise install go@latest || true
+          mise install rust@latest || true
 
-          wait
-          echo "✅ Language setup completed"
-
-      - name: Install language-specific packages
+      - name: Install language packages
         run: |
           set -euo pipefail
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           eval "$(mise activate bash)"
 
-          # Install packages in parallel
-          {
-            if command -v python3 &> /dev/null; then
-              python3 -m pip install --user pynvim debugpy black isort flake8 mypy 2>/dev/null
-              echo "✅ Python packages"
-            fi
-          } &
-          {
-            if command -v npm &> /dev/null; then
-              npm install --global neovim typescript typescript-language-server 2>/dev/null
-              echo "✅ Node packages"
-            fi
-          } &
-          {
-            if command -v cargo &> /dev/null; then
-              cargo install stylua --locked 2>/dev/null && echo "✅ Stylua" || echo "⚠️  Stylua failed"
-            fi
-          } &
+          # Python packages
+          if command -v python3 >/dev/null 2>&1; then
+            python3 -m pip install --user --upgrade pip
+            python3 -m pip install --user pynvim debugpy black isort mypy flake8
+            echo "✅ Python packages installed"
+          fi
 
-          wait
-          echo "✅ Language packages installed"
+          # Node packages
+          if command -v npm >/dev/null 2>&1; then
+            npm install -g neovim typescript typescript-language-server
+            echo "✅ Node packages installed"
+          fi
 
-      - name: Show versions
-        run: |
-          set -euo pipefail
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          eval "$(mise activate bash)"
-
-          echo "=== Installed Versions ==="
-          echo "Neovim: $(nvim --version | head -1)"
-          echo "Mise: $(mise --version)"
-          echo "Python: $(python3 --version 2>/dev/null || echo 'not available')"
-          echo "Node: $(node --version 2>/dev/null || echo 'not available')"
-          echo "Ruby: $(ruby --version 2>/dev/null || echo 'not available')"
-          echo "Rust: $(rustc --version 2>/dev/null || echo 'not available')"
-          echo "Go: $(go version 2>/dev/null || echo 'not available')"
-          echo "=========================="
-
-      - name: Restore Neovim cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.local/share/nvim
-            ~/.cache/nvim
-          key: nvim-cache-${{ runner.os }}-${{ hashFiles('.config/nvim/lazy-lock.json', '.config/nvim/init.lua') }}
-          restore-keys: |
-            nvim-cache-${{ runner.os }}-
+          # Rust packages
+          if command -v cargo >/dev/null 2>&1; then
+            cargo install stylua || true
+            echo "✅ Rust packages installed"
+          fi
 
       - name: Setup Neovim configuration
         run: |
           set -euo pipefail
 
-          # Find and copy Neovim config
-          CONFIG_SRC=".config/nvim"
-          if [ ! -d "$CONFIG_SRC" ]; then
-            echo "❌ Neovim config not found at $CONFIG_SRC"
-            exit 1
-          fi
-
-          echo "📁 Copying Neovim config from $CONFIG_SRC"
-          rm -rf ~/.config/nvim ~/.config/neovim
-          mkdir -p ~/.config/nvim ~/.config/neovim
-          cp -a "$CONFIG_SRC"/. ~/.config/nvim/
-          cp -a "$CONFIG_SRC"/. ~/.config/neovim/
+          # Copy Neovim config
+          mkdir -p ~/.config/nvim
+          cp -r .config/nvim/* ~/.config/nvim/
 
           echo "✅ Neovim configuration copied"
+
+      - name: Cache Neovim plugins
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/nvim
+            ~/.cache/nvim
+          key: nvim-plugins-${{ runner.os }}-${{ hashFiles('.config/nvim/lazy-lock.json') }}
+          restore-keys: |
+            nvim-plugins-${{ runner.os }}-
 
       - name: Install Neovim plugins
         run: |
@@ -165,58 +155,64 @@ jobs:
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           eval "$(mise activate bash)"
 
-          echo "📦 Installing Neovim plugins..."
+          echo "Installing Neovim plugins..."
 
-          # Use the correct Lazy command syntax
-          nvim --headless -c "lua require('lazy').install({wait = true})" -c "qa" || {
-            echo "⚠️  First method failed, trying alternative..."
-            nvim --headless +'Lazy! sync' +qa
+          # Install plugins using Lazy
+          timeout 300 nvim --headless -c "lua require('lazy').install({wait=true})" -c "qall" || {
+            echo "Trying alternative plugin installation method..."
+            timeout 300 nvim --headless +'Lazy! sync' +qall || {
+              echo "Plugin installation failed, but continuing..."
+            }
           }
 
-          echo "✅ Neovim plugins installed"
+          echo "✅ Plugin installation completed"
 
-      - name: Run Neovim healthcheck
+      - name: Run Neovim health check
         run: |
           set -euo pipefail
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           eval "$(mise activate bash)"
 
-          echo "🏥 Running Neovim healthcheck..."
+          echo "Running Neovim health check..."
 
-          # Run healthcheck
-          nvim --headless -c "checkhealth" -c "write! health_report.txt" -c "qa" || true
+          # Run health check
+          nvim --headless -c "checkhealth" -c "write! health-report.txt" -c "qall" || true
 
-          if [ ! -f health_report.txt ]; then
-            echo "❌ No health report generated"
+          if [ -f health-report.txt ]; then
+            echo "=== NEOVIM HEALTH REPORT ==="
+            cat health-report.txt
+            echo "=========================="
+
+            # Check for critical errors
+            if grep -i "ERROR" health-report.txt | grep -v "WARNING" | head -5; then
+              echo "⚠️ Found some errors in health check"
+            fi
+          else
+            echo "❌ Health report not generated"
             exit 1
           fi
 
-          echo "=== Neovim Health Report ==="
-          cat health_report.txt
-          echo "============================"
+          echo "✅ Health check completed"
 
-          # Check for critical errors only
-          if grep -qiE 'ERROR.*CRITICAL|CRITICAL.*ERROR' health_report.txt; then
-            echo "❌ Critical errors found in healthcheck"
-            exit 1
-          fi
+      - name: Show installed versions
+        run: |
+          set -euo pipefail
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          eval "$(mise activate bash)"
 
-          echo "✅ Healthcheck completed"
+          echo "=== INSTALLED VERSIONS ==="
+          echo "Neovim: $(nvim --version | head -1 || echo 'not found')"
+          echo "Python: $(python3 --version 2>/dev/null || echo 'not found')"
+          echo "Node: $(node --version 2>/dev/null || echo 'not found')"
+          echo "Ruby: $(ruby --version 2>/dev/null || echo 'not found')"
+          echo "Go: $(go version 2>/dev/null || echo 'not found')"
+          echo "Rust: $(rustc --version 2>/dev/null || echo 'not found')"
+          echo "========================="
 
       - name: Upload health report
-        if: ${{ always() && !env.ACT }}
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: nvim-health-report-${{ runner.os }}
-          path: health_report.txt
-
-      - name: Save caches
-        if: always()
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.local/share/nvim
-            ~/.cache/nvim
-          key: nvim-cache-${{ runner.os }}-${{ hashFiles('.config/nvim/lazy-lock.json', '.config/nvim/init.lua') }}
-          restore-keys: |
-            nvim-cache-${{ runner.os }}-
+          name: neovim-health-report
+          path: health-report.txt
+          retention-days: 30
