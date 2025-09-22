@@ -1,5 +1,0 @@
-brew "neovim"
-brew "python"
-brew "node"
-brew "ruby"
-brew "stylua"

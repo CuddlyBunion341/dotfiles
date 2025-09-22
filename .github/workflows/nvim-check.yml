@@ -2,55 +2,56 @@ name: Neovim Checks
 
 on:
   push:
-  pull_request:
-  workflow_dispatch:
+  # push:
+  #   branches: [ main ]
+    #paths:
+    #  - '.config/nvim/**'
+  # pull_request:
+  #   branches: [ main ]
+    # paths:
+    #   - '.config/nvim/**'
+  # workflow_dispatch:
 
 jobs:
-  nvim-check:
+  setup:
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
+    env:
+      NONINTERACTIVE: "1"
+      GIT_TERMINAL_PROMPT: "0"
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Restore Homebrew cache
+        uses: actions/cache@v4
         with:
-          node-version: '20'
+          path: |
+            /home/linuxbrew/.linuxbrew
+            /home/linuxbrew/.cache/Homebrew
+          key: linuxbrew-${{ runner.os }}-${{ hashFiles('Brewfile') }}
+          restore-keys: |
+            linuxbrew-${{ runner.os }}-
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-
-      - name: Install system dependencies
+      - name: Install Homebrew
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            neovim \
-            python3-pip \
-            python3-venv \
-            nodejs \
-            npm \
-            ruby \
-            git \
-            curl \
-            wget
+          set -euo pipefail
+          if [ ! -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          fi
 
-      - name: Install Lua formatter
-        run: |
-          curl -sL https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux.zip -o stylua.zip
-          unzip stylua.zip
-          sudo mv stylua /usr/local/bin/
-          rm stylua.zip
+          echo "/home/linuxbrew/.linuxbrew/bin" >> "$GITHUB_PATH"
+          echo "/home/linuxbrew/.linuxbrew/sbin" >> "$GITHUB_PATH"
+          {
+            echo "HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew"
+            echo "HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar"
+            echo "HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew"
+          } >> "$GITHUB_ENV"
 
-      - name: Install Neovim providers
-        run: |
-          python3 -m pip install --user pynvim
-          npm install --global neovim
-          gem install --user-install neovim
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          brew update --force --quiet
+          brew analytics off
 
       - name: Restore Neovim cache
         uses: actions/cache@v4
@@ -63,25 +64,57 @@ jobs:
           restore-keys: |
             nvim-cache-${{ runner.os }}-
 
-      - name: Copy Neovim configuration
+      - name: Install and configure Neovim
         run: |
-          mkdir -p ~/.config/nvim
-          cp -r .config/nvim/* ~/.config/nvim/
+          set -euo pipefail
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-      - name: Install Neovim plugins
-        run: |
+          brew install neovim python node ruby
+          nvim --version
+          python3 --version
+          node --version
+          ruby --version
+
+          PIP_BREAK_SYSTEM_PACKAGES=1 python3 -m pip install --upgrade pip pynvim
+          npm install --global neovim
+          gem install --no-document neovim
+
+          CONFIG_SRC=""
+          if [ -d "./neovim" ]; then
+            CONFIG_SRC="./neovim"
+          elif [ -d "./.config/neovim" ]; then
+            CONFIG_SRC="./.config/neovim"
+          elif [ -d "./.config/nvim" ]; then
+            CONFIG_SRC="./.config/nvim"
+          fi
+
+          if [ -z "$CONFIG_SRC" ]; then
+            echo "Unable to locate Neovim configuration in repository" >&2
+            exit 1
+          fi
+
+          rm -rf ~/.config/neovim ~/.config/nvim
+          mkdir -p ~/.config/neovim ~/.config/nvim
+          cp -a "$CONFIG_SRC"/. ~/.config/neovim/
+          cp -a "$CONFIG_SRC"/. ~/.config/nvim/
+
           nvim --headless -c "if exists(':Lazy') | Lazy! sync | endif" -c "qa"
-
-      - name: Run Lua formatting check
-        run: |
-          stylua --check .config/nvim/
 
       - name: Run Neovim healthcheck
         run: |
+          set -euo pipefail
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
           nvim --headless -c "checkhealth" -c "silent w! health_report.txt" -c "qa"
-          
+
           if [ ! -f health_report.txt ]; then
             echo "Health check did not produce a report" >&2
+            exit 1
+          fi
+
+          if grep -qiE '(^\s*[\-X][[:space:]]*(ERROR|FAIL)|ERROR:)' health_report.txt; then
+            echo "Neovim healthcheck reported errors:" >&2
+            cat health_report.txt >&2
             exit 1
           fi
 
@@ -89,15 +122,8 @@ jobs:
           cat health_report.txt
           echo "============================"
 
-          # Check for errors in health report
-          if grep -qiE '(^\s*[\-X][[:space:]]*(ERROR|FAIL)|ERROR:)' health_report.txt; then
-            echo "Neovim healthcheck reported errors:" >&2
-            cat health_report.txt >&2
-            exit 1
-          fi
-
       - name: Upload health report
-        if: always()
+        if: ${{ always() && !env.ACT }}
         uses: actions/upload-artifact@v4
         with:
           name: nvim-health-report
