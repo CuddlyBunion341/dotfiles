@@ -64,7 +64,7 @@ jobs:
 
           # Configure environment
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $GITHUB_ENV
+          /home/linuxbrew/.linuxbrew/bin/brew shellenv >> $GITHUB_ENV
 
       - name: Install core tools via Homebrew
         run: |
