@@ -157,10 +157,16 @@ jobs:
 
           echo "Installing Neovim plugins..."
 
-          # Install plugins using Lazy
-          timeout 300 nvim --headless -c "lua require('lazy').install({wait=true})" -c "qall" || {
-            echo "Trying alternative plugin installation method..."
-            timeout 300 nvim --headless +'Lazy! sync' +qall || {
+          # Test basic Neovim startup first
+          echo "Testing Neovim startup..."
+          nvim --version
+          nvim --headless -c "echo 'Neovim started successfully'" -c "qall"
+
+          # Bootstrap lazy.nvim and install plugins in one step
+          echo "Bootstrapping lazy.nvim and installing plugins..."
+          nvim --headless -c "lua require('lazy').install({wait=true})" -c "qall" 2>&1 || {
+            echo "First attempt failed, trying sync..."
+            nvim --headless -c "lua require('lazy').sync({wait=true})" -c "qall" 2>&1 || {
               echo "Plugin installation failed, but continuing..."
             }
           }
