@@ -30,6 +30,8 @@ jobs:
           path: |
             ~/.local/share/mise
             ~/.cache/mise
+            ~/.local/share/ruby-build
+            ~/.cache/ruby-build
           key: mise-${{ runner.os }}-${{ hashFiles('**/tool-versions', '.tool-versions', '.config/nvim/.tool-versions') }}
           restore-keys: |
             mise-${{ runner.os }}-
