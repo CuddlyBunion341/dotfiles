@@ -1,5 +1,5 @@
 return {
-	"tpope/vim-rails",
+  "tpope/vim-rails",
   lazy = false,
-	ft = { "ruby" },
+  ft = { "ruby" },
 }

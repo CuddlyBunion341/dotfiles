@@ -1,0 +1,69 @@
+name: Format Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  format-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+
+    - name: Install Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: 'stable'
+
+    - name: Install formatters
+      run: |
+        # Install StyLua for Lua formatting
+        cargo install stylua
+
+        # Install shfmt for shell formatting
+        go install mvdan.cc/sh/v3/cmd/shfmt@latest
+
+        # Install prettier for TypeScript/JavaScript
+        npm install -g prettier
+
+        # Add Go bin to PATH
+        echo "$HOME/go/bin" >> $GITHUB_PATH
+
+    - name: Create directories for fastcheck scripts
+      run: |
+        mkdir -p bin
+        mkdir -p neovim
+        mkdir -p scripts
+
+    - name: Run bin/fastcheck
+      run: ./bin/fastcheck
+
+    - name: Run neovim/fastcheck
+      run: ./neovim/fastcheck
+
+    - name: Run scripts/fastcheck
+      run: ./scripts/fastcheck
+
+    - name: Check if files were modified
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "Files were modified by formatting. Please run the fastcheck scripts locally and commit the changes."
+          git diff
+          exit 1
+        else
+          echo "All files are properly formatted!"
+        fi

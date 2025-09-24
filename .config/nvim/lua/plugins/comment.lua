@@ -1,7 +1,7 @@
 return {
-	"numToStr/Comment.nvim",
-	opts = {},
-	keys = {
-		{ "gcc", "<cmd>CommentToggle<cr>", desc = "Comment" },
-	},
+  "numToStr/Comment.nvim",
+  opts = {},
+  keys = {
+    { "gcc", "<cmd>CommentToggle<cr>", desc = "Comment" },
+  },
 }

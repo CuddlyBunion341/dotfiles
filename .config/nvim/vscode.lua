@@ -7,26 +7,26 @@ vim.g.maplocalleader = ","
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable",
-		lazypath,
-	})
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
 end
 
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-	{
-		{
-			"tpope/vim-rails",
-			lazy = false,
-			ft = { "ruby" },
-		},
-	},
+  {
+    {
+      "tpope/vim-rails",
+      lazy = false,
+      ft = { "ruby" },
+    },
+  },
 }
 
 local opts = { defaults = { lazy = true }, change_detection = { notify = false } }
@@ -44,16 +44,16 @@ local keymap = vim.api.nvim_set_keymap
 M.my_vscode = augroup("MyVSCode", {})
 
 vim.filetype.add({
-	pattern = {
-		[".*%.ipynb.*"] = "python",
-	},
+  pattern = {
+    [".*%.ipynb.*"] = "python",
+  },
 })
 local function notify(cmd)
-	return string.format("<cmd>call VSCodeNotify('%s')<CR>", cmd)
+  return string.format("<cmd>call VSCodeNotify('%s')<CR>", cmd)
 end
 
 local function v_notify(cmd)
-	return string.format("<cmd>call VSCodeNotifyVisual('%s', 1)<CR>", cmd)
+  return string.format("<cmd>call VSCodeNotifyVisual('%s', 1)<CR>", cmd)
 end
 
 keymap("n", "<Leader>xr", notify("references-view.findReferences"), { silent = true }) -- language references
