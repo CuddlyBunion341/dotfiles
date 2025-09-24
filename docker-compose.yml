@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  nvim:
+    build: .
+    image: nvim-dotfiles
+    container_name: neovim-dev
+    volumes:
+      - .:/workspace
+      - nvim_data:/home/developer/.local/share/nvim
+      - mise_data:/home/developer/.local/share/mise
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+
+volumes:
+  nvim_data:
+  mise_data:
