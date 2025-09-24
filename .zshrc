@@ -81,7 +81,7 @@ export LIBRARY_PATH=$LIBRARY_PATH:$(brew --prefix zstd)/lib/
  alias gac="git add . && git commit --verbose"
  alias prc="v /Users/dani/prompts/README.md"
  alias fr='find . | rg '
- alias ff='hyfetch'
+ alias ff='hyfetch -C ~/.config/hyfetch/hyfetch.json'
  alias cvu='~/scripts/simplecov_parser.rb -u'
  alias vo='v $(fzf)'
 
