@@ -3,6 +3,15 @@
 This is a collection of my dotfiles for my personal development setup.
 Other than the dotfiles, I also have a few scripts that I use to automate some tasks.
 
+## Docker Setup
+
+Run the complete development environment in a container:
+
+```bash
+docker compose up -d
+docker compose exec dotfiles zsh
+```
+
 ## Configuration
 
 * [Alacritty](./.config/alacritty/alacritty.toml)
