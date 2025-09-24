@@ -22,5 +22,5 @@ create_symlink ~/dotfiles/.gitignore ~/.gitignore
 create_symlink ~/dotfiles/scripts ~/scripts
 create_symlink ~/dotfiles/.config/ghostty ~/.config/ghostty
 create_symlink ~/dotfiles/.config/btop ~/.config/btop
-create_symlink ~/dotfiles/.config/hyfetch.json ~/.config/hyfetch.json
+create_symlink ~/dotfiles/.config/hyfetch/hyfetch.json "/Users/dani/Library/Application Support/hyfetch.json"
 create_symlink ~/dotfiles/.config/bat ~/.config/bat
