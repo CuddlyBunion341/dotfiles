@@ -3,12 +3,14 @@ name: Neovim Checks
 on:
   push:
     branches: [ main ]
-    #paths:
-    #  - '.config/nvim/**'
+    paths:
+     - '.config/nvim/**'
+     - '.github/workflows/check.yml'
   pull_request:
     branches: [ main ]
-    # paths:
-    #   - '.config/nvim/**'
+    paths:
+      - '.config/nvim/**'
+      - '.github/workflows/check.yml'
   workflow_dispatch:
 
 jobs:
