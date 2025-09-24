@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     ca-certificates \
     locales \
+    zsh \
     && rm -rf /var/lib/apt/lists/*
 
 # Generate locale
@@ -26,8 +27,8 @@ ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
 
-# Create a non-root user
-RUN useradd -m -s /bin/bash developer && \
+# Create a non-root user with zsh as default shell
+RUN useradd -m -s /usr/bin/zsh developer && \
     echo 'developer ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Switch to the developer user
@@ -54,8 +55,29 @@ RUN mkdir -p /home/developer/.config && \
 # Copy tool-versions for mise
 RUN ln -sf /home/developer/.dotfiles/.tool-versions /home/developer/.tool-versions
 
+# Install oh-my-zsh
+RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+# Install zsh plugins
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions && \
+    git clone https://github.com/MichaelAquilina/zsh-you-should-use.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/you-should-use && \
+    git clone https://github.com/jeffreytse/zsh-vi-mode ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-vi-mode && \
+    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting && \
+    git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autocomplete
+
+# Set up zsh configuration
+RUN ln -sf /home/developer/.dotfiles/.zshrc /home/developer/.zshrc
+
+# Create dummy files/directories for macOS-specific paths to avoid errors
+RUN sudo mkdir -p /opt/homebrew/etc/profile.d && \
+    sudo touch /opt/homebrew/etc/profile.d/autojump.sh && \
+    sudo mkdir -p /Users/dani/.dart-cli-completion && \
+    sudo touch /Users/dani/.dart-cli-completion/zsh-config.zsh && \
+    touch /home/developer/.import-secrets.sh && \
+    echo "# Docker placeholder" > /home/developer/.import-secrets.sh
+
 # Install languages using mise
-RUN /bin/bash -c "eval \"\$(mise activate bash)\" && mise install"
+RUN /bin/zsh -c "eval \"\$(mise activate zsh)\" && mise install"
 
 # Initialize neovim and install plugins
 RUN nvim --headless "+Lazy! sync" +qa
@@ -67,4 +89,4 @@ RUN nvim --headless "+Lazy! sync" +qa
 WORKDIR /home/developer/.dotfiles
 
 # Default command
-CMD ["/bin/bash"]
+CMD ["/usr/bin/zsh"]

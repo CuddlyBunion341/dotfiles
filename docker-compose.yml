@@ -1,18 +1,20 @@
 version: '3.8'
 services:
-  nvim:
+  dotfiles:
     build: .
-    image: nvim-dotfiles
-    container_name: neovim-dev
+    image: dotfiles-zsh
+    container_name: dotfiles-dev
     volumes:
       - .:/workspace
       - nvim_data:/home/developer/.local/share/nvim
       - mise_data:/home/developer/.local/share/mise
+      - zsh_data:/home/developer/.oh-my-zsh
     working_dir: /workspace
     stdin_open: true
     tty: true
-    command: /bin/bash
+    command: /usr/bin/zsh
 
 volumes:
   nvim_data:
   mise_data:
+  zsh_data:
