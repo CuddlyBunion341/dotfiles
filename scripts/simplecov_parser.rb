@@ -44,22 +44,22 @@ class SimpleCovParser
 
   def parse(options = {})
     @options = options
-    
+
     File.open(@html_file, 'r') do |file|
       @doc = Nokogiri::HTML(file)
     end
 
     if @options[:uncovered_only]
-      puts "SimpleCov Coverage Report - Uncovered Issues Only"
-      puts "=" * 55
+      puts 'SimpleCov Coverage Report - Uncovered Issues Only'
+      puts '=' * 55
       parse_uncovered_only
     else
-      puts "SimpleCov Coverage Report"
-      puts "=" * 50
+      puts 'SimpleCov Coverage Report'
+      puts '=' * 50
       parse_summary
       parse_groups
     end
-  rescue => e
+  rescue StandardError => e
     puts "Error parsing coverage file: #{e.message}"
     exit 1
   end
@@ -75,7 +75,9 @@ class SimpleCovParser
 
     coverage_percent = all_files_section.css('.covered_percent .green').first&.text&.strip
     hits_per_line = all_files_section.css('.covered_strength .green').first&.text&.strip
-    total_files = all_files_section.css('div').find { |div| div.text.match(/\d+ files in total/) }&.text&.match(/(\d+)/)[1]
+    total_files = all_files_section.css('div').find do |div|
+                    div.text.match(/\d+ files in total/)
+                  end&.text&.match(/(\d+)/)&.[](1)
 
     line_summary = all_files_section.css('.t-line-summary').first
     if line_summary
@@ -94,7 +96,14 @@ class SimpleCovParser
     puts "\nOverall Coverage:"
     puts "  Files: #{total_files}"
     puts "  Line Coverage: #{coverage_percent} (#{covered_lines}/#{relevant_lines} lines)"
-    puts "  Branch Coverage: #{branch_summary ? calculate_branch_percentage(covered_branches, total_branches) : 'N/A'} (#{covered_branches}/#{total_branches} branches)" if branch_summary
+    if branch_summary
+      puts "  Branch Coverage: #{if branch_summary
+                                   calculate_branch_percentage(covered_branches,
+                                                                                                               total_branches)
+                                 else
+                                   'N/A'
+                                 end} (#{covered_branches}/#{total_branches} branches)"
+    end
     puts "  Average Hits/Line: #{hits_per_line}"
     puts
   end
@@ -112,7 +121,7 @@ class SimpleCovParser
 
   def parse_group(section)
     group_name = section.css('.group_name').first&.text
-    
+
     # In uncovered-only mode, check if group has any issues before showing
     if @options[:uncovered_only]
       files = section.css('.file_list tbody .t-file')
@@ -125,7 +134,7 @@ class SimpleCovParser
     end
 
     puts "Group: #{group_name}"
-    puts "-" * (group_name.length + 7)
+    puts '-' * (group_name.length + 7)
 
     unless @options[:uncovered_only]
       coverage_percent = section.css('.covered_percent .green').first&.text&.strip
@@ -188,12 +197,12 @@ class SimpleCovParser
     puts "    Branch Coverage: #{branch_coverage} (#{covered_branches}/#{total_branches})" if total_branches.to_i > 0
     puts "    Average Hits: #{avg_hits}"
 
-    if file_id
+    return unless file_id
+
       parse_file_details(file_id, file_path)
-    end
   end
 
-  def parse_file_details(file_id, file_path)
+  def parse_file_details(file_id, _file_path)
     source_table = @doc.css("##{file_id}").first
     return unless source_table
 
@@ -215,11 +224,11 @@ class SimpleCovParser
       end
     end
 
-    if !uncovered_lines.empty? || !partial_lines.empty?
-      puts "    Issues:"
+    return unless !uncovered_lines.empty? || !partial_lines.empty?
+
+      puts '    Issues:'
       puts "      Uncovered lines: #{uncovered_lines.join(', ')}" unless uncovered_lines.empty?
       puts "      Partially covered lines: #{partial_lines.join(', ')}" unless partial_lines.empty?
-    end
   end
 
   def parse_uncovered_only
@@ -230,12 +239,12 @@ class SimpleCovParser
     if all_files_section
       line_summary = all_files_section.css('.t-line-summary').first
       branch_summary = all_files_section.css('.t-branch-summary').first
-      
-      missed_lines = line_summary&.css('.red b')&.first&.text || "0"
-      missed_branches = branch_summary&.css('.red b')&.first&.text || "0"
+
+      missed_lines = line_summary&.css('.red b')&.first&.text || '0'
+      missed_branches = branch_summary&.css('.red b')&.first&.text || '0'
 
       total_issues = missed_lines.to_i + missed_branches.to_i
-      
+
       if total_issues == 0
         puts "\nPerfect coverage! No uncovered lines or branches found."
         return
@@ -249,7 +258,8 @@ class SimpleCovParser
   end
 
   def calculate_branch_percentage(covered, total)
-    return "0.0%" if total.to_i == 0
+    return '0.0%' if total.to_i == 0
+
     percentage = (covered.to_f / total.to_f * 100).round(1)
     "#{percentage}%"
   end
@@ -289,14 +299,14 @@ end
 def find_coverage_file(directory, filename)
   path = File.join(directory, filename)
   return path if File.exist?(path)
-  
+
   # Try some common variations
   variations = [
     File.join(directory, 'index.html'),
     File.join('.', 'coverage', 'index.html'),
     File.join('.', 'coverage_reports', 'index.html')
   ]
-  
+
   variations.find { |variation| File.exist?(variation) }
 end
 
@@ -308,24 +318,24 @@ target_file = nil
 
 OptionParser.new do |opts|
   opts.banner = "Usage: #{$0} [options] coverage_file.html"
-  
-  opts.on("-d", "--directory DIR", "Coverage directory") do |dir|
+
+  opts.on('-d', '--directory DIR', 'Coverage directory') do |dir|
     coverage_dir = dir
   end
-  
-  opts.on("-f", "--file FILE", "Coverage HTML file") do |file|
+
+  opts.on('-f', '--file FILE', 'Coverage HTML file') do |file|
     coverage_file = file
   end
-  
-  opts.on("-v", "--verbose", "Show verbose output") do
+
+  opts.on('-v', '--verbose', 'Show verbose output') do
     options[:verbose] = true
   end
-  
-  opts.on("-u", "--uncovered-only", "Show only files with uncovered lines/branches") do
+
+  opts.on('-u', '--uncovered-only', 'Show only files with uncovered lines/branches') do
     options[:uncovered_only] = true
   end
-  
-  opts.on("-h", "--help", "Show this help message") do
+
+  opts.on('-h', '--help', 'Show this help message') do
     show_help
     exit
   end
@@ -341,13 +351,13 @@ if ARGV.length > 0
 else
   target_file = find_coverage_file(coverage_dir, coverage_file)
   unless target_file
-    puts "Error: Coverage file not found"
-    puts "Tried looking for:"
+    puts 'Error: Coverage file not found'
+    puts 'Tried looking for:'
     puts "  #{File.join(coverage_dir, coverage_file)}"
-    puts "  ./coverage/index.html"
-    puts "  ./coverage_reports/index.html"
+    puts '  ./coverage/index.html'
+    puts '  ./coverage_reports/index.html'
     puts
-    puts "Make sure you have run your test suite with SimpleCov enabled."
+    puts 'Make sure you have run your test suite with SimpleCov enabled.'
     exit 1
   end
 end
@@ -356,7 +366,7 @@ end
 begin
   require 'nokogiri'
 rescue LoadError
-  puts "Error: nokogiri gem not found. Please install it with: gem install nokogiri"
+  puts 'Error: nokogiri gem not found. Please install it with: gem install nokogiri'
   exit 1
 end
 
@@ -364,4 +374,4 @@ puts "Parsing coverage file: #{target_file}"
 puts
 
 parser = SimpleCovParser.new(target_file)
-parser.parse(options) 
+parser.parse(options)

@@ -30,9 +30,9 @@ EOF
 # --- Platform-aware file size function ---
 file_size() {
   if [[ "$(uname)" == "Darwin" ]]; then
-    stat -f%z "$1"  # macOS
+    stat -f%z "$1" # macOS
   else
-    stat --printf="%s" "$1"  # Linux
+    stat --printf="%s" "$1" # Linux
   fi
 }
 
@@ -81,12 +81,12 @@ for FILE in "$SOURCE_DIR"/*; do
   [[ -f "$FILE" ]] || continue
   SIZE=$(file_size "$FILE")
 
-  if (( SIZE > MAX_SIZE_BYTES )); then
+  if ((SIZE > MAX_SIZE_BYTES)); then
     echo "⚠️  Skipping large file: $(basename "$FILE") (${SIZE} bytes)"
     continue
   fi
 
-  if (( CURRENT_SIZE + SIZE > MAX_SIZE_BYTES && CURRENT_SIZE > 0 )); then
+  if ((CURRENT_SIZE + SIZE > MAX_SIZE_BYTES && CURRENT_SIZE > 0)); then
     ZIP_NAME="$OUTPUT_DIR/${ZIP_PREFIX}${PART_INDEX}.zip"
     echo "📦 Creating $ZIP_NAME..."
     zip -j -q "$ZIP_NAME" "${CURRENT_BATCH[@]}"
@@ -99,11 +99,10 @@ for FILE in "$SOURCE_DIR"/*; do
   CURRENT_SIZE=$((CURRENT_SIZE + SIZE))
 done
 
-if (( ${#CURRENT_BATCH[@]} > 0 )); then
+if ((${#CURRENT_BATCH[@]} > 0)); then
   ZIP_NAME="$OUTPUT_DIR/${ZIP_PREFIX}${PART_INDEX}.zip"
   echo "📦 Creating $ZIP_NAME..."
   zip -j -q "$ZIP_NAME" "${CURRENT_BATCH[@]}"
 fi
 
 echo "✅ Done! Created zip files in '$OUTPUT_DIR'."
-

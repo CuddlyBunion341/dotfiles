@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+echo "🔍 Running format checks for shell files..."
+
+# Find and format shell scripts
+find . -type f \( -name "*.sh" -o -name "*.bash" -o -name "*.zsh" \) -not -path "./.git/*" -not -path "./node_modules/*" | while read -r file; do
+    echo "Formatting: $file"
+
+    # Use shfmt for shell script formatting
+    if command -v shfmt >/dev/null 2>&1; then
+        shfmt -i 2 -ci -w "$file"
+    else
+        echo "Warning: shfmt not found, skipping shell formatting"
+    fi
+done
+
+# Format .zshrc specifically (skip if it has syntax issues)
+if [[ -f ".zshrc" ]]; then
+    echo "Checking .zshrc..."
+    if command -v shfmt >/dev/null 2>&1; then
+        if shfmt -d .zshrc >/dev/null 2>&1; then
+            shfmt -i 2 -ci -w .zshrc
+            echo "Formatted .zshrc"
+        else
+            echo "Warning: .zshrc has syntax issues, skipping formatting"
+        fi
+    fi
+fi
+
+echo "✅ Shell file formatting complete!"
+
+# Run other fastcheck scripts
+echo ""
+echo "🔄 Running neovim/fastcheck..."
+./neovim/fastcheck
+
+echo ""
+echo "🔄 Running scripts/fastcheck..."
+./scripts/fastcheck
+
+echo ""
+echo "🎉 All fastcheck scripts completed!"

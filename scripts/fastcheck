@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+echo "🔍 Running format checks for scripts directory..."
+
+# Find and format shell scripts in scripts/
+find scripts -type f \( -name "*.sh" -o -name "*.bash" \) | while read -r file; do
+    echo "Formatting: $file"
+
+    # Use shfmt for shell script formatting
+    if command -v shfmt >/dev/null 2>&1; then
+        shfmt -i 2 -ci -w "$file"
+    else
+        echo "Warning: shfmt not found, skipping shell formatting"
+    fi
+done
+
+# Check TypeScript files for basic formatting (if prettier is available)
+if command -v prettier >/dev/null 2>&1; then
+    find scripts -type f -name "*.ts" -not -path "*/node_modules/*" | while read -r file; do
+        echo "Formatting TypeScript: $file"
+        prettier --write "$file"
+    done
+else
+    echo "Note: prettier not found, skipping TypeScript formatting"
+fi
+
+# Check Ruby files for basic formatting (use standardrb for autofix)
+if command -v standardrb >/dev/null 2>&1; then
+    find scripts -type f -name "*.rb" | while read -r file; do
+        echo "Formatting Ruby: $file"
+        standardrb --fix "$file" || echo "Warning: standardrb failed on $file"
+    done
+else
+    echo "Note: standardrb not found, skipping Ruby formatting"
+fi
+
+echo "✅ Scripts directory formatting complete!"

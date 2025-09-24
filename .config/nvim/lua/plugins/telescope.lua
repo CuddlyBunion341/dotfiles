@@ -22,8 +22,7 @@ return {
         file_ignore_patterns = { ".git/" }, -- Ignore the .git directory
         mappings = {
           n = {
-            ["<C-q>"] = require("telescope.actions").send_selected_to_qflist
-                + require("telescope.actions").open_qflist,
+            ["<C-q>"] = require("telescope.actions").send_selected_to_qflist + require("telescope.actions").open_qflist,
           },
         },
       },
@@ -42,16 +41,16 @@ return {
       end
 
       require("telescope.pickers")
-          .new({}, {
-            prompt_title = "Harpoon",
-            finder = require("telescope.finders").new_table({
-              results = file_paths,
-            }),
-            layout_strategy = "center",
-            previewer = conf.file_previewer({}),
-            sorter = conf.generic_sorter({}),
-          })
-          :find()
+        .new({}, {
+          prompt_title = "Harpoon",
+          finder = require("telescope.finders").new_table({
+            results = file_paths,
+          }),
+          layout_strategy = "center",
+          previewer = conf.file_previewer({}),
+          sorter = conf.generic_sorter({}),
+        })
+        :find()
     end
 
     vim.keymap.set("n", "<C-e>", function()
@@ -59,13 +58,13 @@ return {
     end, { desc = "Open harpoon window" })
   end,
   keys = {
-    { "<C-p>",     '<cmd>Telescope find_files path_display={"smart"}<cr>', desc = "Find files" },
-    { "<C-t>",     "<cmd>Telescope buffers<cr>",                           desc = "Find buffer" },
-    { "<leader>C", "<cmd>Telescope commands<cr>",                          desc = "Find commands" },
-    { "<C-s>",     "<cmd>Telescope lsp_document_symbols<cr>",              desc = "Find symbols" },
-    { "<leader>f", "<cmd>Telescope find_files hidden=true<cr>",            desc = "Find files" },
+    { "<C-p>", '<cmd>Telescope find_files path_display={"smart"}<cr>', desc = "Find files" },
+    { "<C-t>", "<cmd>Telescope buffers<cr>", desc = "Find buffer" },
+    { "<leader>C", "<cmd>Telescope commands<cr>", desc = "Find commands" },
+    { "<C-s>", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Find symbols" },
+    { "<leader>f", "<cmd>Telescope find_files hidden=true<cr>", desc = "Find files" },
     -- { "<leader>e", "<cmd>Telescope find_files hidden=false<cr>", desc = "Find all files" },
-    { "<leader>w", "<cmd>Telescope live_grep<cr>",                         desc = "Find substring" },
+    { "<leader>w", "<cmd>Telescope live_grep<cr>", desc = "Find substring" },
     {
       "<leader>r",
       function()
@@ -73,7 +72,7 @@ return {
         require("telescope.builtin").grep_string({ search = current_word })
       end,
     },
-    { "<leader>cc", "<cmd>Telescope git_commits<cr>",          desc = "Find git commits" },
+    { "<leader>cc", "<cmd>Telescope git_commits<cr>", desc = "Find git commits" },
     {
       "<leader>ac",
       "<cmd>Telescope find_files prompt_title=Controllers cwd=app/controllers/ hidden=true<cr>",
@@ -109,6 +108,6 @@ return {
       "<cmd>Telescope find_files prompt_title=Views cwd=app/views hidden=true<cr>",
       desc = "Find Rails views",
     },
-    { "<leader>l",  "<cmd>Telescope lsp_document_symbols<cr>", desc = "Find symbols" },
+    { "<leader>l", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Find symbols" },
   },
 }

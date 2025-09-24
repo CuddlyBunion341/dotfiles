@@ -74,7 +74,7 @@ vim.keymap.set("n", "cp", "cp :let @+=expand('%:p')<cr>")
 vim.keymap.set("n", "cm", ":cnext<cr>")
 vim.keymap.set("n", "cl", ":cprev<cr>")
 
-vim.api.nvim_create_user_command('Kms', 'execute "SessionDelete" | quit', {})
+vim.api.nvim_create_user_command("Kms", 'execute "SessionDelete" | quit', {})
 
 -- splits
 
@@ -88,28 +88,28 @@ vim.keymap.set("n", "<C-e>", ":wincmd =<cr>", { silent = true })
 vim.keymap.set("n", "<leader>v", ":wincmd v<cr>", { silent = true })
 vim.keymap.set("n", "<leader>V", ":wincmd s<cr>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>o", function()
-	-- get the current line content
-	local line = vim.api.nvim_get_current_line()
+  -- get the current line content
+  local line = vim.api.nvim_get_current_line()
 
-	-- extract the string (either single-quoted or double-quoted)
-	local str = line:match("'(.-)'") or line:match('"(.-)"')
+  -- extract the string (either single-quoted or double-quoted)
+  local str = line:match("'(.-)'") or line:match('"(.-)"')
 
-	if str then
-		-- Construct the GitHub URL
-		local url = "https://github.com/" .. str
+  if str then
+    -- Construct the GitHub URL
+    local url = "https://github.com/" .. str
 
-		-- use the open shell command to open the URL
-		os.execute("open " .. url)
-	else
-		print("No valid string found on the current line.")
-	end
+    -- use the open shell command to open the URL
+    os.execute("open " .. url)
+  else
+    print("No valid string found on the current line.")
+  end
 end)
 
 -- vim.keymap.set('n', '<C-r>', ':let @+ = "rspec " . substitute(expand("%:p"), getcwd() . "/", "", "") . ":" . line(".")<CR>')
-vim.keymap.set('n', '<C-S-r>', ':let @+ = "rspec " . substitute(expand("%:p"), getcwd() . "/", "", "")<CR>')
-vim.keymap.set('n', '<C-S-c>', ':let @+ = "rubocop " . substitute(expand("%:p"), getcwd() . "/", "", "")<CR>')
+vim.keymap.set("n", "<C-S-r>", ':let @+ = "rspec " . substitute(expand("%:p"), getcwd() . "/", "", "")<CR>')
+vim.keymap.set("n", "<C-S-c>", ':let @+ = "rubocop " . substitute(expand("%:p"), getcwd() . "/", "", "")<CR>')
 
-vim.keymap.set('n', '<C-S-l>', ':let @+ = substitute(expand("%:p"), getcwd() . "/", "", "")<CR>')
+vim.keymap.set("n", "<C-S-l>", ':let @+ = substitute(expand("%:p"), getcwd() . "/", "", "")<CR>')
 -- vim.keymap.set('n', '<C-d>', ':let @+ = expand("%:p")<CR>')
 
-vim.api.nvim_create_user_command('Trim', ':%s/\\s\\+$//e', {})
+vim.api.nvim_create_user_command("Trim", ":%s/\\s\\+$//e", {})
