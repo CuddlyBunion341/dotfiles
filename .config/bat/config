@@ -1,2 +1,12 @@
---style plain
---theme gruvbox-dark
+# Bat configuration file
+# Syntax highlighting theme
+--theme="TwoDark"
+
+# Style components to display
+--style="numbers,changes,header"
+
+# Always show decorations
+--decorations=always
+
+# Use less as pager with useful options
+--pager="less -RF"
