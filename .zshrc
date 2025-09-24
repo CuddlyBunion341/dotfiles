@@ -160,7 +160,6 @@ compdef _deploio deploio depl 2>/dev/null
 fpath=(~/.config/zsh/completions $fpath)
 autoload -U compinit && compinit
 
-alias bat='bat --theme="gruvbox-dark"'
 nvimfuzzysearch() {
   local sel
   sel=$(
