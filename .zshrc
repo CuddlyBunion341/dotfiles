@@ -16,6 +16,7 @@ set -o vi
    fast-syntax-highlighting
    rust
    zsh-autocomplete
+   zsh_codex
  )
 
  source $HOME/.import-secrets.sh
@@ -181,3 +182,7 @@ fpath+=/Users/dani/.zfunc
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
+
+alias py='python'
+
+bindkey '^X' create_completion # omzsh codex plugin

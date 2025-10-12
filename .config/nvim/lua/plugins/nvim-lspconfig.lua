@@ -42,7 +42,7 @@ return {
         },
         settings = {
           formatter = {
-            enabled = true,
+            enabled = false,
           },
         },
       },

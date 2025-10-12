@@ -6,7 +6,7 @@
 --style="numbers,changes,header"
 
 # Always show decorations
---decorations=never
+# --decorations=never
 
 # Use less as pager with useful options
 --pager="less -RF"

@@ -327,8 +327,8 @@ simplified_ui true
 // Choose the theme that is specified in the themes section.
 // Default: default
 // 
-// theme "tokyo-night-dark"
-theme "gruvbox-dark"
+theme "tokyo-night-dark"
+// theme "gruvbox-dark"
 // theme "ayu-light"
 // theme "iceberg-light"
 
